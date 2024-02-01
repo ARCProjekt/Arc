@@ -210,6 +210,32 @@ return new class extends Migration
             'magyar' => "masodik g.",
             'hol' => 'gALERIA   ',
         ]);
+
+        //csapat 
+        Nyelv::create([
+            'angol' => "Court of Night",
+            'magyar' => "Éjszaka Udvara",
+            'hol' => 'csapat nev',
+        ]);
+
+        Nyelv::create([
+            'angol' => "Court of Spring",
+            'magyar' => "Tavasz udvara",
+           
+            'hol' => 'csapat nev',
+        ]);
+        Nyelv::create([
+            'angol' => "Court of Night is the best place, where i ever want to go",
+            'magyar' => "Éjszaka Udvara a legjobb hely ahova valaha akartam menni",
+            'hol' => 'csapat leiras',
+        ]);
+
+        Nyelv::create([
+            'angol' => "Court of Spring is a wrong place",
+            'magyar' => "Tavasz udvara egy rossz hely",
+           
+            'hol' => 'csapat leiras',
+        ]);
     }
 
     /**

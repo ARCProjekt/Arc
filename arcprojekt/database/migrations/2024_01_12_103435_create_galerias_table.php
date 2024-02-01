@@ -22,7 +22,7 @@ return new class extends Migration
 
 
 
-        Galeria::create([
+       Galeria::create([
             'nyelv_id_leiras' => 32,
         ]);
 

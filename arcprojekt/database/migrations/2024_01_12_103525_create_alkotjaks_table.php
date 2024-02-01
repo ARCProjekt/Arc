@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\Alkotjak;
 return new class extends Migration
 {
     /**
@@ -17,6 +17,17 @@ return new class extends Migration
             $table->foreignId('a_azon')->references('a_azon')->on('alkotos');
             $table->timestamps();
         });
+        Alkotjak::create([
+            'cs_azon' => 1,
+            'a_azon'=>  1,
+            
+        ]);
+
+        Alkotjak::create([
+            'cs_azon' => 2,
+            'a_azon'=>  2,
+            
+        ]);
     }
 
     /**

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\Csapat;
 return new class extends Migration
 {
     /**
@@ -19,6 +19,19 @@ return new class extends Migration
             $table->foreignId('nyelv_id_leiras')->references('nyelv_id')->on('nyelvs');
             $table->timestamps();
         });
+        Csapat::create([
+            'galeria_id' => 1,
+            'projekt_id'=>  1,
+            'nyelv_id_csapat_nev'=>34,
+            'nyelv_id_leiras'=>36
+        ]);
+
+        Csapat::create([
+            'galeria_id' => 2,
+            'projekt_id'=>  2,
+            'nyelv_id_csapat_nev'=>35,
+            'nyelv_id_leiras'=>37
+        ]);
     }
 
     /**
