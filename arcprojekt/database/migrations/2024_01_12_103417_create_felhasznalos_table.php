@@ -31,6 +31,7 @@ return new class extends Migration
             'jelszo' => 'admin',
             'email' => 'admin@admin.com',
         ]);
+        
     }
 
     /**

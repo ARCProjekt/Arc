@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Reszprojekt;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,22 @@ return new class extends Migration
             $table->foreignId('nyelv_id_leir')->references('nyelv_id')->on('nyelvs');
             $table->timestamps();
         });
+
+        Reszprojekt::create([
+            'k_id' => 1,
+            'galeria_id' => 1,
+            'nyelv_id_elnevezes' => 1,
+            'nyelv_id_leir' => 28,
+        ]);
+
+        
+        Reszprojekt::create([
+            'k_id' => 2,
+            'galeria_id' => 2,
+            'nyelv_id_elnevezes' => 2,
+            'nyelv_id_leir' => 29,
+        ]);
+
     }
 
     /**

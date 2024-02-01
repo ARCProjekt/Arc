@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Galeria_kep;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,19 @@ return new class extends Migration
             $table->boolean('kiemelt_kep');
             $table->timestamps();
         });
+
+        Galeria_kep::create([
+            'galeria_id' => 1,
+            'kep_azon' => 1,
+            'kiemelt_kep' => false
+        ]);
+
+        Galeria_kep::create([
+            'galeria_id' => 2,
+            'kep_azon' => 2,
+            'kiemelt_kep' => false
+        ]);
+
     }
 
     /**

@@ -150,21 +150,21 @@ return new class extends Migration
             'hol' => 'Alkotó név',
         ]);
 
-        
+
         Nyelv::create([
             'angol' => "Maja Hubrics",
             'magyar' => "Hobrics Maja",
             'hol' => 'Alkotó név',
         ]);
 
-        
+
         Nyelv::create([
             'angol' => "Kata Vona",
             'magyar' => "Vona Kata",
             'hol' => 'Alkotó név',
         ]);
 
-        
+
         Nyelv::create([
             'angol' => "Zoltan Horvath",
             'magyar' => "Horváth Zoltán",
@@ -182,7 +182,7 @@ return new class extends Migration
             'magyar' => "maaagyaaaaaaaaaaaaar 222222222",
             'hol' => 'Alkotó bemutat',
         ]);
-        
+
 
         //kepek
         Nyelv::create([
@@ -197,7 +197,19 @@ return new class extends Migration
             'hol' => 'Kép leírás',
         ]);
 
+        //galeria
 
+        Nyelv::create([
+            'angol' => "elso galeria",
+            'magyar' => "elso galeria",
+            'hol' => 'Galeria',
+        ]);
+
+        Nyelv::create([
+            'angol' => "masodik g.",
+            'magyar' => "masodik g.",
+            'hol' => 'gALERIA   ',
+        ]);
     }
 
     /**
