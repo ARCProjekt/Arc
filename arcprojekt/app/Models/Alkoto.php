@@ -12,9 +12,9 @@ class Alkoto extends Model
 
     protected $fillable = [
         'szak_id',
-        'nev',
+        'nyelv_id_nev',
         'kep_azon',
-        'nyelv_id',
+        'nyelv_id_bemutat',
         'buszkesegeink'
     ];
 

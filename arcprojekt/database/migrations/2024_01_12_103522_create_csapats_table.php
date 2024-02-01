@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('cs_azon');
             $table->foreignId('galeria_id')->references('galeria_id')->on('galerias');
             $table->foreignId('projekt_id')->references('projekt_id')->on('reszprojekts');
-            $table->string('csapat_nev');
-            $table->foreignId('nyelv_id')->references('nyelv_id')->on('nyelvs');
+            $table->foreignId('nyelv_id_csapat_nev')->references('nyelv_id')->on('nyelvs');
+            $table->foreignId('nyelv_id_leiras')->references('nyelv_id')->on('nyelvs');
             $table->timestamps();
         });
     }

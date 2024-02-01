@@ -12,7 +12,7 @@ class Galeria extends Model
 
     protected $fillable = [
         'fogaleria',
-        'nyelv_id'
+        'nyelv_id_leiras'
     ];
 
 }

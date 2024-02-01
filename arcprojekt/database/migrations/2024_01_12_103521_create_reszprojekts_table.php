@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id('projekt_id');
             $table->foreignId('k_id')->references('k_id')->on('kategorias');
             $table->foreignId('galeria_id')->references('galeria_id')->on('galerias');
-            $table->string('elnev');
-            $table->string('e_elnev');      //angol elnevezes
-            $table->foreignId('nyelv_id')->references('nyelv_id')->on('nyelvs');
+            $table->foreignId('nyelv_id_elnevezes')->references('nyelv_id')->on('nyelvs');
+            $table->foreignId('nyelv_id_leir')->references('nyelv_id')->on('nyelvs');
             $table->timestamps();
         });
     }

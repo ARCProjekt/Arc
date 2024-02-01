@@ -13,7 +13,7 @@ class Kepek extends Model
 
     protected $fillable = [
         'kep',
-        'nyelv_id',
+        'nyelv_id_leiras',
         'fotos_neve'
     ];
 

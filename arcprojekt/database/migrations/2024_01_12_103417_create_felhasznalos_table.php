@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Felhasznalo;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,18 @@ return new class extends Migration
             $table->string('email');
             $table->timestamps();
         });
+
+        Felhasznalo::create([
+            'jog' => 2,
+            'jelszo' => 'aa',
+            'email' => 'csefi@gmail.com',
+        ]);
+
+        Felhasznalo::create([
+            'jog' => 1,
+            'jelszo' => 'admin',
+            'email' => 'admin@admin.com',
+        ]);
     }
 
     /**

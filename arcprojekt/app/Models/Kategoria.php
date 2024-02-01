@@ -12,8 +12,7 @@ class Kategoria extends Model
     protected  $primaryKey = 'k_id';
 
     protected $fillable = [
-        'k_nev',
-        'nyelv_id',
+        'nyelv_id_elnevezes',
     ];
 
 }

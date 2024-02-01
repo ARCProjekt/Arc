@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kepek;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +15,21 @@ return new class extends Migration
         Schema::create('kepeks', function (Blueprint $table) {
             $table->id('kep_azon');
             $table->string('kep');
-            $table->foreignId('nyelv_id')->references('nyelv_id')->on('nyelvs');
+            $table->foreignId('nyelv_id_leiras')->references('nyelv_id')->on('nyelvs');
             $table->string('fotos_neve');
             $table->timestamps();
         });
+
+        Kepek::create([
+            'kep' => 'qwqw',
+            'nyelv_id_leiras' => 30,
+            'fotos_neve' => 'R. Máté'
+        ]); 
+        Kepek::create([
+            'kep' => 'efefef',
+            'nyelv_id_leiras' => 31,
+            'fotos_neve' => 'Balázs'
+        ]);
     }
 
     /**

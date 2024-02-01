@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('galerias', function (Blueprint $table) {
             $table->id('galeria_id');
             $table->foreignId('fogaleria')->references('galeria_id')->on('galerias');
-            $table->foreignId('nyelv_id')->references('nyelv_id')->on('nyelvs');
+            $table->foreignId('nyelv_id_leiras')->references('nyelv_id')->on('nyelvs');
             $table->timestamps();
         });
     }

@@ -13,8 +13,8 @@ class Csapat extends Model
     protected $fillable = [
         'galeria_id',
         'projekt_id',
-        'csapat_nev',
-        'nyelv_id'
+        'nyelv_id_csapat_nev',
+        'nyelv_id_leiras'
     ];
 
 }

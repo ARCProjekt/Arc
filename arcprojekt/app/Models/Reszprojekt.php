@@ -14,9 +14,8 @@ class Reszprojekt extends Model
     protected $fillable = [
         'k_id',
         'galeria_id',
-        'elnevezes',
-        'e_elnevezes',
-        'nyelv_id'
+        'nyelv_id_elnevezes',
+        'nyelv_id_leir'
     ];
 
 
