@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        for ($i = 1; $i <= 21; $i++) {
+      for ($i = 1; $i <= 21; $i++) {
             Kategoria::create([
                 'nyelv_id_elnevezes' => $i,
         

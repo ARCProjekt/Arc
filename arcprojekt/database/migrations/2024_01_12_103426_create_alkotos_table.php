@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Alkoto::create([
+       Alkoto::create([
             'szak_id' => 1,
             'nyelv_id_nev' => 24,
             'kep_azon' => 1,

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Szak::create([
+      Szak::create([
             'nyelv_id_elnevezes' => 22,
         ]);
         Szak::create([

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Reszprojekt::create([
+       Reszprojekt::create([
             'k_id' => 1,
             'galeria_id' => 1,
             'nyelv_id_elnevezes' => 1,
