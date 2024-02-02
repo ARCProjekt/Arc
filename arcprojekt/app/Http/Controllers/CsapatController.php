@@ -40,43 +40,35 @@ class CsapatController extends Controller
             'magyar_leiras' => 'required',
             'angol_leiras' => 'required',
         ]);
-
+    
         // Nyelv létrehozása magyar névvel
         $nyelvMagyarNev = Nyelv::create([
             'magyar' => $request->magyar_nev,
             'angol' => $request->angol_nev,
             'hol' => 'csapat nev',
         ]);
-
+    
         // Nyelv létrehozása magyar leírással
         $nyelvMagyarLeiras = Nyelv::create([
             'magyar' => $request->magyar_leiras,
             'angol' => $request->angol_leiras,
             'hol' => 'csapat leiras',
         ]);
-
+    
         // Csapat létrehozása
         $csapat = Csapat::create([
             'galeria_id' => $request->galeria_id,
             'projekt_id' => $request->projekt_id,
-            'nyelv_id_csapat_nev' => $nyelvMagyarNev->id,
-            'nyelv_id_leiras' => $nyelvMagyarLeiras->id,
+            'nyelv_id_csapat_nev' => $nyelvMagyarNev->nyelv_id, // Megváltoztatva
+            'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id, // Megváltoztatva
         ]);
-
-        // Alkotók hozzárendelése a csapathoz
-        $csapat->alkotok()->attach($request->alkotok);
-
+    
+        // Az új csapat adatainak lekérése
+        $createdCsapat = Csapat::with(['nyelvCsapatNev', 'nyelvLeiras', 'alkotok'])->find($csapat->id);
+    
         // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
-        return view('csapatok.create', ['message' => 'Csapat sikeresen létrehozva', 'alkotok' => Alkoto::all()]);
+        return view('csapatok.create', ['message' => 'Csapat sikeresen létrehozva', 'alkotok' => Alkoto::all(), 'createdCsapat' => $createdCsapat]);
     }
-
-    public function index()
-    {
-        // Csapatok lekérdezése
-        $csapatok = Csapat::all();
-
-        // Megfelelő válasz küldése a csapatok lekérdezéséhez
-        return response()->json($csapatok);
-    }
+    
 
 }
