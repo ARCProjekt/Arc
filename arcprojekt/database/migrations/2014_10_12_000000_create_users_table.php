@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        /*User::create([
+       /*  User::create([
             'name' => 'Cséfalvay Katalain',
             'jog' => 2,
             'email' => 'csefi@gmail.com',
@@ -37,8 +37,10 @@ return new class extends Migration
             'email' => 'admin@admin.com',
             'jelszo' => 'admin',
            
-        ]);
-*/
+        ]); */
+
+
+
     }
 
     /**

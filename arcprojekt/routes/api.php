@@ -23,6 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//bejelentkezett felhasználó
+Route::middleware('auth.basic')->group(function () {
+Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
+});
+
 Route::get('/adott_csapat/{cs_azon}', [CsapatController::class, 'show']);
 Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
 

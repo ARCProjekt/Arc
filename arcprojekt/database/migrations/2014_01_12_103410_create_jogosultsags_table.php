@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('jogosultsags', function (Blueprint $table) {
             $table->id();
-            $table->char('jog');
+            $table->char('jog')->default('T');
             $table->string('elnevezes');
             $table->timestamps();
         });
