@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 class GaleriaController extends Controller
 {
     public function csapatGaleriaja($csapat_id){
-        $galery = DB::table('galeries as g')
+        $galery = DB::table('galerias as g')
         ->select('*')       
-        ->join('csapats as cs', 'galerias.galeria_id','=','cs.galeria_id')
+        ->join('csapats as cs', 'g.galeria_id','=','cs.galeria_id')
         ->where('cs_azon', '=', $csapat_id)
         ->get();
         return $galery;

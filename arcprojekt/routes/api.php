@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CsapatController;
+use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\KategoriaController;
 use App\Models\Csapat;
 use Illuminate\Http\Request;
@@ -22,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/adott_csapat/{cs_azon}', [CsapatController::class, 'show']);
-Route::get('/kategoriakLista', [KategoriaController::class, 'kategoriakLista']);
+Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
+Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGaleriaja']);
