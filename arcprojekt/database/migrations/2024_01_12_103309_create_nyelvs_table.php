@@ -236,6 +236,17 @@ return new class extends Migration
            
             'hol' => 'csapat leiras',
         ]);
+        Nyelv::create([
+            'angol' => "apple",
+            'magyar' => "alma",
+           
+            'hol' => 'csapat nev',
+        ]);
+        Nyelv::create([
+            'angol' => "gogogogog",
+            'magyar' => "egymegy",
+            'hol' => 'csapat leiras',
+        ]);
     }
 
     /**
