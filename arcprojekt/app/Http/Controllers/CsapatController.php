@@ -14,8 +14,9 @@ class CsapatController extends Controller
     }
 
     public function csapatGaleriaja($csapat_id){
-        $galery = DB::table('galeries as g')
-        ->select('*')
+        $galery = DB::table('galerias as g')
+        ->select('*')    
+        ->join('csapats as cs' ,'g.galeria_id','=','cs.galeria_id')
         ->where('cs_azon', '=', $csapat_id)
         ->get();
         return $galery;
