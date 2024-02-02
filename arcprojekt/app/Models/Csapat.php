@@ -16,10 +16,6 @@ class Csapat extends Model
         'nyelv_id_csapat_nev',
         'nyelv_id_leiras'
     ];
-    public function alkotok()
-    {
-        return $this->belongsToMany(Alkoto::class, 'csapat_alkotok', 'csapat_id', 'alkoto_id');
-    }
     public function nyelvCsapatNev()
     {
         return $this->belongsTo(Nyelv::class, 'nyelv_id_csapat_nev');
@@ -28,5 +24,10 @@ class Csapat extends Model
     public function nyelvLeiras()
     {
         return $this->belongsTo(Nyelv::class, 'nyelv_id_leiras');
+    }
+
+    public function alkotok()
+    {
+        return $this->belongsToMany(Alkoto::class);
     }
 }
