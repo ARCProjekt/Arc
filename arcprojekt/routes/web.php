@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\CsapatController;
 use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +14,13 @@ use App\Http\Controllers\AlkotoController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/alkotok', [AlkotoController::class, 'index']);
+/*alkotók listázása*/ 
+Route::get('/api/alkotok', [AlkotoController::class, 'index']);
+/*csapat készítlése */
+Route::get('/api/csapatok/create', [CsapatController::class, 'create']);
+Route::post('/api/csapatok', [CsapatController::class, 'store']);
+Route::get('/api/csapatok', [CsapatController::class, 'index']);
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -29,5 +35,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('/api/kategoriak', [KategoriaController::class, 'kategoriakLista']);
-
+Route::get('/api/adott_csapat_galeria/{cs_id}', [CsapatController::class, 'show']);
 require __DIR__.'/auth.php';
