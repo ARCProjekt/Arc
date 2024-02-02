@@ -12,11 +12,4 @@ class CsapatController extends Controller
         return Csapat::find($id);
     }
 
-    public function csapatGaleriaja($csapat_id){
-        $galery = DB::table('galeries as g')
-        ->select('*')
-        ->where('cs_azon', '=', $csapat_id)
-        ->get();
-        return $galery;
-    }
 }
