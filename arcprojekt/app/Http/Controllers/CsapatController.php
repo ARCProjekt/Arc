@@ -71,5 +71,5 @@ class CsapatController extends Controller
         return view('csapatok.create', ['message' => 'Csapat sikeresen létrehozva', 'alkotok' => Alkoto::all(), 'createdCsapat' => $createdCsapat]);
     }
     
-
+    
 }

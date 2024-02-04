@@ -22,4 +22,12 @@ class AlkotoController extends Controller
         ->where('buszkesegeink', '=', false )
         ->update(['buszkeseg' => 1]); 
     }
-}
+    //adott alkoto
+     public function adottAlkoto($alkoto)
+    {
+        $alkoto = DB::table('alkotots')
+        ->where('a_azon', '=', $alkoto);
+        return $alkoto;
+    }
+    //alkoto letrehozasa
+} 

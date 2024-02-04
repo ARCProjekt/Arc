@@ -33,6 +33,7 @@ Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
 
 Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGaleriaja']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
+Route::get('/adottAlkoto/{alkoto}', [AlkotoController::class, 'show']);
 Route::get('/adott_csapat_galeria/{cs_id}', [CsapatController::class, 'show']);
 Route::get('/csapatok/create', [CsapatController::class, 'create']);
 Route::post('/csapatok', [CsapatController::class, 'store']);
