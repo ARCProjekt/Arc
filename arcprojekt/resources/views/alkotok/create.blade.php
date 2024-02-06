@@ -21,8 +21,6 @@
         <input type="text" name="szak_id" required>
         <br>
 
-
-
         <label for="magyar_nev">Magyar Név:</label>
         <input type="text" name="magyar_nev" required>
         <br>

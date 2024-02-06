@@ -62,14 +62,14 @@ class AlkotoController extends Controller
         $nyelvMagyarNev = Nyelv::create([
             'magyar' => $request->magyar_nev,
             'angol' => $request->angol_nev,
-            'hol' => 'csapat nev',
+            'hol' => 'alkoto nev',
         ]);
     
         // Nyelv létrehozása magyar leírással
         $nyelvMagyarBemutat = Nyelv::create([
             'magyar' => $request->magyar_leiras,
             'angol' => $request->angol_leiras,
-            'hol' => 'csapat leiras',
+            'hol' => 'alkoto bemutat',
         ]);
 
         //letrehozas
