@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth.basic')->group(function () {
 
 Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
-Route::post('/alkotok/create', [AlkotoController::class, 'create']);
+Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
 
    
 

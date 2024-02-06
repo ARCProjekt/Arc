@@ -46,7 +46,7 @@ class AlkotoController extends Controller
         $kepek = Kepek::all();
 
         // Űrlap nézetének megjelenítése és az képek átadása
-        return view('alkotok.create', compact('kepek'));
+        return view('alkotok.alkot', compact('kepek'));
     }
      public function store(Request $request){
         
