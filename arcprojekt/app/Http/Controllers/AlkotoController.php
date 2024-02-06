@@ -86,7 +86,7 @@ class AlkotoController extends Controller
         $createdalkoto = Alkoto::with(['nyelvAlkotoNev', 'nyelvBemutat', 'szak_id'])->find($alkoto->id);
     
         // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
-        return view('alkotok.create', ['message' => 'Alkoto sikeresen létrehozva', 'kepek' => Kepek::all(), 'createdAlkoto' => $createdalkoto]);
+        return view('alkotok.create', ['message' => 'Alkoto sikeresen létrehozva', 'createdAlkoto' => $createdalkoto]);
     }
        
         

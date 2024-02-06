@@ -2,14 +2,16 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Új Alkotó Hozzáadása</title>
 </head>
+
 <body>
     <h1>Új Alkotó Hozzáadása</h1>
 
     @if (isset($message))
-        <p>{{ $message }}</p>
+    <p>{{ $message }}</p>
     @endif
 
     <form method="POST" action="/api/alkotok">
@@ -19,7 +21,7 @@
         <input type="text" name="szak_id" required>
         <br>
 
-       
+
 
         <label for="magyar_nev">Magyar Név:</label>
         <input type="text" name="magyar_nev" required>
@@ -40,7 +42,7 @@
         <label for="alkotok">Válassz Képet:</label>
         <select name="kepek[]" multiple>
             @foreach($kepek as $kep)
-                <option value="{{ $kep->kep_azon }}">{{ $kep->kep }}</option>
+            <option value="{{ $kep->kep_azon }}">{{ $kep->kep }}</option>
             @endforeach
         </select>
         <br>
@@ -48,4 +50,5 @@
         <button type="submit">Mentés</button>
     </form>
 </body>
+
 </html>
