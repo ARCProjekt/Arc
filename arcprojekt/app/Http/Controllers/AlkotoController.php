@@ -20,7 +20,7 @@ class AlkotoController extends Controller
         DB::table('alkotos')
         ->where('a_azon', '=', $alkoto)
         ->where('buszkesegeink', '=', false )
-        ->update(['buszkeseg' => 1]); 
+        ->update(['buszkesegeink' => 1]); 
     }
     //adott alkoto
     /*  public function adottAlkoto($alkoto)

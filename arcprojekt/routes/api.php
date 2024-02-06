@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //bejelentkezett felhasználó
 Route::middleware('auth.basic')->group(function () {
-Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
+    Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
 });
 
 Route::get('/adott_csapat/{cs_azon}', [CsapatController::class, 'show']);
