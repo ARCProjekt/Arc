@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //bejelentkezett felhasználó
 Route::middleware('auth.basic')->group(function () {
 Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
+Route::get('/alkotok/create', [AlkotoController::class, 'create']);
 });
 
 Route::get('/adott_csapat/{cs_azon}', [CsapatController::class, 'show']);
@@ -33,9 +34,11 @@ Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
 
 Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGaleriaja']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
-/* Route::get('/adottAlkoto/{alkoto}', [AlkotoController::class, 'show']);
- */
+Route::get('/adott_alkoto/{alkoto_id}', [AlkotoController::class, 'adottAlkoto']);
+
 Route::get('/adott_csapat_galeria/{cs_id}', [CsapatController::class, 'show']);
 Route::get('/csapatok/create', [CsapatController::class, 'create']);
 Route::post('/csapatok', [CsapatController::class, 'store']);
 Route::get('/csapatok', [CsapatController::class, 'index']);
+Route::get('/buszkeseg_kiir', [AlkotoController::class, 'buszkesegKiir']);
+

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('nyelv_id_nev')->references('nyelv_id')->on('nyelvs');
             $table->foreignId('kep_azon')->references('kep_azon')->on('kepeks');
             $table->foreignId('nyelv_id_bemutat')->references('nyelv_id')->on('nyelvs');
-            $table->boolean('buszkesegeink');
+            $table->boolean('buszkesegeink')->default(0);
             $table->timestamps();
         });
 

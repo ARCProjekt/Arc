@@ -21,6 +21,13 @@ Route::get('/api/csapatok/create', [CsapatController::class, 'create']);
 Route::post('/api/csapatok', [CsapatController::class, 'store']);
 Route::get('/api/csapatok', [CsapatController::class, 'index']);
 
+
+
+
+//alkoto letrehozasa
+Route::get('/api/alkotok/create', [AlkotoController::class, 'create']);
+Route::post('/api/alkotok', [AlkotoController::class, 'store']);
+Route::get('/api/alkotok', [AlkotoController::class, 'index']);
 Route::get('/', function () {
     return view('welcome');
 });
