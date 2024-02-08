@@ -24,6 +24,11 @@ class User extends Authenticatable
         'jog'
     ];
 
+    public function jogosultsag()
+    {
+        return $this->belongsTo(Jogosultsag::class, 'jog');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -4,6 +4,8 @@ use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlkotoController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +23,9 @@ Route::get('/api/csapatok/alkot', [CsapatController::class, 'create']);
 Route::post('/api/csapatok', [CsapatController::class, 'store']);
 Route::get('/api/csapatok', [CsapatController::class, 'index']);
 
+Route::middleware(['admin'])->group(function () {
+    Route::post('/api/userLetrehoz', [UserController::class, 'store']);
+});
 
 
 
