@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./LayOut";
 //import Fooldal from "./pages/Fooldal";
 import Alkoto from "./pages/Alkoto";
@@ -10,7 +10,7 @@ import Projekt from "./pages/Projekt";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* <Route index element={<Fooldal />} /> */}
@@ -21,7 +21,7 @@ function App() {
           <Route path="projekt" element={<Projekt />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
