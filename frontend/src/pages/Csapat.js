@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { kepek } from "../KepLista";
 import KepGaleria from "./Galeria";
 import { useState } from "react";
-//import "../css/Kozos.css";
+import "../css/Kozos.css";
 import GaleriaKep from "./GaleriaKep";
 export default function Csapat() {
   const [nagyKepLathato, setNagyKepLathato] = useState(false);
