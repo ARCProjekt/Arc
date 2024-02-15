@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from './NyelvSegedlet';
-import '../css/Kozos.css';
+//import '../css/Kozos.css';
 
 const NyelvValtas = () => {
   const { selectedLanguage, handleLanguageChange } = useLanguage();

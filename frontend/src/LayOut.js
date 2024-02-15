@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, Outlet } from "react-router-dom";
 import NyelvValtas from "./pages/NyelvValtas";
 import { LanguageProvider } from "./pages/NyelvSegedlet";
-import "./css/Kozos.css";
+//import "./css/Kozos.css";
 
 const LayOut = () => {
   return (

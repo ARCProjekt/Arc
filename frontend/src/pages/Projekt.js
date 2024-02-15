@@ -1,6 +1,6 @@
 import { Carousel } from "react-bootstrap";
 import { kepek } from "../KepLista";
-import "../css/Kozos.css";
+//import "../css/Kozos.css";
 export default function Projekt() {
   return (
     <div className="summary-section">
