@@ -16,7 +16,9 @@ class AlkotoController extends Controller
         $alkotok = Alkoto::all();
         return response()->json($alkotok);
     }
-
+    public function show($id){
+        return Alkoto::find($id);
+    }
     public function buszkeseg($alkoto){
         $user = Auth::user();
         DB::table('alkotos')
@@ -40,7 +42,7 @@ class AlkotoController extends Controller
         return response()->json($buszkeseg);
     } 
     //uj alkoto
-    public function create()
+    public function alkot()
     {
         // Képek lekérdezése
         $kepek = Kepek::all();
@@ -48,16 +50,16 @@ class AlkotoController extends Controller
         // Űrlap nézetének megjelenítése és az képek átadása
         return view('alkotok.alkot', compact('kepek'));
     }
-     public function store(Request $request){
-        
+    public function store(Request $request){
         $request->validate([
             'szak_id' => 'required',
-            'kep_azon' => 'required',
+            'kep_azon' => 'required|numeric',
             'magyar_nev' => 'required',
             'angol_nev' => 'required',
             'magyar_bemutat' => 'required',
             'angol_bemutat' => 'required',
         ]);
+    
         // Nyelv létrehozása magyar névvel
         $nyelvMagyarNev = Nyelv::create([
             'magyar' => $request->magyar_nev,
@@ -71,24 +73,19 @@ class AlkotoController extends Controller
             'angol' => $request->angol_leiras,
             'hol' => 'alkoto bemutat',
         ]);
-
-        //letrehozas
-        $alkoto = Alkoto ::create([
-        'szak_id' => $request->szak_id,
-        'nyelv_id_nev' => $nyelvMagyarNev->nyelv_id,
-        'kep_azon' => $request->kep_azon,
-        'nyelv_id_bemutat' => $nyelvMagyarBemutat->nyelv_id,
-        'buszkesegeink'=>false,
-        
-
+    
+        // Alkoto létrehozása képpel együtt
+        $alkoto = Alkoto::create([
+            'szak_id' => $request->szak_id,
+            'nyelv_id_nev' => $nyelvMagyarNev->nyelv_id,
+            'nyelv_id_bemutat' => $nyelvMagyarBemutat->nyelv_id,
+            'buszkesegeink' => 0,
+            'kep_azon' => $request->kep_azon,
         ]);
-        // Az új csapat adatainak lekérése
-        $createdalkoto = Alkoto::with(['nyelvAlkotoNev', 'nyelvBemutat', 'szak_id'])->find($alkoto->id);
+    
+        // Az új alkotó adatainak lekérése
+        $createdAlkoto = Alkoto::with(['szak_id', 'nyelvAlkotoNev', 'kep_azon', 'nyelvBemutat'])->find($alkoto->id);
     
         // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
-        return view('alkotok.create', ['message' => 'Alkoto sikeresen létrehozva', 'createdAlkoto' => $createdalkoto]);
-    }
-       
-        
-    
-} 
+        return redirect()->route('alkotok.alkot')->with('success', 'Alkotó sikeresen létrehozva');    }
+}    

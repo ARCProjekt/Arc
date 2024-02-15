@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth.basic')->group(function () {
 
 Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
-Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
+Route::post('/alkotok/alkot', [AlkotoController::class, 'alkot']);
 
    
 
@@ -39,6 +39,7 @@ Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
 Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGaleriaja']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
 Route::get('/adott_alkoto/{alkoto_id}', [AlkotoController::class, 'adottAlkoto']);
+Route::get('/alkotok', [AlkotoController::class, 'store']);
 
 Route::get('/adott_csapat_galeria/{cs_id}', [CsapatController::class, 'show']);
 Route::get('/csapatok/create', [CsapatController::class, 'create']);

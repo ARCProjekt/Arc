@@ -17,7 +17,7 @@ use App\Http\Controllers\AlkotoController;
 /*alkotók listázása*/ 
 Route::get('/api/alkotok', [AlkotoController::class, 'index']);
 /*csapat készítlése */
-Route::get('/api/csapatok/alkot', [CsapatController::class, 'create']);
+Route::post('/api/csapatok/alkot', [CsapatController::class, 'alkot']);
 Route::post('/api/csapatok', [CsapatController::class, 'store']);
 Route::get('/api/csapatok', [CsapatController::class, 'index']);
 
