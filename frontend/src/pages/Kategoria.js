@@ -1,7 +1,7 @@
 import { Nav } from "react-bootstrap";
 import { kategoriak } from "../KatLista";
 import { Link } from "react-router-dom";
-import "../css/Kozos.css";
+//import "../css/Kozos.css";
 import { useLanguage } from "./NyelvSegedlet";
 
 export default function Kategoria() {
