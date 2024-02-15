@@ -50,14 +50,15 @@ class AlkotoController extends Controller
         // Űrlap nézetének megjelenítése és az képek átadása
         return view('alkotok.alkot', compact('kepek'));
     }
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
             'szak_id' => 'required',
-            'kep_azon' => 'required|numeric',
             'magyar_nev' => 'required',
             'angol_nev' => 'required',
             'magyar_bemutat' => 'required',
             'angol_bemutat' => 'required',
+            'kep_azon' => 'required|numeric',
         ]);
     
         // Nyelv létrehozása magyar névvel
@@ -69,8 +70,8 @@ class AlkotoController extends Controller
     
         // Nyelv létrehozása magyar leírással
         $nyelvMagyarBemutat = Nyelv::create([
-            'magyar' => $request->magyar_leiras,
-            'angol' => $request->angol_leiras,
+            'magyar' => $request->magyar_bemutat,
+            'angol' => $request->angol_bemutat,
             'hol' => 'alkoto bemutat',
         ]);
     
@@ -87,5 +88,7 @@ class AlkotoController extends Controller
         $createdAlkoto = Alkoto::with(['szak_id', 'nyelvAlkotoNev', 'kep_azon', 'nyelvBemutat'])->find($alkoto->id);
     
         // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
-        return redirect()->route('alkotok.alkot')->with('success', 'Alkotó sikeresen létrehozva');    }
+        return redirect()->route('alkotok.alkot')->with('success', 'Alkotó sikeresen létrehozva');
+    }
+
 }    
