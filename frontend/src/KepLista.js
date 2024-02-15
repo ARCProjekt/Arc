@@ -13,7 +13,7 @@ export const  kepek = [
     {nev : "valami", src : "./galeriakepek/valami.jpg",leiras:"valami"},
     {nev : "Gepek", src : "./galeriakepek/havas.jpg",leiras:"havas út"},
     {nev : "sziget", src : "./galeriakepek/sziget.jpg",leiras:"sziget"},
-    {nev : "valami", src : "./galeriakepek/valami.jpg",leiras:"valami"},
+    {nev : "valami", src : "/galeriakepek/valami.jpg",leiras:"valami"},
 
 
   ];
