@@ -13,7 +13,7 @@ export default function Projekt() {
           <Carousel style={{ width: "40%" }}>
             {kepek.map((kep) => (
               <Carousel.Item key={kep.id}>
-                <img className="d-block w-100" src={process.env.PUBLIC_URLkep.src} alt={kep.cim} />
+                <img className="d-block w-100" src={process.env.PUBLIC_URL+kep.src} alt={kep.cim} />
                 <Carousel.Caption>
                   <h5>{kep.leiras}</h5>
                 </Carousel.Caption>
