@@ -18,10 +18,10 @@ use App\Http\Controllers\UserController;
 */
 /*alkotók listázása*/ 
 Route::get('/api/alkotok', [AlkotoController::class, 'index']);
-/*csapat készítlése */
+/* /*csapat készítlése 
 Route::post('/api/csapatok/alkot', [CsapatController::class, 'alkot']);
 Route::post('/api/csapatok', [CsapatController::class, 'store']);
-Route::get('/api/csapatok', [CsapatController::class, 'index']);
+Route::get('/api/csapatok', [CsapatController::class, 'index']); */
 
 Route::middleware(['admin'])->group(function () {
     Route::post('/api/userLetrehoz', [UserController::class, 'store']);
@@ -32,7 +32,7 @@ Route::middleware(['admin'])->group(function () {
 //alkoto letrehozasa
 Route::get('/api/alkotok/create', [AlkotoController::class, 'create']);
 Route::post('/api/alkotok', [AlkotoController::class, 'store']);
-Route::get('/api/alkotok', [AlkotoController::class, 'index']);
+//Route::get('/api/alkotok', [AlkotoController::class, 'index']);
 Route::get('/', function () {
     return view('welcome');
 });
