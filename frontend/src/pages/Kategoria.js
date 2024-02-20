@@ -1,12 +1,23 @@
 import { Nav } from "react-bootstrap";
-import { kategoriak } from "../KatLista";
+//import { kategoriak } from "../KatLista";
 import { Link } from "react-router-dom";
 import "../css/Kozos.css";
 import { useLanguage } from "./NyelvSegedlet";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Kategoria() {
-  const { selectedLanguage } = useLanguage();
 
+  const { selectedLanguage } = useLanguage();
+  const[kategoriak,setKategoriak] = useState([]);
+  useEffect(()=>{
+    const getKategoria = async()=>{
+      const apiKategoria = await axios.get("http://localhost:8000/api/kategoriaklista");
+      console.log(apiKategoria.data.kategoriak)
+      setKategoriak(apiKategoria.data.kategoriak);
+    };
+    getKategoria()
+  },[])
   return (
     <div className="summary-section">
       <div className="cont">
@@ -21,7 +32,8 @@ export default function Kategoria() {
                 <div className="d-flex justify-content-between align-items-center kategoriak">
                   <div>
                     <h5 className="mb-0">
-                      {selectedLanguage === "hu" ? elem.magyar : elem.angol}
+                      {selectedLanguage === "hu" ? elem.magyar : elem.angol} 
+                     
                     </h5>
                     <p className="mb-0">
                       {selectedLanguage === "hu"
@@ -30,7 +42,7 @@ export default function Kategoria() {
                     </p>
                   </div>
                   <Nav.Link as={Link} to="/csapat">
-                    {selectedLanguage === "hu" ? "Tovább..." : "More..."}
+                    {selectedLanguage === "hu" ? "Tovább a csapathoz..." : "Go to the team..."}
                   </Nav.Link>
                 </div>
               </li>
