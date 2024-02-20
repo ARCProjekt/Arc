@@ -91,7 +91,7 @@ export default function Alkoto() {
             <div 
               style={{
                 textAlign: "center",
-                background: "rgb(248, 223, 188)",
+                background: " rgb(208, 245, 254)",
                 padding: "20px",
                 borderRadius: "10px",
               }}
@@ -104,7 +104,7 @@ export default function Alkoto() {
             <div
               style={{
                 textAlign: "center",
-                background: "rgb(248, 223, 188)",
+                background: " rgb(208, 245, 254)",
                 padding: "20px",
                 borderRadius: "10px",
               }}

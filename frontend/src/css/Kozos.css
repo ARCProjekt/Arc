@@ -7,7 +7,7 @@ h1 {
   text-align: center;
 }
 body {
-  background-image: url("https://media.istockphoto.com/id/1059274406/photo/abstract-blur-softness-beauty-pink-and-blush-colorful-image-gradient-with-dark-edge-effect.webp?b=1&s=170667a&w=0&k=20&c=bGwPsl8b9XL_09wIOuRmvZlYtbz1x4eucwXdlRUMMtE=");
+  background-image: url("https://4kwallpapers.com/images/walls/thumbs_3t/5661.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -29,12 +29,13 @@ body {
 
 .cont {
   padding: 15px;
-  border: 1px solid #ffc49b;
+  border: 1px solid #edf9ff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 1000px;
   min-width: 1000px;
-  background-color: #fbeae0;
+  background-color: #edf9ff;
+  ;
   flex-grow: 1;
 }
 .link:hover {
