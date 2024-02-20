@@ -14,21 +14,21 @@ return new class extends Migration
         Schema::create('csapats', function (Blueprint $table) {
             $table->id('cs_azon');
             $table->foreignId('galeria_id')->references('galeria_id')->on('galerias');
-            $table->foreignId('projekt_id')->references('projekt_id')->on('reszprojekts');
+            $table->foreignId('k_id')->references('k_id')->on('kategorias');
             $table->foreignId('nyelv_id_csapat_nev')->references('nyelv_id')->on('nyelvs');
             $table->foreignId('nyelv_id_leiras')->references('nyelv_id')->on('nyelvs');
             $table->timestamps();
         });
         Csapat::create([
             'galeria_id' => 1,
-            'projekt_id'=>  1,
+            'k_id'=>  1,
             'nyelv_id_csapat_nev'=>34,
             'nyelv_id_leiras'=>36
         ]);
 
         Csapat::create([
             'galeria_id' => 2,
-            'projekt_id'=>  2,
+            'k_id'=>  2,
             'nyelv_id_csapat_nev'=>35,
             'nyelv_id_leiras'=>37
         ]);
