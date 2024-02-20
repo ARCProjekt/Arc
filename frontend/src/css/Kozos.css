@@ -1,423 +1,402 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  h1{
-    text-align: center;
-  }
-  body {
-    background-image: url("https://media.istockphoto.com/id/1059274406/photo/abstract-blur-softness-beauty-pink-and-blush-colorful-image-gradient-with-dark-edge-effect.webp?b=1&s=170667a&w=0&k=20&c=bGwPsl8b9XL_09wIOuRmvZlYtbz1x4eucwXdlRUMMtE=");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  text-align: center;
+}
+body {
+  background-image: url("https://media.istockphoto.com/id/1059274406/photo/abstract-blur-softness-beauty-pink-and-blush-colorful-image-gradient-with-dark-edge-effect.webp?b=1&s=170667a&w=0&k=20&c=bGwPsl8b9XL_09wIOuRmvZlYtbz1x4eucwXdlRUMMtE=");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 20px;
+  flex-direction: column;
+  text-align: center;
+}
+
+.cont {
+  padding: 15px;
+  border: 1px solid #ffc49b;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  min-width: 1000px;
+  background-color: #fbeae0;
+  flex-grow: 1;
+}
+.link:hover {
+  color: red;
+}
+.lang-select {
+  position: relative;
+}
+
+.btn-select {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  border-collapse: collapse !important;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.flag-icon {
+  width: 30px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  border-radius: 5px;
+  overflow: hidden;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.dropdown-list.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-list li {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.dropdown-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-list img {
+  width: 20px;
+  height: 15px;
+  margin-right: 10px;
+}
+
+.b {
+  display: none;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+}
+
+.open .b {
+  display: block;
+}
+
+.navvv {
+  padding-left: 20px !important;
+}
+
+.footer-content {
+  padding-left: 20px !important;
+}
+
+@media only screen and (max-width: 575px) {
   .summary-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-top: 20px;
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .cont {
-    padding: 15px;
-    border: 1px solid #ffc49b;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
-    min-width: 1000px;
-    background-color: #fbeae0;
-    flex-grow: 1;
-  }
-  .link:hover{
-    color: red;
-  }
-  .lang-select {
-    position: relative;
-  }
-  
-  .btn-select {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    border-collapse: collapse !important;
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-  .flag-icon {
-    width: 30px;
-    height: 20px;
-    margin-right: 10px;
-  }
-  
-  .dropdown-list {
-  
-    list-style: none;
-    padding: 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: 100%;
-    left: 0;
-  
-    border-radius: 5px;
-    overflow: hidden;
-    transition: opacity 0.3s ease-in-out;
-    opacity: 0;
-    visibility: hidden;
-  }
-  
-  .dropdown-list.open {
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  .dropdown-list li {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .dropdown-list li:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .dropdown-list img {
-    width: 20px;
-    height: 15px;
-    margin-right: 10px;
-  }
-  
-  .b {
-    display: none;
-    width: 100%;
-    max-width: 350px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 5px;
-  }
-  
-  .open .b {
     display: block;
+    width: 100%;
+    margin: auto;
   }
-  
-  .navvv {
-    padding-left: 20px !important;
-  }
-  
-  .footer-content {
-    padding-left: 20px !important;
-  }
-  
-  @media only screen and (max-width: 575px) {
-    .summary-section {
-      display: block;
-      width: 100%;
-      margin: auto;
-    }
-  .infok{
-    
+  .infok {
     grid-template-columns: 1fr !important;
   }
-  .cont{
-   min-width: 350px !important;
+  .cont {
+    min-width: 350px !important;
   }
-  .szoveg p{
+  .szoveg p {
     font-size: 15px !important;
     text-align: left !important;
   }
-    .mask {
-      height: 300px !important;
-      display: block !important;
-      visibility: visible !important;
-  
-    }
-    
-  .alk_div{
+  .mask {
+    height: 300px !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .alk_div {
     margin-right: 0 !important;
   }
-    .meret {
-      font-size: 10px;
-    }
-    .bem{
-      width: 90% !important;
-      margin: auto !important;
-    }
-    .summary-content{
-      display: grid !important;
-      grid-template-columns: 1fr;
-      grid-template-areas: 'f' 
-      'a';
-    }
-    .felul{
-      grid-area: f;
-    }
-    .alul{
-      grid-area: a;
-      width: 250px !important;
-      margin: auto !important;
-    }
-    .gomb{
-      padding: 5px !important; 
-      
-    }
-    .szovegdoboz{
-      padding-top: 5px !important;
-    }
-    .padd{
-      padding: 0 !important;
-      
-      margin: 0 !important;
-    }
-    .adatok{
-      flex-direction: column;
-    }
-    iframe {
-      width: 250px !important;
-      height: auto !important;
-      margin-bottom: 10px !important;
-    }
-  
-    .videok {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-  
-    }
-    .csapat_szov  {
-      text-align: left !important;
-    }
-    .galeria {
-      display: grid !important;
-      grid-template-columns: 1fr  !important;
-      
-      margin:0;
-      padding: 0;
-    }
-  
-    .kep {
-      width: 100% !important;
-      margin: auto;
-    }
-    .b_kartya{
-      width: 220px !important;
-     }
-     .kategoriak{
-      display: block !important;
-     }
-     .kartya{
-      display: grid;
-      grid-template-columns: 1fr ;
-      margin: auto !important;
-      padding: 0 !important;
-     }
-     .menukep{
-      height: 300px !important;
-     
-     }
-  
-     .projekt_cim{
-      padding-top: 10px;
-     }
+  .meret {
+    font-size: 10px;
   }
-  
-  /* Táblagépek */
-  @media only screen and (min-width: 576px) and (max-width: 767px) {
-    .summary-section {
-      display: block;
-      width: 100%;
-      margin: auto;
-    }
-  
-  .cont{
-   min-width: fit-content !important;
+  .bem {
+    width: 90% !important;
+    margin: auto !important;
   }
-  
-    .mask {
-      height: 320px !important;
-      display: block !important;
-      visibility: visible !important;
-  
-    }
-  
-    .meret {
-      font-size: 15px;
-    }
-    .bem{
-      width: 90% !important;
-      margin: auto !important;
-    }
-    .summary-content{
-      display: grid !important;
-      grid-template-columns: 1fr;
-      grid-template-areas: 'f' 
-      'a';
-    }
-    .felul{
-      grid-area: f;
-    }
-    .alul{
-      grid-area: a;
-      width: 400px !important;
-      margin: auto !important;
-    }
-    .gomb{
-      padding: 5px !important; 
-      
-    }
-    .szovegdoboz{
-      padding-top: 5px !important;
-    }
-    .padd{
-      padding: 0 !important;
-      
-      margin: 0 !important;
-    }
-    .adatok{
-      flex-direction: column;
-    }
-    iframe {
-      width: 350px !important;
-      height: auto !important;
-      margin-bottom: 10px !important;
-    }
-  
-    .videok {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-  
-    }
-  
-    .galeria {
-      display: grid !important;
-      grid-template-columns: 1fr  !important;
-      
-      margin:0;
-      padding: 0;
-    }
-  
-    .kep {
-      width: 100% !important;
-      margin: auto;
-    }
-    .b_kartya{
-      width: 220px !important;
-     }
-     .kartya{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      margin: auto !important;
-      padding: 0 !important;
-     }
-  
+  .summary-content {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "f"
+      "a";
   }
-  
-  /* Kisebb képernyőjű laptopok és nagyobb telefonok */
-  @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .summary-section {
-      width: 80%;
-      margin: auto;
-    }
-  
-    .cont {
-  
-      min-width: 600px !important;
-      max-width: 600px !important;
-      margin: auto;
-  
-    }
-  
-    .mask {
-      height: 400px !important;
-  
-    }
-  
-    .meret {
-      font-size: 15px;
-    }
-  
-    iframe {
-      width: 350px !important;
-      height: auto !important;
-      margin-bottom: 10px !important;
-    }
-  
-    .videok {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-  
-    }
-  
-    .galeria {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
-  
-    }
-  
-    .kep {
-      width: 200px !important;
-      margin: auto;
-    }
-  
-    .buszke {
-      padding-right: 10px !important;
-      padding-top: 10px !important;
-      padding-left: 10px !important;
-  
-      height: 90% !important;
-  
-    }
-    
+  .felul {
+    grid-area: f;
   }
-  
-  /* Kisebb asztali számítógépek és laptopok */
-  @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .summary-section {
-      width: 80%;
-      margin: auto;
-    }
-  
-    .cont {
-  
-      min-width: 800px !important;
-      max-width: 800px !important;
-      margin: auto;
-  
-    }
-  
-    .mask {
-      height: 600px !important;
-    }
-    iframe {
-      width: 100% !important;
-      height: auto !important;
-      margin-bottom: 10px !important;
-    }
-  
-  
+  .alul {
+    grid-area: a;
+    width: 250px !important;
+    margin: auto !important;
   }
-  
-  /* Nagyobb asztali számítógépek */
-  @media only screen and (min-width: 1200px) {
-    .summary-section {
-      width: 80%;
-      margin: auto;
-    }
-  
-    .cont {
-      margin: 20px;
-  
-    }
-  
+  .gomb {
+    padding: 5px !important;
   }
+  .szovegdoboz {
+    padding-top: 5px !important;
+  }
+  .padd {
+    padding: 0 !important;
+
+    margin: 0 !important;
+  }
+  .adatok {
+    flex-direction: column;
+  }
+  iframe {
+    width: 250px !important;
+    height: auto !important;
+    margin-bottom: 10px !important;
+  }
+
+  .videok {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+  .csapat_szov {
+    text-align: left !important;
+  }
+  .galeria {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  .kep {
+    width: 100% !important;
+    margin: auto;
+  }
+  .b_kartya {
+    width: 220px !important;
+  }
+  .kategoriak {
+    display: block !important;
+  }
+  .kartya {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: auto !important;
+    padding: 0 !important;
+  }
+  .menukep {
+    height: 300px !important;
+  }
+
+  .projekt_cim {
+    padding-top: 10px;
+  }
+}
+
+/* Táblagépek */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .summary-section {
+    display: block;
+    width: 100%;
+    margin: auto;
+  }
+
+  .cont {
+    min-width: fit-content !important;
+  }
+
+  .mask {
+    height: 320px !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .meret {
+    font-size: 15px;
+  }
+  .bem {
+    width: 90% !important;
+    margin: auto !important;
+  }
+  .summary-content {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "f"
+      "a";
+  }
+  .felul {
+    grid-area: f;
+  }
+  .alul {
+    grid-area: a;
+    width: 400px !important;
+    margin: auto !important;
+  }
+  .gomb {
+    padding: 5px !important;
+  }
+  .szovegdoboz {
+    padding-top: 5px !important;
+  }
+  .padd {
+    padding: 0 !important;
+
+    margin: 0 !important;
+  }
+  .adatok {
+    flex-direction: column;
+  }
+  iframe {
+    width: 350px !important;
+    height: auto !important;
+    margin-bottom: 10px !important;
+  }
+
+  .videok {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .galeria {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  .kep {
+    width: 100% !important;
+    margin: auto;
+  }
+  .b_kartya {
+    width: 220px !important;
+  }
+  .kartya {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: auto !important;
+    padding: 0 !important;
+  }
+}
+
+/* Kisebb képernyőjű laptopok és nagyobb telefonok */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .summary-section {
+    width: 80%;
+    margin: auto;
+  }
+
+  .cont {
+    min-width: 600px !important;
+    max-width: 600px !important;
+    margin: auto;
+  }
+
+  .mask {
+    height: 400px !important;
+  }
+
+  .meret {
+    font-size: 15px;
+  }
+
+  iframe {
+    width: 350px !important;
+    height: auto !important;
+    margin-bottom: 10px !important;
+  }
+
+  .videok {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .galeria {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .kep {
+    width: 200px !important;
+    margin: auto;
+  }
+
+  .buszke {
+    padding-right: 10px !important;
+    padding-top: 10px !important;
+    padding-left: 10px !important;
+
+    height: 90% !important;
+  }
+}
+
+/* Kisebb asztali számítógépek és laptopok */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .summary-section {
+    width: 80%;
+    margin: auto;
+  }
+
+  .cont {
+    min-width: 800px !important;
+    max-width: 800px !important;
+    margin: auto;
+  }
+
+  .mask {
+    height: 600px !important;
+  }
+  iframe {
+    width: 100% !important;
+    height: auto !important;
+    margin-bottom: 10px !important;
+  }
+}
+
+/* Nagyobb asztali számítógépek */
+@media only screen and (min-width: 1200px) {
+  .summary-section {
+    width: 80%;
+    margin: auto;
+  }
+
+  .cont {
+    margin: 20px;
+  }
+}
