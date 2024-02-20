@@ -27,22 +27,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //bejelentkezett felhasználó
 Route::middleware('auth.basic')->group(function () {
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
-    Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
+    
+    
 });
-
+Route::get('/alkotok/alkot', [AlkotoController::class, 'alkot']);
 Route::get('/adott_csapat/{cs_azon}', [CsapatController::class, 'show']);
 Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
 
 Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGaleriaja']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
 Route::get('/adott_alkoto/{alkoto_id}', [AlkotoController::class, 'adottAlkoto']);
-Route::get('/alkotok', [AlkotoController::class, 'store']);
+Route::post('/alkotok', [AlkotoController::class, 'store']);
 
 Route::get('/adott_csapat_galeria/{cs_id}', [CsapatController::class, 'show']);
 Route::get('/csapatok/create', [CsapatController::class, 'create']);
 Route::post('/csapatok', [CsapatController::class, 'store']);
 
-Route::post('/api/userLetrehoz', [UserController::class, 'store']);
+Route::get('/userletrehoz', [UserController::class, 'create']);
+Route::post('/api/userLetrehoz', [UserController::class, 'store'])->name('user.store');
+
+/*javaslatok:*/ 
 
 
 Route::get('/csapatok', [CsapatController::class, 'index']);

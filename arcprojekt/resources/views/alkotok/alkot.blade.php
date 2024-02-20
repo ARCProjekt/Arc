@@ -38,7 +38,7 @@
         <br>
 
         <label for="alkotok">Válassz Képet:</label>
-        <select name="kepek[]" multiple>
+        <select name="kep_azon">
             @foreach($kepek as $kep)
             <option value="{{ $kep->kep_azon }}">{{ $kep->kep }}</option>
             @endforeach
