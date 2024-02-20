@@ -29,7 +29,7 @@ Route::middleware('auth.basic')->group(function () {
 Route::middleware(['admin'])->group(function () {
     Route::post('/userLetrehoz', [UserController::class, 'store']);
 });
-
+ 
 
 Route::get('/alkotok', [AlkotoController::class, 'index']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);
