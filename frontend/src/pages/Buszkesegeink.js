@@ -2,12 +2,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { alkotok } from "../Alkotok";
 import React from "react";
 import "../css/Kozos.css";
-
+import {  Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 export default function Buszkesegeink() {
   return (
     <div className="summary-section">
       <div className="cont">
-        <div className="cim"><h1>Iskolánk Büszkeségei</h1></div>
+        <div className="cim">
+          <h1>Iskolánk Büszkeségei</h1>
+        </div>
         <div className="row row-cols-1 row-cols-md-2 g-3 kartya">
           {alkotok.map((elem, index) => (
             <div key={index} className="col ">
@@ -15,7 +18,7 @@ export default function Buszkesegeink() {
                 <div className="row g-0">
                   <div className="col-md-4">
                     <img
-                      src={process.env.PUBLIC_URL+elem.src}
+                      src={process.env.PUBLIC_URL + elem.src}
                       alt=""
                       className="img-fluid rounded-start buszke"
                     />
@@ -26,9 +29,14 @@ export default function Buszkesegeink() {
                       <p className="card-text">{"Szak: " + elem.szak}</p>
                     </div>
                     <div className="mt-auto text-center p-3">
-                      <a href="/alkoto" className="btn btn-primary">
+                      <Nav.Link
+                        className="link"
+                        as={Link}
+                        to="/alkoto"
+                        
+                      >
                         Megtekintés
-                      </a>
+                      </Nav.Link>
                     </div>
                   </div>
                 </div>
