@@ -19,8 +19,8 @@
         <input type="text" name="galeria_id" required>
         <br>
 
-        <label for="projekt_id">Projekt ID:</label>
-        <input type="text" name="projekt_id" required>
+        <label for="k_id">Kategória ID:</label>
+        <input type="text" name="k_id" required>
         <br>
 
         <label for="magyar_nev">Magyar Név:</label>

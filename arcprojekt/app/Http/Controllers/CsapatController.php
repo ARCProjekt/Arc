@@ -34,7 +34,7 @@ class CsapatController extends Controller
     {
         $request->validate([
             'galeria_id' => 'required',
-            'projekt_id' => 'required',
+            'k_id' => 'required',
             'alkotok' => 'required|array',
             'magyar_nev' => 'required',
             'angol_nev' => 'required',
@@ -59,7 +59,7 @@ class CsapatController extends Controller
         // Csapat létrehozása
         $csapat = Csapat::create([
             'galeria_id' => $request->galeria_id,
-            'projekt_id' => $request->projekt_id,
+            'k_id' => $request->k_id,
             'nyelv_id_csapat_nev' => $nyelvMagyarNev->nyelv_id, // Megváltoztatva
             'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id, // Megváltoztatva
         ]);
