@@ -38,6 +38,14 @@ return new class extends Migration
             'buszkesegeink' => true
         ]);
 
+        Alkoto::create([
+            'szak_id' => 2,
+            'nyelv_id_nev' => 26,
+            'kep_azon' => 2,
+            'nyelv_id_bemutat' => 29,
+            'buszkesegeink' => true
+        ]);
+
     }
 
     /**

@@ -16,31 +16,57 @@ class AlkotoController extends Controller
         $alkotok = Alkoto::all();
         return response()->json($alkotok);
     }
-    public function show($id){
+    public function show($id)
+    {
         return Alkoto::find($id);
     }
-    public function buszkeseg($alkoto){
+    public function buszkeseg($alkoto)
+    {
         $user = Auth::user();
         DB::table('alkotos')
-        ->where('a_azon', '=', $alkoto)
-        ->where('buszkesegeink', '=', false )
-        ->update(['buszkesegeink' => 1]); 
+            ->where('a_azon', '=', $alkoto)
+            ->where('buszkesegeink', '=', false)
+            ->update(['buszkesegeink' => 1]);
     }
     //adott alkoto
-      public function adottAlkoto($alkoto_id)
+    public function adottAlkoto($alkoto_id)
     {
         $alkoto = DB::table('alkotos')
-        ->where('a_azon', '=', $alkoto_id)
-        ->get();
+            ->where('a_azon', '=', $alkoto_id)
+            ->get();
         return $alkoto;
-    }  
+    }
     //buszkeseg listazasa
-     public function buszkesegKiir()
+    public function buszkesegKiir()
     {
-        $buszkeseg =  Alkoto::all()
-        ->where('buszkesegeink', '=', true );
-        return response()->json($buszkeseg);
-    } 
+        $buszkesegeink = DB::select('
+            SELECT nyelvs.magyar as alkoto_nev, nyelvs_bemutat.magyar as bemutato_nev, kepeks.kep, szak_elnev.magyar as szak
+            from alkotos
+            inner join nyelvs
+            on alkotos.nyelv_id_nev = nyelvs.nyelv_id
+            INNER JOIN nyelvs AS nyelvs_bemutat 
+            ON alkotos.nyelv_id_bemutat = nyelvs_bemutat.nyelv_id
+            inner join kepeks
+            on alkotos.kep_azon = kepeks.kep_azon
+            inner join szaks
+            on alkotos.szak_id = szaks.szak_id
+            inner join nyelvs as szak_elnev
+            on szaks.nyelv_id_elnevezes = szak_elnev.nyelv_id
+            where buszkesegeink = 1
+        ');
+        return response()->json(['buszkesegeink' => $buszkesegeink]);
+    }
+    /* 
+    
+            INNER JOIN nyelvs AS nyelvs_bemutat 
+            ON alkotos.nyelv_id_bemutat = nyelvs_bemutat.nyelv_id
+            inner join kepeks
+            on alkotos.kep_azon = kepeks.kep_azon
+            inner join szaks
+            on alkotos.szak_id = szaks.szak_id
+            inner join nyelvs as szak_elnev
+            on szaks.nyelv_id_elnevezes = szak_elnev.nyelv_id */
+
     //uj alkoto
     public function alkot()
     {
@@ -60,21 +86,21 @@ class AlkotoController extends Controller
             'angol_bemutat' => 'required',
             'kep_azon' => 'required|numeric',
         ]);
-    
+
         // Nyelv létrehozása magyar névvel
         $nyelvMagyarNev = Nyelv::create([
             'magyar' => $request->magyar_nev,
             'angol' => $request->angol_nev,
             'hol' => 'alkoto nev',
         ]);
-    
+
         // Nyelv létrehozása magyar leírással
         $nyelvMagyarBemutat = Nyelv::create([
             'magyar' => $request->magyar_bemutat,
             'angol' => $request->angol_bemutat,
             'hol' => 'alkoto bemutat',
         ]);
-    
+
         // Alkoto létrehozása képpel együtt
         $alkoto = Alkoto::create([
             'szak_id' => $request->szak_id,
@@ -83,12 +109,11 @@ class AlkotoController extends Controller
             'buszkesegeink' => 0,
             'kep_azon' => $request->kep_azon,
         ]);
-    
+
         // Az új alkotó adatainak lekérése
         $createdAlkoto = Alkoto::with(['szak_id', 'nyelvAlkotoNev', 'kep_azon', 'nyelvBemutat'])->find($alkoto->id);
-    
+
         // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
         return redirect()->route('alkotok.alkot')->with('success', 'Alkotó sikeresen létrehozva');
     }
-
-}    
+}

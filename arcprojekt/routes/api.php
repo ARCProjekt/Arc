@@ -21,18 +21,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/api/alkotok', [AlkotoController::class, 'index']);
-/*csapat készítlése */
-/* /*csapat készítlése 
-Route::post('/api/csapatok/alkot', [CsapatController::class, 'alkot']);
-Route::post('/api/csapatok', [CsapatController::class, 'store']);
-Route::get('/api/csapatok', [CsapatController::class, 'index']);
-Route::get('/api/csapatok', [CsapatController::class, 'index']); */
+Route::middleware('auth.basic')->group(function () {
+    Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
+    Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
+});
 
 Route::middleware(['admin'])->group(function () {
     Route::post('/userLetrehoz', [UserController::class, 'store']);
 });
+
+
+Route::get('/alkotok', [AlkotoController::class, 'index']);
+Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);
 //alkoto letrehozasa
 Route::get('/alkotok/create', [AlkotoController::class, 'create']);
 Route::post('/alkotok', [AlkotoController::class, 'store']);
@@ -43,3 +43,9 @@ Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGa
 Route::get('/', function () {
     return view('welcome');
 });
+/*csapat készítlése */
+/* /*csapat készítlése 
+Route::post('/api/csapatok/alkot', [CsapatController::class, 'alkot']);
+Route::post('/api/csapatok', [CsapatController::class, 'store']);
+Route::get('/api/csapatok', [CsapatController::class, 'index']);
+Route::get('/api/csapatok', [CsapatController::class, 'index']); */

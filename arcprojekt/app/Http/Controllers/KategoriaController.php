@@ -10,20 +10,14 @@ class KategoriaController extends Controller
 {
     public function kategoriakLista()
     {
-      /*  $kategoriak = DB::table('kategoriak as k')
-            ->select('ny.magyar as nev')
-            ->join('nyelvs as ny', 'k.nyelv_id_elnevezes', '=', 'ny.nyelv_id')
-            ->get();
-        return $kategoriak;*/
-
-    $kategoriak = DB::select(
-        '
+        $kategoriak = DB::select(
+            '
         SELECT *
         from kategorias 
         inner join nyelvs
         on kategorias.nyelv_id_elnevezes = nyelvs.nyelv_id
         '
-    );
-    return response()->json(['kategoriak' => $kategoriak]);
+        );
+        return response()->json(['kategoriak' => $kategoriak]);
     }
 }
