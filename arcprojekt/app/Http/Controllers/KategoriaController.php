@@ -18,7 +18,7 @@ class KategoriaController extends Controller
 
     $kategoriak = DB::select(
         '
-        SELECT nyelvs.magyar
+        SELECT *
         from kategorias 
         inner join nyelvs
         on kategorias.nyelv_id_elnevezes = nyelvs.nyelv_id
