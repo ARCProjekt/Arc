@@ -11,7 +11,7 @@ const LayOut = () => {
     <div>
       <LanguageProvider>
         <header className="szin p-3 ">
-          <h1>Art Of Survival</h1>
+          <h1 >Art Of Survival</h1>
         </header>
         <Navbar bg="dark" variant="dark" expand="sm" className="p-2 navvv">
           <Container fluid>
