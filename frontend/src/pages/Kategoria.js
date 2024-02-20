@@ -1,15 +1,15 @@
 import { Nav } from "react-bootstrap";
-import { kategoriak } from "../KatLista";
+//import { kategoriak } from "../KatLista";
 import { Link } from "react-router-dom";
 import "../css/Kozos.css";
 import { useLanguage } from "./NyelvSegedlet";
-/* import axios from "axios";
-import { useEffect, useState } from "react"; */
+import axios from "axios";
+import { useEffect, useState } from "react"; 
 
 export default function Kategoria() {
 
   const { selectedLanguage } = useLanguage();
- /*  const[kategoriak,setKategoriak] = useState([]);
+   const[kategoriak,setKategoriak] = useState([]);
   useEffect(()=>{
     const getKategoria = async()=>{
       const apiKategoria = await axios.get("http://localhost:8000/api/kategoriaklista");
@@ -17,7 +17,7 @@ export default function Kategoria() {
       setKategoriak(apiKategoria.data.kategoriak);
     };
     getKategoria()
-  },[]) */
+  },[]) 
   return (
     <div className="summary-section">
       <div className="cont">
