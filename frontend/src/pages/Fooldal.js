@@ -1,11 +1,17 @@
 // Fooldal.js
 import "../css/Fooldal.css";
-
 import "../css/Kozos.css";
 import React from 'react';
 import BgImageWithNavbar from '../BgImageWithNavbar';
-
+import  { useEffect } from "react";
+import useAuthContext from "../contexts/AuthContext";
 const Fooldal = () => {
+  const { user, getUser } = useAuthContext();
+    useEffect(() => {
+        if (!user) {
+            getUser();
+        }
+    });
   return (
     <div>
       <BgImageWithNavbar />
@@ -18,6 +24,7 @@ const Fooldal = () => {
               <div className="summary-content">
                 <div className="summary-text">
                   <div className="bem">
+                  <p>Bejelentkezett felhasználó: {user?.name}</p>
                     <h1>Bemutatkozás</h1>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis cupiditate atque ex itaque consequuntur molestias! Ipsam nulla veritatis, laudantium nostrum itaque non sunt accusantium rem sapiente aliquam doloribus. Eum, ducimus?
                       Eius officia aut illum iusto sequi sunt nam exercitationem modi asperiores porro odit aliquid accusamus voluptas rem doloremque ab perferendis iure labore laborum, corporis dignissimos tenetur, laudantium ipsa! Dolorum, quasi.

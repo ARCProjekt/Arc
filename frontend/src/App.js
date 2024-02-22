@@ -14,20 +14,17 @@ function App() {
   return (
     <HashRouter>
       <AuthProvider>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Fooldal />} />
-          <Route path="alkoto" element={<Alkoto />} />
-          <Route path="csapat" element={<Csapat />} />
-          <Route path="kategoria" element={<Kategoria />} />
-          <Route path="buszkesegeink" element={<Buszkesegeink />} />
-          <Route path="projekt" element={<Projekt />} />
-          
-            {/* Más komponensek itt */}
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Fooldal />} />
+            <Route path="alkoto" element={<Alkoto />} />
+            <Route path="csapat" element={<Csapat />} />
+            <Route path="kategoria" element={<Kategoria />} />
+            <Route path="buszkesegeink" element={<Buszkesegeink />} />
+            <Route path="projekt" element={<Projekt />} />
             <Route path="bejelentkezes" element={<Bejelentkezes />} />
-          
-        </Route>
-      </Routes>
+          </Route>
+        </Routes>
       </AuthProvider>
     </HashRouter>
   );

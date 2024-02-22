@@ -40,7 +40,7 @@ export default function Bejelentkezes() {
             await axios.post("/login", adat );
             console.log("siker")
             //sikeres bejelentkezés esetén elmegyünk  a kezdőlapra
-            navigate("/CsapatModosit");
+            navigate("/");
         } catch (error) {
             console.log(error);
         }
