@@ -7,6 +7,7 @@ import Csapat from "./pages/Csapat";
 import Kategoria from "./pages/Kategoria";
 import Buszkesegeink from "./pages/Buszkesegeink";
 import Projekt from "./pages/Projekt";
+import Bejelentkezes from "./pages/Bejelentkezes";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="kategoria" element={<Kategoria />} />
           <Route path="buszkesegeink" element={<Buszkesegeink />} />
           <Route path="projekt" element={<Projekt />} />
+          <Route path="bejelentkezes" element={<Bejelentkezes />} />
         </Route>
       </Routes>
     </HashRouter>

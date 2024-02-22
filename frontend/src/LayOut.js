@@ -36,6 +36,9 @@ const LayOut = () => {
                 <Nav.Link as={Link} to="/projekt">
                   Projekt
                 </Nav.Link>
+                <Nav.Link as={Link} to="/bejelentkezes">
+                  Bejelentkezés
+                </Nav.Link>
               </Nav>
               <Nav style={{ marginLeft: "auto" }}>
                 <NyelvValtas />
