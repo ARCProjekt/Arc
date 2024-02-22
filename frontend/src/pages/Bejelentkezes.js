@@ -1,24 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import  useAuthContext  from "../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../api/axios";
 
 export default function Bejelentkezes() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({
+        name: "hiba",
+        email: "hiba",
+        password: "hiba",
+        password_confirmation: "hiba",
+    });
 
-    const { loginReg, errors } = useAuthContext();
+    //const csrf = () => axios.get("/sanctum/csrf-cookie");
+    let token = "";
+    const csrf = () =>
+        axios.get("/token").then((response) => {
+            console.log(response);
+            token = response.data;
+        });
+    /* console.log(csrf); */
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        //lekérjük a csrf tokent
+        await csrf();
         //bejelentkezés
         //Összegyűjtjük egyetlen objektumban az űrlap adatokat
         const adat = {
             email: email,
             password: password,
+            _token: token,
         };
 
-        loginReg(adat, "/login");
+        // Megrpóbáljuk elküldeni a /login végpontra az adatot
+        // hiba esetén kiiratjuk a hibaüzenetet
+        try {
+            await axios.post("/login", adat );
+            console.log("siker")
+            //sikeres bejelentkezés esetén elmegyünk  a kezdőlapra
+            navigate("/CsapatModosit");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -77,12 +102,7 @@ export default function Bejelentkezes() {
                         Login
                     </button>
 
-                    <p>
-                        Még nincs felhaszálóneve?
-                        <Link className="nav-link text-info" to="/regisztracio">
-                            Regisztráció
-                        </Link>
-                    </p>
+                   
                 </div>
             </form>
         </div>

@@ -41,9 +41,21 @@ export const AuthProvider = ({ children }) => {
             console.log("siker");
             //sikeres bejelentkezés esetén elmegyünk  a kezdőlapra
             navigate("/");
-        } catch (error) {
-            console.log(error);
-        }
+        }  catch (error) {
+            if (error.response) {
+              // A szerver választ küldött, de hibás volt
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // A kérés elküldésében hiba történt
+              console.log(error.request);
+            } else {
+              // Egyéb hiba történt
+              console.log('Error', error.message);
+            }
+            console.log(error.config);
+          }
     };
 
     return (

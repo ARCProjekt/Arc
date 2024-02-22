@@ -8,10 +8,12 @@ import Kategoria from "./pages/Kategoria";
 import Buszkesegeink from "./pages/Buszkesegeink";
 import Projekt from "./pages/Projekt";
 import Bejelentkezes from "./pages/Bejelentkezes";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
     <HashRouter>
+      <AuthProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Fooldal />} />
@@ -20,9 +22,13 @@ function App() {
           <Route path="kategoria" element={<Kategoria />} />
           <Route path="buszkesegeink" element={<Buszkesegeink />} />
           <Route path="projekt" element={<Projekt />} />
-          <Route path="bejelentkezes" element={<Bejelentkezes />} />
+          
+            {/* Más komponensek itt */}
+            <Route path="bejelentkezes" element={<Bejelentkezes />} />
+          
         </Route>
       </Routes>
+      </AuthProvider>
     </HashRouter>
   );
 }
