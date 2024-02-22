@@ -1,17 +1,20 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, Outlet } from "react-router-dom";
 import NyelvValtas from "./pages/NyelvValtas";
 import { LanguageProvider } from "./pages/NyelvSegedlet";
 import "./css/Kozos.css";
+import useAuthContext from "./contexts/AuthContext";
+
 
 const LayOut = () => {
+  const { user } = useAuthContext();
+
   return (
     <div>
       <LanguageProvider>
-        <header className="szin p-3 ">
-          <h1 >Art Of Survival</h1>
+        <header className="szin p-3">
+          <h1>Art Of Survival</h1>
         </header>
         <Navbar bg="dark" variant="dark" expand="sm" className="p-2 navvv">
           <Container fluid>
@@ -40,7 +43,7 @@ const LayOut = () => {
                   Bejelentkezés
                 </Nav.Link>
                 <Nav.Link as={Link} to="/AlkotoModosit">
-                  Alkotó Módosítása
+                  {user && user.jog === 1 && "Alkotó Módosítása"}
                 </Nav.Link>
               </Nav>
               <Nav style={{ marginLeft: "auto" }}>
