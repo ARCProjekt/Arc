@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 
 export default function Bejelentkezes() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
   const [errors, setErrors] = useState({
     name: "hiba",
     email: "hiba",
@@ -13,49 +14,51 @@ export default function Bejelentkezes() {
     password_confirmation: "hiba",
   });
 
-  //const csrf = () => axios.get("/sanctum/csrf-cookie");
   let token = "";
+
   const csrf = () =>
     axios.get("/token").then((response) => {
       console.log(response);
       token = response.data;
     });
-  /* console.log(csrf); */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //lekérjük a csrf tokent
     await csrf();
-    //bejelentkezés
-    //Összegyűjtjük egyetlen objektumban az űrlap adatokat
+
     const adat = {
       email: email,
       password: password,
       _token: token,
     };
 
-    // Megrpóbáljuk elküldeni a /login végpontra az adatot
-    // hiba esetén kiiratjuk a hibaüzenetet
     try {
       await axios.post("/login", adat);
-      console.log("siker");
-      //sikeres bejelentkezés esetén elmegyünk  a kezdőlapra
+      console.log("Sikeres bejelentkezés");
       navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
-  /* const handleLogout = async (e) => {
+
+  const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/logout");
-      console.log("siker");
-      //sikeres bejelentkezés esetén elmegyünk  a kezdőlapra
-      navigate("/");
+      // Frissítjük a CSRF tokent
+      await csrf();
+  
+      // Kijelentkezési kérés elküldése a frissített tokennel
+      await axios.post("/logout", { _token: token });
+  
+      // Frissítjük az authentikációs állapotot
+      setUser(null);
+  
+      console.log("Sikeres kijelentkezés");
+      navigate("/bejelentkezes");
     } catch (error) {
       console.log(error);
     }
-  }; */
+  };
 
   return (
     <div className="m-auto" style={{ maxWidth: "400px" }}>
@@ -67,9 +70,7 @@ export default function Bejelentkezes() {
           </label>
           <input
             type="email"
-            // value beállítása a state értékére
             value={email}
-            // state értékének módosítása ha változik a beviteli mező tartalma
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -108,18 +109,15 @@ export default function Bejelentkezes() {
 
         <div className=" text-center">
           <button type="submit" className="btn btn-primary w-100">
-            Login
+            Bejelentkezés
           </button>
         </div>
-        {/* <div className=" text-center">
-          <button
-            type="submit"
-            onClick={handleLogout}
-            className="btn btn-primary w-100"
-          >
-            Logout
+
+        <div className=" text-center mt-3">
+          <button onClick={handleLogout} className="btn btn-danger">
+            Kijelentkezés
           </button>
-        </div> */}
+        </div>
       </form>
     </div>
   );

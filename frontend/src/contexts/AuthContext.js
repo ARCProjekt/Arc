@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
             console.log(response);
             token = response.data;
         });
-    console.log(csrf);
+ //   console.log(csrf);
     //bejelentkezett felhasználó adatainak lekérdezése
     const getUser = async () => {
         const { data } = await axios.get("/api/user");
