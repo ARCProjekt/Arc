@@ -45,7 +45,7 @@ export default function Bejelentkezes() {
       console.log(error);
     }
   };
-  const handleLogout = async (e) => {
+  /* const handleLogout = async (e) => {
     e.preventDefault();
     try {
       await axios.post("/logout");
@@ -55,7 +55,7 @@ export default function Bejelentkezes() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; */
 
   return (
     <div className="m-auto" style={{ maxWidth: "400px" }}>
@@ -111,7 +111,7 @@ export default function Bejelentkezes() {
             Login
           </button>
         </div>
-        <div className=" text-center">
+        {/* <div className=" text-center">
           <button
             type="submit"
             onClick={handleLogout}
@@ -119,7 +119,7 @@ export default function Bejelentkezes() {
           >
             Logout
           </button>
-        </div>
+        </div> */}
       </form>
     </div>
   );
