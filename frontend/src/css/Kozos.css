@@ -17,6 +17,29 @@ body {
   display: flex;
   flex-direction: column;
 }
+thead,td{
+ border: 1px gainsboro solid;
+ border-radius: 5px;
+}
+.tablazat table{
+  text-align: center;
+  margin: auto;
+  min-width: 800px ;
+  margin-bottom: 15px;
+}
+.feltoltes td label{
+  text-align: center ;
+}
+
+.feltoltes td{
+  border: 0;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.feltoltes button{
+ margin: auto;
+}
 
 .summary-section {
   display: flex;
