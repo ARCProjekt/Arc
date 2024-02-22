@@ -57,9 +57,18 @@ export const AuthProvider = ({ children }) => {
             console.log(error.config);
           }
     };
+    const logout = async () => {
+        try {
+          await axios.post("/logout"); // Az endpoint, ahol a kijelentkezési logika található
+          setUser(null);
+          navigate("/login"); // Átirányítás a kijelentkezés után
+        } catch (error) {
+          console.error("Hiba történt a kijelentkezés során:", error);
+        }
+      };
 
     return (
-        <AuthContext.Provider value={{ loginReg, errors, getUser, user }}>
+        <AuthContext.Provider value={{ loginReg, errors, getUser, user,logout}}>
             {children}
         </AuthContext.Provider>
     );
