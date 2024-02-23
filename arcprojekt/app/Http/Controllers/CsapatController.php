@@ -10,7 +10,21 @@ use Illuminate\Support\Facades\DB;
 class CsapatController extends Controller
 {
     public function show($id){
-        return Csapat::find($id);
+        $csapat = DB::select('
+        SELECT nyelvs.magyar as magyar_kategoria, csapat_nev.magyar, csapat_bemutat.magyar
+        from csapats
+        inner join nyelvs as csapat_nev
+        on csapats.nyelv_id_csapat_nev = csapat_nev.nyelv_id
+        inner join nyelvs as csapat_bemutat
+        on csapats.nyelv_id_leiras = csapat_bemutat.nyelv_id
+        inner join kategorias
+        on csapats.k_id = kategorias.k_id
+        inner join nyelvs
+        on kategorias.nyelv_id_elnevezes = nyelvs.nyelv_id
+        
+
+        ');
+        return response()->json(['adott_csapatt' => $csapat]);
     }
 
     public function csapatGaleriaja($csapat_id){

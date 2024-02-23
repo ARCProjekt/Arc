@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlkotoController;
+use App\Http\Controllers\CsapatController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\UserController;
@@ -30,7 +31,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/userLetrehoz', [UserController::class, 'store']);
 });
  
-
+Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);
 //alkoto letrehozasa
@@ -39,6 +40,7 @@ Route::post('/alkotok', [AlkotoController::class, 'store']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
 Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
 Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGaleriaja']);
+Route::get('/adott_csapat/{csapat_id}', [CsapatController::class, 'show']);
 //Route::get('/api/alkotok', [AlkotoController::class, 'index']);
 Route::get('/', function () {
     return view('welcome');

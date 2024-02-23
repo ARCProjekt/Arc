@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Jogosultsag;
 class UserController extends Controller
 {
+    public function users(){
+        return User::all();
+    }
+
     public function create()
     {
        /*  $user = Auth::user();
