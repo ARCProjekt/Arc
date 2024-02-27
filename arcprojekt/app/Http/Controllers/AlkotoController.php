@@ -16,10 +16,29 @@ class AlkotoController extends Controller
         $alkotok = Alkoto::all();
         return response()->json($alkotok);
     }
-    public function show($id)
+     public function alkotok(){
+        return Alkoto::all();
+    } 
+
+     public function alkotokKiir()
     {
-        return Alkoto::find($id);
-    }
+        $alkotok = DB::select('
+        SELECT a_azon,nyelvs.magyar as alkoto_nev, nyelvs_bemutat.magyar as bemutato_nev, kepeks.kep, szak_elnev.magyar as szak
+            from alkotos
+            inner join nyelvs
+            on alkotos.nyelv_id_nev = nyelvs.nyelv_id
+            INNER JOIN nyelvs AS nyelvs_bemutat
+            ON alkotos.nyelv_id_bemutat = nyelvs_bemutat.nyelv_id
+            inner join kepeks
+            on alkotos.kep_azon = kepeks.kep_azon
+            inner join szaks
+            on alkotos.szak_id = szaks.szak_id
+            inner join nyelvs as szak_elnev
+            on szaks.nyelv_id_elnevezes = szak_elnev.nyelv_id
+
+        ');
+        return response()->json(['alkotok' => $alkotok]);
+    } 
     public function buszkeseg($alkoto)
     {
         $user = Auth::user();
@@ -56,16 +75,6 @@ class AlkotoController extends Controller
         ');
         return response()->json(['buszkesegeink' => $buszkesegeink]);
     }
-    /* 
-    
-            INNER JOIN nyelvs AS nyelvs_bemutat 
-            ON alkotos.nyelv_id_bemutat = nyelvs_bemutat.nyelv_id
-            inner join kepeks
-            on alkotos.kep_azon = kepeks.kep_azon
-            inner join szaks
-            on alkotos.szak_id = szaks.szak_id
-            inner join nyelvs as szak_elnev
-            on szaks.nyelv_id_elnevezes = szak_elnev.nyelv_id */
 
     //uj alkoto
     public function alkot()

@@ -4,6 +4,7 @@ use App\Http\Controllers\AlkotoController;
 use App\Http\Controllers\CsapatController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\KategoriaController;
+use App\Http\Controllers\KepekController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 Route::middleware('auth.basic')->group(function () {
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
-    Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
+    Route::post('/alkotoLetrehoz', [AlkotoController::class, 'store']);
 });
 
 Route::middleware(['admin'])->group(function () {
@@ -32,8 +33,9 @@ Route::middleware(['admin'])->group(function () {
 });
  
 Route::get('/users', [UserController::class, 'users']);
-Route::get('/alkotok', [AlkotoController::class, 'index']);
+Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);
+Route::get('/kepek', [KepekController::class, 'kepek']);
 //alkoto letrehozasa
 Route::get('/alkotok/create', [AlkotoController::class, 'create']);
 Route::post('/alkotok', [AlkotoController::class, 'store']);
