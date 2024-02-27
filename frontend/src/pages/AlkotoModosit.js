@@ -14,6 +14,12 @@ export default function AlkotoModosit() {
     };
     getAlkotok();
   }, []);
+  let token = "";
+  const csrf = () =>
+    axios.get("http://localhost:8000/token").then((response) => {
+      console.log(response);
+      token = response.data;
+    });
   const handleEditClick = (id) => {
     setEditableRow(id === editableRow ? null : id);
   };
@@ -31,22 +37,24 @@ export default function AlkotoModosit() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post
-         "http://localhost:8000/api/alkotoLetrehoz",
-        formData 
-        ();
-      console.log(response.data);
-      // Frissítheted az állapotot, vagy bármilyen más tevékenységet végezhetsz itt
-    } catch (error) {
-      console.error("Error creating user:", error);
-    }
 
+    await csrf();
+    formData._token = token;
+    console.log(formData);
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/alkotoletrehoz",
+        formData
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error creating alkoto:", error);
+    }
   };
   const [formData, setFormData] = useState({
     szak_id: "",
     magyar_nev: "",
-    angol_nev:"",
+    angol_nev: "",
     magyar_leiras: "",
     angol_leiras: "",
     kep: "",
@@ -131,8 +139,15 @@ export default function AlkotoModosit() {
             </td>
 
             <td>
-              <label htmlFor="alkotok">Tölts Képet:</label>
-              <input type="image" name="kepek" />
+              <label htmlFor="kep">Tölts Képet:</label>
+              <textarea
+                style={{ maxWidth: "300px" }}
+                type="number"
+                id="kep"
+                name="kep"
+                value={formData.kep}
+                onChange={handleChange}
+              ></textarea>
               <br />
             </td>
 

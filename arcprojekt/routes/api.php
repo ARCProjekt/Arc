@@ -36,6 +36,7 @@ Route::middleware('auth.basic')->group(function () {
 });
 
 Route::post('/userletrehoz', [UserController::class, 'store']);
+Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
 
  
 Route::get('/users', [UserController::class, 'users']);
