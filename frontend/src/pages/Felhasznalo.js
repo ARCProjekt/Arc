@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Felhasznalo = () => {
@@ -10,6 +10,13 @@ const Felhasznalo = () => {
     password: "",
     jog: "",
   });
+
+  useEffect(() => {
+    // Felhasználók lekérése és állapot frissítése
+    axios.get("http://localhost:8000/api/users").then((response) => {
+      setFelhasznalok(response.data);
+    });
+  }, []); // A második paraméter nélkül az useEffect csak egyszer fut le, amikor a komponens mountolódik
 
   let token = "";
   const csrf = () =>
@@ -30,6 +37,9 @@ const Felhasznalo = () => {
         formData
       );
       console.log(response.data);
+
+      // Frissítsd a felhasználók állapotot a frissen létrehozott felhasználóval
+      setFelhasznalok((prevFelhasznalok) => [...prevFelhasznalok, response.data.user]);
     } catch (error) {
       console.error("Error creating user:", error);
     }
