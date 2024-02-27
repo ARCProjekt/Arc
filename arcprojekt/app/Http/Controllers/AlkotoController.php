@@ -77,14 +77,7 @@ class AlkotoController extends Controller
     }
 
     //uj alkoto
-    public function alkot()
-    {
-        // Képek lekérdezése
-        $kepek = Kepek::all();
-
-        // Űrlap nézetének megjelenítése és az képek átadása
-        return view('alkotok.alkot', compact('kepek'));
-    }
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -119,10 +112,7 @@ class AlkotoController extends Controller
             'kep_azon' => $request->kep_azon,
         ]);
 
-        // Az új alkotó adatainak lekérése
-        $createdAlkoto = Alkoto::with(['szak_id', 'nyelvAlkotoNev', 'kep_azon', 'nyelvBemutat'])->find($alkoto->id);
-
-        // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
-        return redirect()->route('alkotok.alkot')->with('success', 'Alkotó sikeresen létrehozva');
+        $alkoto->save();
+        
     }
 }

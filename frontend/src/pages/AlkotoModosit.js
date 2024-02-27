@@ -14,6 +14,12 @@ export default function AlkotoModosit() {
     };
     getAlkotok();
   }, []);
+  let token = "";
+  const csrf = () =>
+    axios.get("http://localhost:8000/token").then((response) => {
+      console.log(response);
+      token = response.data;
+    });
   const handleEditClick = (id) => {
     setEditableRow(id === editableRow ? null : id);
   };
@@ -31,26 +37,38 @@ export default function AlkotoModosit() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post
-         "http://localhost:8000/api/alkotoLetrehoz",
-        formData 
-        ();
-      console.log(response.data);
-      // Frissítheted az állapotot, vagy bármilyen más tevékenységet végezhetsz itt
-    } catch (error) {
-      console.error("Error creating user:", error);
-    }
 
+    await csrf();
+    formData._token = token;
+    console.log(formData);
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/alkotoletrehoz",
+        formData
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error creating alkoto:", error);
+    }
   };
   const [formData, setFormData] = useState({
     szak_id: "",
     magyar_nev: "",
-    angol_nev:"",
+    angol_nev: "",
     magyar_leiras: "",
     angol_leiras: "",
     kep: "",
+
+    
   });
+  /* const [errors, setErrors] = useState({
+    szak_id: "",
+    magyar_nev: "",
+    angol_nev: "",
+    magyar_leiras: "",
+    angol_leiras: "",
+    kep: "",
+  }) */
   return (
     <div className="summary-section">
       <div className="cont">
@@ -69,13 +87,18 @@ export default function AlkotoModosit() {
               <label htmlFor="galeria_id">Szak ID:</label>
               <input
                 style={{ maxWidth: "300px" }}
-                type="text"
+                type="number"
                 id="szak_id"
                 name="szak_id"
                 value={formData.szak_id}
                 onChange={handleChange}
               />
               <br />
+              {/* <div>
+                {errors.szak_id && (
+                  <span className="text-danger">{errors.szak_id[0]}</span>
+                )}
+              </div> */}
             </td>
 
             <td>
@@ -89,6 +112,11 @@ export default function AlkotoModosit() {
                 onChange={handleChange}
               />
               <br />
+              {/* <div>
+                {errors.magyar_nev && (
+                  <span className="text-danger">{errors.magyar_nev[0]}</span>
+                )}
+              </div> */}
             </td>
 
             <td>
@@ -102,6 +130,11 @@ export default function AlkotoModosit() {
                 onChange={handleChange}
               />
               <br />
+              {/* <div>
+                {errors.angol_nev && (
+                  <span className="text-danger">{errors.angol_nev[0]}</span>
+                )}
+              </div> */}
             </td>
 
             <td>
@@ -115,6 +148,11 @@ export default function AlkotoModosit() {
                 onChange={handleChange}
               ></textarea>
               <br />
+              {/* <div>
+                {errors.magyar_leiras && (
+                  <span className="text-danger">{errors.magyar_leiras[0]}</span>
+                )}
+              </div> */}
             </td>
 
             <td>
@@ -128,18 +166,36 @@ export default function AlkotoModosit() {
                 onChange={handleChange}
               ></textarea>
               <br />
+             {/*  <div>
+                {errors.angol_leiras && (
+                  <span className="text-danger">{errors.angol_leiras[0]}</span>
+                )}
+              </div> */}
             </td>
 
             <td>
-              <label htmlFor="alkotok">Tölts Képet:</label>
-              <input type="image" name="kepek" />
+              <label htmlFor="kep">Tölts Képet:</label>
+              <input
+                style={{ maxWidth: "300px" }}
+                type="number"
+                id="kep"
+                name="kep"
+                value={formData.kep}
+                onChange={handleChange}
+              />
               <br />
+              {/* <div>
+                {errors.kep && (
+                  <span className="text-danger">{errors.kep[0]}</span>
+                )}
+              </div> */}
             </td>
 
             <button
               type="submit"
               className=" text-center mt-3"
               style={{ maxWidth: "200px" }}
+              onClick={handleInputChange}
             >
               Mentés
             </button>

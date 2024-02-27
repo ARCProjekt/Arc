@@ -32,9 +32,8 @@ Route::middleware('auth.basic')->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
     });
-   
+    Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
 });
-
 
 
 
