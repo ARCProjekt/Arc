@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import useAuthContext from "../contexts/AuthContext";
 
 const Felhasznalo = () => {
+  const { user, getUser } = useAuthContext();
   const [editableRow, setEditableRow] = useState(null);
   const [felhasznalok, setFelhasznalok] = useState([]);
   const [formData, setFormData] = useState({
@@ -12,36 +14,48 @@ const Felhasznalo = () => {
   });
 
   useEffect(() => {
-    // Felhasználók lekérése és állapot frissítése
-    axios.get("http://localhost:8000/api/users").then((response) => {
-      setFelhasznalok(response.data);
-    });
-  }, []); // A második paraméter nélkül az useEffect csak egyszer fut le, amikor a komponens mountolódik
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/users");
+        setFelhasznalok(response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
 
-  let token = "";
-  const csrf = () =>
-    axios.get("http://localhost:8000/token").then((response) => {
-      console.log(response);
-      token = response.data;
-    });
+      try {
+        const token = await csrf();
+        console.log(token);
+      } catch (error) {
+        console.error("Error fetching CSRF token:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const csrf = async () => {
+    const response = await axios.get("http://localhost:8000/token");
+    console.log(response);
+    return response.data;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await csrf();
-    formData._token = token;
-    console.log(formData);
     try {
+      const token = await csrf();
       const response = await axios.post(
         "http://localhost:8000/api/userletrehoz",
-        formData
+        { ...formData, _token: token }
       );
-      console.log(response.data);
 
-      // Frissítsd a felhasználók állapotot a frissen létrehozott felhasználóval
-      setFelhasznalok((prevFelhasznalok) => [...prevFelhasznalok, response.data.user]);
+      setFelhasznalok((prevFelhasznalok) => [
+        ...prevFelhasznalok,
+        response.data.user,
+      ]);
     } catch (error) {
       console.error("Error creating user:", error);
+      console.log(error.response);
     }
   };
 
@@ -51,14 +65,18 @@ const Felhasznalo = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleInputChange = (e, id, key) => {
     const newData = felhasznalok.map((item) =>
       item.id === id ? { ...item, [key]: e.target.value } : item
     );
     setFelhasznalok(newData);
   };
+
   const handleEditClick = (id) => {
-    setEditableRow(id === editableRow ? null : id);
+    setEditableRow((prevEditableRow) =>
+      prevEditableRow === id ? null : id
+    );
   };
 
   return (
@@ -158,7 +176,7 @@ const Felhasznalo = () => {
                     <td>
                       {editableRow === item.id ? (
                         <input
-                          type="number"
+                          type="text"
                           value={item.jog}
                           onChange={(e) => handleInputChange(e, item.id, "jog")}
                         />

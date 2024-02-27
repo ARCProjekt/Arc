@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use Illuminate\Support\Facades\Auth;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -10,11 +11,12 @@ class Admin
 {
     public function handle(Request $request, Closure $next)
     {
-        // Ellenőrizd, hogy a bejelentkezett felhasználónak admin jogosultsága van-e
-        if (Auth::check() && Auth::user()->jog === 'A') {
-            return $next($request);
+        if (Auth::check()) {
+            // Ellenőrizd, hogy a felhasználónak admin jogosultsága van-e
+            if (Auth::user()->jog === 'A') {
+                return $next($request);
+            }
         }
-
         // Ha nincs admin jogosultság, dobunk egy hibát
         abort(403, 'Unauthorized action.');
     }
