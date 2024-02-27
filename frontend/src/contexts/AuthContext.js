@@ -7,7 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [errors, setErrors] = useState({
+  const [errors] = useState({
     name: "hiba",
     email: "hiba",
     password: "hiba",
@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const loginReg = async ({ ...adat }, vegpont) => {
-    adat._token = token;
+   
     await csrf();
-
+    adat._token = token;
     try {
       await axios.post(vegpont, adat);
       console.log("Sikeres bejelentkezés");
