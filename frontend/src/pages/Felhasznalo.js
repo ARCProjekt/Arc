@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import useAuthContext from "../contexts/AuthContext";
 
 const Felhasznalo = () => {
+  const { user, getUser } = useAuthContext();
+  useEffect(() => {
+    if (!user) {
+      getUser();
+      // Felhasználók lekérése és állapot frissítése
+      /* axios.get("http://localhost:8000/api/users").then((response) => {
+        setFelhasznalok(response.data);
+      }); */
+    }
+  });
   const [editableRow, setEditableRow] = useState(null);
   const [felhasznalok, setFelhasznalok] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    jog: "",
+    jog: "tanar",
   });
 
-  useEffect(() => {
-    // Felhasználók lekérése és állapot frissítése
-    axios.get("http://localhost:8000/api/users").then((response) => {
-      setFelhasznalok(response.data);
-    });
-  }, []); // A második paraméter nélkül az useEffect csak egyszer fut le, amikor a komponens mountolódik
+  useEffect(() => {}, []); // A második paraméter nélkül az useEffect csak egyszer fut le, amikor a komponens mountolódik
 
   let token = "";
   const csrf = () =>
@@ -39,7 +45,10 @@ const Felhasznalo = () => {
       console.log(response.data);
 
       // Frissítsd a felhasználók állapotot a frissen létrehozott felhasználóval
-      setFelhasznalok((prevFelhasznalok) => [...prevFelhasznalok, response.data.user]);
+      setFelhasznalok((prevFelhasznalok) => [
+        ...prevFelhasznalok,
+        response.data.user,
+      ]);
     } catch (error) {
       console.error("Error creating user:", error);
     }

@@ -23,23 +23,17 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware('auth.basic')->group(function () {
-    Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
 
-    /* Route::post('/alkotoLetrehoz', [AlkotoController::class, 'store']);
- */
+Route::middleware('auth.basic')->group(function () {
+    Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
+    Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
+
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
     });
-    Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
 });
 
-
-
-
-
- 
 Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);

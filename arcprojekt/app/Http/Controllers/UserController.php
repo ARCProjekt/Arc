@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Jogosultsag;
+
 class UserController extends Controller
 {
     public function users()
@@ -16,6 +17,13 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        if (!$user || $user->jog !== 1) {
+            abort(403, 'Nincs jogosultsága új felhasználókat létrehozni.');
+        }
+
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -24,8 +32,8 @@ class UserController extends Controller
         ]);
 
         // Lekérjük a jogosultsági szerepköröket
-        $jogTanar = Jogosultsag::where('jog', 'T')->firstOrFail()->id;
-        $jogAdmin = Jogosultsag::where('jog', 'A')->firstOrFail()->id;
+        $jogTanar = 2;
+        $jogAdmin = 1;
 
         // Új felhasználó létrehozása
         $user = new User([
@@ -36,7 +44,5 @@ class UserController extends Controller
         ]);
 
         $user->save();
-
-      
-       
-}}
+    }
+}
