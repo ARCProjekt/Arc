@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Middleware;
-
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +14,6 @@ class Admin
         if (Auth::check() && Auth::user()->jog === 1) {
             return $next($request);
         }
-
         // Ha nincs admin jogosultság, dobunk egy hibát
         abort(403, 'Unauthorized action.');
     }

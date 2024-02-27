@@ -17,13 +17,14 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $user = Auth::user();
+        /* $user = Auth::user();
 
         if (!$user || $user->jog !== 1) {
             abort(403, 'Nincs jogosultsága új felhasználókat létrehozni.');
         }
+ */
 
-
+        $this->middleware('auth');
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -31,16 +32,25 @@ class UserController extends Controller
             'jog' => 'required|in:tanar,admin',
         ]);
 
-        // Lekérjük a jogosultsági szerepköröket
+     /*    // Lekérjük a jogosultsági szerepköröket
         $jogTanar = 2;
-        $jogAdmin = 1;
+        $jogAdmin = 1; */
+        // Lekérjük mindkét jogosultsági szerepkört
+        $jogosultsagok = Jogosultsag::whereIn('jog', ['T', 'A'])->get();
+
+        $jogTanar = $jogosultsagok->where('jog', 'T')->first();
+        $jogAdmin = $jogosultsagok->where('jog', 'A')->first();
+
+        if (!$jogTanar || !$jogAdmin) {
+            abort(500, 'Nem találhatók megfelelő jogosultsági szerepkörök az adatbázisban.');
+        }
 
         // Új felhasználó létrehozása
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'jog' => ($request->jog == 'tanar') ? $jogTanar : $jogAdmin,
+            'jog' => ($request->jog == 'tanar') ? $jogTanar->id : $jogAdmin->id,
         ]);
 
         $user->save();

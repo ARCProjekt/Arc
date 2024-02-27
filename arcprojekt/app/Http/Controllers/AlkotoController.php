@@ -23,7 +23,7 @@ class AlkotoController extends Controller
      public function alkotokKiir()
     {
         $alkotok = DB::select('
-        SELECT a_azon,nyelvs.magyar as alkoto_nev, nyelvs_bemutat.magyar as bemutato_nev, kepeks.kep, szak_elnev.magyar as szak
+        SELECT a_azon,nyelvs.magyar as alkoto_nev, nyelvs_bemutat.magyar as bemutato_nev, kepeks.kep, szak_elnev.magyar as szak,alkotos.cs_azon as csapat
             from alkotos
             inner join nyelvs
             on alkotos.nyelv_id_nev = nyelvs.nyelv_id
@@ -35,6 +35,8 @@ class AlkotoController extends Controller
             on alkotos.szak_id = szaks.szak_id
             inner join nyelvs as szak_elnev
             on szaks.nyelv_id_elnevezes = szak_elnev.nyelv_id
+            inner join csapats
+            on alkotos.cs_azon = csapats.cs_azon
 
         ');
         return response()->json(['alkotok' => $alkotok]);
@@ -87,6 +89,7 @@ class AlkotoController extends Controller
             'magyar_bemutat' => 'required',
             'angol_bemutat' => 'required',
             'kep_azon' => 'required|numeric',
+            'cs_azon' => 'required|numeric',
         ]);
 
         // Nyelv létrehozása magyar névvel
@@ -110,6 +113,7 @@ class AlkotoController extends Controller
             'nyelv_id_bemutat' => $nyelvMagyarBemutat->nyelv_id,
             'buszkesegeink' => 0,
             'kep_azon' => $request->kep_azon,
+            'cs_azon'=>$request->cs_azon,
         ]);
 
         $alkoto->save();
