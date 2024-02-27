@@ -15,7 +15,8 @@ class Alkoto extends Model
         'nyelv_id_nev',
         'kep_azon',
         'nyelv_id_bemutat',
-        'buszkesegeink'
+        'buszkesegeink',
+        'cs_azon'
     ];
 
 }

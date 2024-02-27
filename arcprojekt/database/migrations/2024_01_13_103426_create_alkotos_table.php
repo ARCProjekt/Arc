@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('kep_azon')->references('kep_azon')->on('kepeks');
             $table->foreignId('nyelv_id_bemutat')->references('nyelv_id')->on('nyelvs');
             $table->boolean('buszkesegeink')->default(0);
+            $table->foreignId('cs_azon')->references('cs_azon')->on('csapats');
             $table->timestamps();
         });
 
@@ -27,7 +28,8 @@ return new class extends Migration
             'nyelv_id_nev' => 24,
             'kep_azon' => 1,
             'nyelv_id_bemutat' => 28,
-            'buszkesegeink' => false
+            'buszkesegeink' => false,
+            'cs_azon' => 1,
         ]);
 
         Alkoto::create([
@@ -35,7 +37,8 @@ return new class extends Migration
             'nyelv_id_nev' => 25,
             'kep_azon' => 2,
             'nyelv_id_bemutat' => 29,
-            'buszkesegeink' => true
+            'buszkesegeink' => true,
+            'cs_azon' => 1,
         ]);
 
         Alkoto::create([
@@ -43,7 +46,8 @@ return new class extends Migration
             'nyelv_id_nev' => 26,
             'kep_azon' => 2,
             'nyelv_id_bemutat' => 29,
-            'buszkesegeink' => true
+            'buszkesegeink' => true,
+            'cs_azon' => 2,
         ]);
 
     }
