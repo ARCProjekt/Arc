@@ -46,7 +46,7 @@ const LayOut = () => {
                   {user && user.jog === 1 && "Alkotó Módosítása"}
                 </Nav.Link>
                 <Nav.Link as={Link} to="/Felhasznalo">
-                  {user && user.jog === 1 && "Felhasználó Módosítása"}
+                  /* {user && user.jog === 1 && "Felhasználó Módosítása"} */  fm
                 </Nav.Link>
               </Nav>
               <Nav style={{ marginLeft: "auto" }}>

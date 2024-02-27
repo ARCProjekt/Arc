@@ -25,11 +25,14 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::middleware('auth.basic')->group(function () {
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
+    Route::middleware(['admin'])->group(function () {
+        
+    });
+    
 });
 
-Route::middleware(['admin'])->group(function () {
-    Route::post('/userLetrehoz', [UserController::class, 'store']);
-});
+Route::post('/userletrehoz', [UserController::class, 'store']);
+
  
 Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);

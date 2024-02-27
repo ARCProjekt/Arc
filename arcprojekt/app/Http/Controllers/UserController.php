@@ -8,22 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Jogosultsag;
 class UserController extends Controller
 {
-    public function users(){
+    public function users()
+    {
         return User::all();
     }
 
-    public function create()
-    {
-       /*  $user = Auth::user();
-
-        if (!$user || $user->jog !== 1) {
-            abort(403, 'Nincs jogosultsága új felhasználókat létrehozni.');
-        } */
-
-       // Alkotók lekérdezése
-       $users = User::all();
-       return view('users.useruserLetrehoz', compact('users'));
-    }
 
     public function store(Request $request)
     {
@@ -31,25 +20,23 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
+            'jog' => 'required|in:tanar,admin',
         ]);
-    
+
         // Lekérjük a jogosultsági szerepköröket
-        $jogTanar = Jogosultsag::where('jog', 'T')->first();
-        $jogAdmin = Jogosultsag::where('jog', 'A')->first();
-    
-        // Felhasználó létrehozása a megfelelő jogosultsági szerepkörrel
-        $user = User::create([
+        $jogTanar = Jogosultsag::where('jog', 'T')->firstOrFail()->id;
+        $jogAdmin = Jogosultsag::where('jog', 'A')->firstOrFail()->id;
+
+        // Új felhasználó létrehozása
+        $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'jog' => ($request->jog == 'tanar') ? $jogTanar->id : $jogAdmin->id,
+            'jog' => ($request->jog == 'tanar') ? $jogTanar : $jogAdmin,
         ]);
-    
-        return view('users.useruserLetrehoz', [
-            'message' => 'Felhasználó sikeresen létrehozva',
-            'users' => User::all(),
-            'lastCreatedUser' => $user
-        ]);
-    }
-    
-}
+
+        $user->save();
+
+      
+       
+}}
