@@ -29,12 +29,12 @@ Route::middleware('auth.basic')->group(function () {
     /* Route::post('/alkotoLetrehoz', [AlkotoController::class, 'store']);
  */
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
-    
     Route::middleware(['admin'])->group(function () {
-        
+        Route::post('/userletrehoz', [UserController::class, 'store']);
     });
+   
 });
-Route::post('/userletrehoz', [UserController::class, 'store']);
+
 
 
 
