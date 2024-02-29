@@ -40,14 +40,15 @@ Route::middleware('auth.basic')->group(function () {
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
-
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
     }); 
 });
+Route::post('/csapat/store', [CsapatController::class, 'store'])->withoutMiddleware(['auth.basic']);
 
    
-    
+
+
 
 /* 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {

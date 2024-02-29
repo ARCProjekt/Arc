@@ -16,5 +16,14 @@ class Nyelv extends Model
         'angol',
         'hol'
     ];
+    public function csapatokNev()
+    {
+        return $this->hasMany(Csapat::class, 'nyelv_id_csapat_nev');
+    }
+
+    public function csapatokLeiras()
+    {
+        return $this->hasMany(Csapat::class, 'nyelv_id_leiras');
+    }
 
 }
