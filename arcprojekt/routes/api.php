@@ -5,6 +5,7 @@ use App\Http\Controllers\CsapatController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\KepekController;
+use App\Http\Controllers\SzakController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+    /* Route::post('/alkotoLetrehoz', [AlkotoController::class, 'store']);
+ *//* 
+    Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
+    Route::middleware(['admin'])->group(function () {
+        Route::post('/userletrehoz', [UserController::class, 'store']);
+        Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
+    }); */
+    
 
 Route::middleware('auth.basic')->group(function () {
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
@@ -59,6 +70,8 @@ Route::get('/alkotok', [AlkotoController::class, 'index']);
 Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
 Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGaleriaja']);
 Route::get('/adott_csapat/{csapat_id}', [CsapatController::class, 'show']);
+Route::get('/csapatok', [CsapatController::class, 'csapatokKiir']);
+Route::get('/szakok', [SzakController::class, 'szakokKiir']);
 //Route::get('/api/alkotok', [AlkotoController::class, 'index']);
 Route::get('/', function () {
     return view('welcome');
