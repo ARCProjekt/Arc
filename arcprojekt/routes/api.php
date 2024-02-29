@@ -26,28 +26,29 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 
-    /* Route::post('/alkotoLetrehoz', [AlkotoController::class, 'store']);
+/* Route::post('/alkotoLetrehoz', [AlkotoController::class, 'store']);
  *//* 
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
         Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
     }); */
-    
+
 
 Route::middleware('auth.basic')->group(function () {
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
-    Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
+
 
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
-    }); 
+        Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
+    });
 });
 
-   
-    
+
+
 
 /* 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
@@ -58,7 +59,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
  */
 
 
- 
+
 Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);

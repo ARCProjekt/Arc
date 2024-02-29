@@ -38,6 +38,7 @@ class AlkotoController extends Controller
             on szaks.nyelv_id_elnevezes = szak_elnev.nyelv_id
             inner join csapats
             on alkotos.cs_azon = csapats.cs_azon
+            order by a_azon
 
         ');
         return response()->json(['alkotok' => $alkotok]);

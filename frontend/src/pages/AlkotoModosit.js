@@ -103,7 +103,15 @@ export default function AlkotoModosit() {
           <form onSubmit={handleSubmit}>
             <td>
               <label htmlFor="szak_id">Szak ID:</label>
-              <select
+              <input
+                style={{ maxWidth: "300px" }}
+                type="number"
+                id="szak_id"
+                name="szak_id"
+                value={formData.szak_id}
+                onChange={handleChange}
+              />
+             {/*  <select
                 style={{ maxWidth: "300px" }}
                 id="szak_id"
                 name="szak_id"
@@ -114,11 +122,11 @@ export default function AlkotoModosit() {
                   Válassz egy szakot
                 </option>
                 {szakok.map((team) => (
-                  <option key={team.szak_id} value={team.szak_id}>
+                  <option key={formData.szak_id} value={formData.szak_id}>
                     {team.magyar}
                   </option>
                 ))}
-              </select>
+              </select> */}
               <br />
             </td>
 
@@ -187,7 +195,15 @@ export default function AlkotoModosit() {
             </td>
             <td>
               <label htmlFor="cs_azon">Csapat ID:</label>
-              <select
+              <input
+                style={{ maxWidth: "300px" }}
+                type="text"
+                id="cs_azon"
+                name="cs_azon"
+                value={formData.cs_azon}
+                onChange={handleChange}
+              /> 
+             {/*  <select
                 style={{ maxWidth: "300px" }}
                 id="cs_azon"
                 name="cs_azon"
@@ -196,13 +212,13 @@ export default function AlkotoModosit() {
               >
                 <option value="" disabled hidden>
                   Válassz egy csapatot
-                </option>
-                {csapatok.map((team) => (
-                  <option key={team.cs_azon} value={team.cs_azon}>
+                </option> */}
+              {/*   {csapatok.map((team) => (
+                  <option key={formData.cs_azon} value={formData.cs_azon}>
                     {team.magyar}
                   </option>
                 ))}
-              </select>
+              </select> */}
               <br />
             </td>
 
