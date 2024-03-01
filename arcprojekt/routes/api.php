@@ -43,10 +43,11 @@ Route::middleware('auth.basic')->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
     }); 
-});
-Route::post('/csapat/store', [CsapatController::class, 'store'])->withoutMiddleware(['auth.basic']);
-
    
+});
+
+Route::get('/csapat/create', [CsapatController::class, 'create']);
+Route::post('/csapat/store', [CsapatController::class, 'store']);
 
 
 
@@ -74,9 +75,9 @@ Route::get('/adott_csapat/{csapat_id}', [CsapatController::class, 'show']);
 Route::get('/csapatok', [CsapatController::class, 'csapatokKiir']);
 Route::get('/szakok', [SzakController::class, 'szakokKiir']);
 //Route::get('/api/alkotok', [AlkotoController::class, 'index']);
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
 /*csapat készítlése */
 /* /*csapat készítlése 
 Route::post('/api/csapatok/alkot', [CsapatController::class, 'alkot']);

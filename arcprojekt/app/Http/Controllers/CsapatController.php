@@ -56,48 +56,60 @@ class CsapatController extends Controller
         return $galery;
     }
 
-   
-        public function store(Request $request)
-        {
-            $request->validate([
-                'galeria_id' => 'required',
-                'k_id' => 'required',
-                'alkotok' => 'required|array',
-                'magyar_nev' => 'required',
-                'angol_nev' => 'required',
-                'magyar_leiras' => 'required',
-                'angol_leiras' => 'required',
-            ]);
-    
-            // Nyelv létrehozása magyar névvel
-            $nyelvMagyarNev = Nyelv::create([
-                'magyar' => $request->magyar_nev,
-                'angol' => $request->angol_nev,
-                'hol' => 'csapat nev',
-            ]);
-    
-            // Nyelv létrehozása magyar leírással
-            $nyelvMagyarLeiras = Nyelv::create([
-                'magyar' => $request->magyar_leiras,
-                'angol' => $request->angol_leiras,
-                'hol' => 'csapat leiras',
-            ]);
-    
-            // Csapat létrehozása
-            $csapat = Csapat::create([
-                'galeria_id' => $request->galeria_id,
-                'k_id' => $request->k_id,
-                'nyelv_id_csapat_nev' => $nyelvMagyarNev->id, // Megváltoztatva
-                'nyelv_id_leiras' => $nyelvMagyarLeiras->id, // Megváltoztatva
-            ]);
-    
-            // Az új csapat adatainak lekérése
-            $createdCsapat = Csapat::with(['nyelvCsapatNev', 'nyelvLeiras', 'alkotok'])->find($csapat->id);
-    
-            // További műveletek vagy válasz küldése a frontend-nek
-    
-            return response()->json(['message' => 'Csapat sikeresen létrehozva', 'createdCsapat' => $createdCsapat]);
+    public function create()
+{
+    return view('csapatok.create');
+}
+
+
+    // CsapatController.php
+
+public function store(Request $request)
+{
+    $request->validate([
+        'galeria_id' => 'required',
+        'k_id' => 'required',
+        'magyar_nev' => 'required',
+        'angol_nev' => 'required',
+        'magyar_leiras' => 'required',
+        'angol_leiras' => 'required',
+        'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Nyelv létrehozása magyar névvel
+    $nyelvMagyarNev = Nyelv::create([
+        'magyar' => $request->magyar_nev,
+        'angol' => $request->angol_nev,
+        'hol' => 'csapat nev',
+    ]);
+
+    // Nyelv létrehozása magyar leírással
+    $nyelvMagyarLeiras = Nyelv::create([
+        'magyar' => $request->magyar_leiras,
+        'angol' => $request->angol_leiras,
+        'hol' => 'csapat leiras',
+    ]);
+
+    // Csapat létrehozása
+    $csapat = Csapat::create([
+        'galeria_id' => $request->galeria_id,
+        'k_id' => $request->k_id,
+        'nyelv_id_csapat_nev' => $nyelvMagyarNev->id,
+        'nyelv_id_leiras' => $nyelvMagyarLeiras->id,
+    ]);
+
+    // Képek mentése
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $image) {
+            // Kép nevében csatoljuk a csapat_id-t és a galéria_id-t
+            $imageName = time() . '_cs' . $csapat->cs_azon . '_g' . $request->galeria_id . '_' . $image->getClientOriginalName();
+            $image->storeAs('frontend/public/csapatkepek', $imageName, 'public');
         }
+    }
+
+    return response()->json(['message' => 'Csapat sikeresen létrehozva', 'createdCsapat' => $csapat]);
+}
+
     }
     
     
