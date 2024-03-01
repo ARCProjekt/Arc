@@ -9,7 +9,7 @@ class SzakController extends Controller
 {
     public function szakokKiir(){
         $szakok = DB::select('
-        SELECT  szak_nev.magyar
+        SELECT  szak_nev.magyar,szak_id
         from szaks
         inner join nyelvs as szak_nev
         on szaks.nyelv_id_elnevezes = szak_nev.nyelv_id

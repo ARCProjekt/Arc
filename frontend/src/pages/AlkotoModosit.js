@@ -5,6 +5,7 @@ export default function AlkotoModosit() {
   const [alkotok, setAlkotok] = useState([]);
   const [csapatok, setCsapatok] = useState([]);
   const [szakok, setSzakok] = useState([]);
+  const [kep, setKep] = useState([]);
   const [editableRow, setEditableRow] = useState(null);
   const [formData, setFormData] = useState({
     szak_id: "",
@@ -101,17 +102,10 @@ export default function AlkotoModosit() {
         >
           <h3>Új Alkotó</h3>
           <form onSubmit={handleSubmit}>
-            <td>
+            <div className="td">
               <label htmlFor="szak_id">Szak ID:</label>
-              <input
-                style={{ maxWidth: "300px" }}
-                type="number"
-                id="szak_id"
-                name="szak_id"
-                value={formData.szak_id}
-                onChange={handleChange}
-              />
-             {/*  <select
+
+              <select
                 style={{ maxWidth: "300px" }}
                 id="szak_id"
                 name="szak_id"
@@ -122,15 +116,15 @@ export default function AlkotoModosit() {
                   Válassz egy szakot
                 </option>
                 {szakok.map((team) => (
-                  <option key={formData.szak_id} value={formData.szak_id}>
+                  <option key={team.szak_id} value={team.szak_id}>
                     {team.magyar}
                   </option>
                 ))}
-              </select> */}
+              </select>
               <br />
-            </td>
+            </div>
 
-            <td>
+            <div className="td">
               <label htmlFor="magyar_nev">Magyar Név:</label>
               <input
                 style={{ maxWidth: "300px" }}
@@ -141,9 +135,9 @@ export default function AlkotoModosit() {
                 onChange={handleChange}
               />
               <br />
-            </td>
+            </div>
 
-            <td>
+            <div className="td">
               <label htmlFor="angol_nev">Angol Név:</label>
               <input
                 style={{ maxWidth: "300px" }}
@@ -154,9 +148,9 @@ export default function AlkotoModosit() {
                 onChange={handleChange}
               />
               <br />
-            </td>
+            </div>
 
-            <td>
+            <div className="td">
               <label htmlFor="magyar_bemutat">Magyar Bemutatkozás:</label>
               <textarea
                 style={{ maxWidth: "300px" }}
@@ -167,9 +161,9 @@ export default function AlkotoModosit() {
                 onChange={handleChange}
               ></textarea>
               <br />
-            </td>
+            </div>
 
-            <td>
+            <div className="td">
               <label htmlFor="angol_bemutat">Angol Bemutatkozás:</label>
               <textarea
                 style={{ maxWidth: "300px", marginBottom: "10px" }}
@@ -179,31 +173,24 @@ export default function AlkotoModosit() {
                 value={formData.angol_bemutat}
                 onChange={handleChange}
               ></textarea>
-            </td>
+            </div>
 
-            <td>
+            <div className="td">
               <label htmlFor="kep_azon">Tölts Képet:</label>
               <input
                 style={{ maxWidth: "300px" }}
-                type="number"
+                type="file"
                 id="kep_azon"
                 name="kep_azon"
-                value={formData.kep_azon}
-                onChange={handleChange}
+                //value={formData.kep_azon}
+                onChange={(e)=>setKep(e.target.files[0])}
               />
               <br />
-            </td>
-            <td>
+            </div>
+            <div className="td">
               <label htmlFor="cs_azon">Csapat ID:</label>
-              <input
-                style={{ maxWidth: "300px" }}
-                type="text"
-                id="cs_azon"
-                name="cs_azon"
-                value={formData.cs_azon}
-                onChange={handleChange}
-              /> 
-             {/*  <select
+
+              <select
                 style={{ maxWidth: "300px" }}
                 id="cs_azon"
                 name="cs_azon"
@@ -212,15 +199,15 @@ export default function AlkotoModosit() {
               >
                 <option value="" disabled hidden>
                   Válassz egy csapatot
-                </option> */}
-              {/*   {csapatok.map((team) => (
-                  <option key={formData.cs_azon} value={formData.cs_azon}>
+                </option>
+                {csapatok.map((team) => (
+                  <option key={team.cs_azon} value={team.cs_azon}>
                     {team.magyar}
                   </option>
                 ))}
-              </select> */}
+              </select>
               <br />
-            </td>
+            </div>
 
             <button
               type="submit"
@@ -293,21 +280,21 @@ export default function AlkotoModosit() {
                     <td>
                       {editableRow === item.a_azon ? (
                         <select
-                        style={{ maxWidth: "300px" }}
-                        id="szak_id"
-                        name="szak_id"
-                        value={formData.szak_id}
-                        onChange={handleChange}
-                      >
-                        <option value="" disabled hidden>
-                          Válassz egy szakot
-                        </option>
-                        {szakok.map((team) => (
-                          <option key={team.szak_id} value={team.szak_id}>
-                            {team.magyar}
+                          style={{ maxWidth: "300px" }}
+                          id="szak_id"
+                          name="szak_id"
+                          value={formData.szak_id}
+                          onChange={handleChange}
+                        >
+                          <option value="" disabled hidden>
+                            Válassz egy szakot
                           </option>
-                        ))}
-                      </select>
+                          {szakok.map((team) => (
+                            <option key={team.szak_id} value={team.szak_id}>
+                              {team.magyar}
+                            </option>
+                          ))}
+                        </select>
                       ) : (
                         item.szak
                       )}
@@ -315,21 +302,21 @@ export default function AlkotoModosit() {
                     <td>
                       {editableRow === item.a_azon ? (
                         <select
-                        style={{ maxWidth: "300px" }}
-                        id="cs_azon"
-                        name="cs_azon"
-                        value={formData.cs_azon}
-                        onChange={handleChange}
-                      >
-                        <option value="" disabled hidden>
-                         Válassz egy csapatot
-                        </option>
-                        {csapatok.map((team) => (
-                          <option key={team.cs_azon} value={team.cs_azon}>
-                            {team.magyar}
+                          style={{ maxWidth: "300px" }}
+                          id="cs_azon"
+                          name="cs_azon"
+                          value={formData.cs_azon}
+                          onChange={handleChange}
+                        >
+                          <option value="" disabled hidden>
+                            Válassz egy csapatot
                           </option>
-                        ))}
-                      </select>
+                          {csapatok.map((team) => (
+                            <option key={team.cs_azon} value={team.cs_azon}>
+                              {team.magyar}
+                            </option>
+                          ))}
+                        </select>
                       ) : (
                         item.csapat
                       )}

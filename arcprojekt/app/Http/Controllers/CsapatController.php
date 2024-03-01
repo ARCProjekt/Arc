@@ -14,7 +14,7 @@ class CsapatController extends Controller
     }
     public function csapatokKiir(){
         $csapatok = DB::select('
-        SELECT  csapat_nev.magyar
+        SELECT  csapat_nev.magyar,cs_azon
         from csapats
         inner join nyelvs as csapat_nev
         on csapats.nyelv_id_csapat_nev = csapat_nev.nyelv_id
