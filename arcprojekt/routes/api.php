@@ -49,7 +49,8 @@ Route::middleware('auth.basic')->group(function () {
 Route::get('/csapat/create', [CsapatController::class, 'create']);
 Route::post('/csapat/store', [CsapatController::class, 'store']);
 
-
+Route::get('kepek/create', [KepekController::class, 'create'])->name('kepek.create');
+Route::post('kepek/store', [KepekController::class, 'store'])->name('kepek.store');
 
 /* 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {

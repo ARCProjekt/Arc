@@ -25,5 +25,9 @@ class Nyelv extends Model
     {
         return $this->hasMany(Csapat::class, 'nyelv_id_leiras', 'nyelv_id');
     }
+    public function kepekLeiras()
+    {
+        return $this->hasMany(Kepek::class, 'nyelv_id_leiras', 'nyelv_id');
+    }
 
 }

@@ -16,5 +16,8 @@ class Kepek extends Model
         'nyelv_id_leiras',
         'fotos_neve'
     ];
-
+    public function galeriaKepek()
+    {
+        return $this->hasMany(Galeria_kep::class, 'kep_azon', 'kep_azon');
+    }
 }
