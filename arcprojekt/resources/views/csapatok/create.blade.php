@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form action="{{ url('/csapat/store') }}" method="post" enctype="multipart/form-data">
+<form action="{{ url('/api/csapat/store') }}" method="post">
     @csrf
     <label for="galeria_id">Galeria ID:</label>
     <input type="text" name="galeria_id" required>
@@ -33,10 +33,8 @@
     <input type="text" name="angol_leiras" required>
     <br>
 
-    <label for="images">Képek:</label>
-    <input type="file" name="images[]" accept="image/*" multiple required>
-    <br>
-
+    <!-- Képekhez kapcsolódó részek eltávolítva -->
+    
     <button type="submit">Csapat létrehozása</button>
 </form>
 

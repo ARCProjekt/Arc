@@ -14,5 +14,8 @@ class Galeria extends Model
         'fogaleria',
         'nyelv_id_leiras'
     ];
-
+    public function csapatok()
+    {
+        return $this->hasMany(Csapat::class, 'galeria_id', 'galeria_id');
+    }
 }

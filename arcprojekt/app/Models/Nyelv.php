@@ -18,12 +18,12 @@ class Nyelv extends Model
     ];
     public function csapatokNev()
     {
-        return $this->hasMany(Csapat::class, 'nyelv_id_csapat_nev');
+        return $this->hasMany(Csapat::class, 'nyelv_id_csapat_nev', 'nyelv_id');
     }
 
     public function csapatokLeiras()
     {
-        return $this->hasMany(Csapat::class, 'nyelv_id_leiras');
+        return $this->hasMany(Csapat::class, 'nyelv_id_leiras', 'nyelv_id');
     }
 
 }
