@@ -3,8 +3,46 @@ import axios from "axios";
 import useAuthContext from "../contexts/AuthContext";
 
 const Felhasznalo = () => {
-  const { user, getUser } = useAuthContext();
-  useEffect(() => {
+   const { user, getUser } = useAuthContext();  
+   const [editableRow, setEditableRow] = useState(null);
+   const [felhasznalok, setFelhasznalok] = useState([]);
+   const [formData, setFormData] = useState({
+     name: "",
+     email: "",
+     password: "",
+     jog: "tanar",
+   });
+
+
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await getUser(); // Várakozz a felhasználói adatokra
+        const response = await axios.get("http://localhost:8000/api/users", {
+          withCredentials: true, // Ezzel engedélyezed a böngésző sütik és hitelesítési adatok küldését
+        });
+        setFelhasznalok(response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+  
+     /*  try {
+        const csrfToken = await csrf();
+        console.log(csrfToken);
+      } catch (error) {
+        console.error("Error fetching CSRF token:", error);
+      } */
+    };
+  
+    fetchData();
+  }, []); // Csak a getUser változására figyel
+  
+
+
+
+
+ 
+/*  useEffect(() => {
     if (!user) {
       getUser();
       // Felhasználók lekérése és állapot frissítése
@@ -12,17 +50,9 @@ const Felhasznalo = () => {
         setFelhasznalok(response.data);
       }); 
     }
-  });
-  const [editableRow, setEditableRow] = useState(null);
-  const [felhasznalok, setFelhasznalok] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    jog: "tanar",
-  });
+  }); 
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/users");
@@ -40,7 +70,7 @@ const Felhasznalo = () => {
     };
 
     fetchData();
-  }, []);
+  }, []);   */
 
   const csrf = async () => {
     const response = await axios.get("http://localhost:8000/token");
@@ -63,6 +93,7 @@ const Felhasznalo = () => {
         ...prevFelhasznalok,
         response.data.user,
       ]);
+      console.log(felhasznalok.length)
     } catch (error) {
       console.error("Error creating user:", error);
       console.log(error.response);
