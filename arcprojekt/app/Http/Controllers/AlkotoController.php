@@ -24,7 +24,7 @@ class AlkotoController extends Controller
     public function alkotokKiir()
     {
         $alkotok = DB::select('
-        SELECT a_azon,nyelvs.magyar as alkoto_nev, nyelvs_bemutat.magyar as bemutato_nev, kepeks.kep, szak_elnev.magyar as szak,alkotos.cs_azon as csapat
+        SELECT a_azon,nyelvs.magyar as alkoto_nev, nyelvs_bemutat.magyar as bemutato_nev, kepeks.kep, szak_elnev.magyar as szak,alkotos.cs_azon as csapat, csap_nev_nyelv.magyar as csapat_nev
             from alkotos
             inner join nyelvs
             on alkotos.nyelv_id_nev = nyelvs.nyelv_id
@@ -38,6 +38,10 @@ class AlkotoController extends Controller
             on szaks.nyelv_id_elnevezes = szak_elnev.nyelv_id
             inner join csapats
             on alkotos.cs_azon = csapats.cs_azon
+            inner join nyelvs as csap_nev_nyelv
+            on csapats.nyelv_id_csapat_nev = csap_nev_nyelv.nyelv_id
+            order by a_azon
+
 
         ');
         return response()->json(['alkotok' => $alkotok]);
