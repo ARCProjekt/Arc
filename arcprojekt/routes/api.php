@@ -51,7 +51,8 @@ Route::post('/csapat/store', [CsapatController::class, 'store']);
 
 Route::get('kepek/create', [KepekController::class, 'create'])->name('kepek.create');
 Route::post('kepek/store', [KepekController::class, 'store'])->name('kepek.store');
-
+Route::get('/galeria/create', [GaleriaController::class, 'create'])->name('galeria.create');
+Route::post('/galeria/store', [GaleriaController::class, 'store'])->name('galeria.store');
 /* 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     

@@ -29,7 +29,7 @@ class KepekController extends Controller
             ]);
     
             // Elérési útvonal mentése
-            $eleresi_utvonal = $request->file('kep')->storeAs('Csapatkepek', $request->file('kep')->getClientOriginalName(), 'public');
+            $eleresi_utvonal = $request->file('kep')->storeAs('public/csapatkepek', $request->file('kep')->getClientOriginalName());
     
             // Nyelv létrehozása mindkét leírással
             $nyelvMagyarLeiras = Nyelv::create([

@@ -18,4 +18,9 @@ class Galeria extends Model
     {
         return $this->hasMany(Csapat::class, 'galeria_id', 'galeria_id');
     }
+    public function galeriaKepek()
+    {
+        return $this->hasMany(Galeria_kep::class, 'galeria_id', 'galeria_id');
+    }
+    
 }
