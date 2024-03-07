@@ -125,7 +125,7 @@ export default function AlkotoModosit() {
   
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/alkotpKepek",
+        "http://localhost:8000/api/kepek/alkotoKepek",
         formKep  // Use formKep instead of formData
       );
       console.log(response.data);
