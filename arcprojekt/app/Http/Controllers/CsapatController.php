@@ -20,17 +20,17 @@ class CsapatController extends Controller
     public function csapatokKiir()
     {
         $csapatok = DB::select('
-        SELECT  csapat_nev.magyar
-        from csapats
-        inner join nyelvs as csapat_nev
-        on csapats.nyelv_id_csapat_nev = csapat_nev.nyelv_id
-        inner join nyelvs as csapat_bemutat
-        on csapats.nyelv_id_leiras = csapat_bemutat.nyelv_id
-        inner join kategorias
-        on csapats.k_id = kategorias.k_id
-        inner join nyelvs
-        on kategorias.nyelv_id_elnevezes = nyelvs.nyelv_id
-           
+        SELECT
+            nyelvs.magyar as magyar_kategoria,
+            csapats.*,
+            csapat_nev.magyar as csapat_nev_magyar,
+            csapat_bemutat.magyar as csapat_bemutat_magyar
+        FROM csapats
+        INNER JOIN nyelvs as csapat_nev ON csapats.nyelv_id_csapat_nev = csapat_nev.nyelv_id
+        INNER JOIN nyelvs as csapat_bemutat ON csapats.nyelv_id_leiras = csapat_bemutat.nyelv_id
+        INNER JOIN kategorias ON csapats.k_id = kategorias.k_id
+        INNER JOIN nyelvs ON kategorias.nyelv_id_elnevezes = nyelvs.nyelv_id
+
 
         ');
         return response()->json(['csapatok' => $csapatok]);
@@ -80,30 +80,30 @@ class CsapatController extends Controller
                 'magyar_leiras' => 'required',
                 'angol_leiras' => 'required',
             ]);
-    
+
             // Nyelv létrehozása magyar névvel
             $nyelvMagyarNev = Nyelv::create([
                 'magyar' => $request->magyar_nev,
                 'angol' => $request->angol_nev,
                 'hol' => 'csapat nev',
             ]);
-            
+
             $nyelvMagyarLeiras = Nyelv::create([
                 'magyar' => $request->magyar_leiras,
                 'angol' => $request->angol_leiras,
                 'hol' => 'csapat leiras',
             ]);
-            
+
             $csapat = Csapat::create([
                 'galeria_id' => $request->galeria_id,
                 'k_id' => $request->k_id,
                 'nyelv_id_csapat_nev' => $nyelvMagyarNev->nyelv_id,
                 'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id,
             ]);
-    
+
             // Az új csapat adatainak lekérése
             $createdCsapat = Csapat::with(['nyelvCsapatNev', 'nyelvLeiras', 'alkotok'])->find($csapat->id);
-    
+
             // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
             return view('csapatok.create', ['message' => 'Csapat sikeresen létrehozva', 'alkotok' => Alkoto::all(), 'createdCsapat' => $createdCsapat]);
         } catch (\Exception $e) {
@@ -111,6 +111,5 @@ class CsapatController extends Controller
             return response()->json(['error' => 'Hiba történt a csapat létrehozása közben.'], 500);
         }
     }
-    
     
 }

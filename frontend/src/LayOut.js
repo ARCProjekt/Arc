@@ -48,6 +48,9 @@ const LayOut = () => {
                 <Nav.Link as={Link} to="/Felhasznalo">
                    {user && user.jog === 1 && "Felhasználó Módosítása"} 
                 </Nav.Link>
+                <Nav.Link as={Link} to="/csapatletrehoz">
+                {user && user.jog === 1 && "Csapat Módosítása"} 
+             </Nav.Link>
               </Nav>
               <Nav style={{ marginLeft: "auto" }}>
                 <NyelvValtas />

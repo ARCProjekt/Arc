@@ -19,10 +19,7 @@ class GaleriaController extends Controller
         ->get();
         return $galery;
     }
-    public function create()
-    {
-        return view('galeria.create');
-    }
+  
 
     public function store(Request $request)
     {
@@ -87,5 +84,6 @@ class GaleriaController extends Controller
             return response()->json(['error' => 'Hiba történt a képek és galéria létrehozása közben.'], 500);
         }
     }
+    
     
 }

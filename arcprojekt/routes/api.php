@@ -40,19 +40,16 @@ Route::middleware('auth.basic')->group(function () {
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
+    Route::post('/csapat/store', [CsapatController::class, 'store']);
+    Route::post('/galeria/store', [GaleriaController::class, 'store']);
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
     }); 
    
 });
 
-Route::get('/csapat/create', [CsapatController::class, 'create']);
-Route::post('/csapat/store', [CsapatController::class, 'store']);
 
-Route::get('kepek/create', [KepekController::class, 'create'])->name('kepek.create');
-Route::post('kepek/store', [KepekController::class, 'store'])->name('kepek.store');
-Route::get('/galeria/create', [GaleriaController::class, 'create'])->name('galeria.create');
-Route::post('/galeria/store', [GaleriaController::class, 'store'])->name('galeria.store');
+
 /* 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     
