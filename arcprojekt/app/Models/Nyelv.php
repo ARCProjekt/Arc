@@ -16,5 +16,9 @@ class Nyelv extends Model
         'angol',
         'hol'
     ];
+    public function kepekLeiras()
+    {
+        return $this->hasMany(Kepek::class, 'nyelv_id_leiras', 'nyelv_id');
+    }
 
 }

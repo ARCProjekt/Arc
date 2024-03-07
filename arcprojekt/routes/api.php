@@ -58,7 +58,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 });
  */
 
-
+Route::post('/kepek/alkotoKepek',[KepekController::class,'alkotoKepek']);
 
 Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
