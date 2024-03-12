@@ -4,15 +4,6 @@ import useAuthContext from "../contexts/AuthContext";
 
 const Felhasznalo = () => {
   const { user, getUser } = useAuthContext();
-  useEffect(() => {
-    if (!user) {
-      getUser();
-      // Felhasználók lekérése és állapot frissítése
-        axios.get("http://localhost:8000/api/users").then((response) => {
-        setFelhasznalok(response.data);
-      }); 
-    }
-  });
   const [editableRow, setEditableRow] = useState(null);
   const [felhasznalok, setFelhasznalok] = useState([]);
   const [formData, setFormData] = useState({
@@ -22,49 +13,64 @@ const Felhasznalo = () => {
     jog: "tanar",
   });
 
+  const [ujToken2, setUjToken] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/users");
+        await getUser();
+        const response = await axios.get("http://localhost:8000/api/users", {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": ujToken2 },
+        });
+        console.log("ujtoken2 useeffect", ujToken2);
         setFelhasznalok(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
-
-      try {
-        const token = await csrf();
-        console.log(token);
-      } catch (error) {
-        console.error("Error fetching CSRF token:", error);
-      }
     };
 
-    fetchData();
+    if (ujToken2) {
+      fetchData();
+    }
+  }, [ujToken2]);
+
+  useEffect(() => {
+    csrf();
   }, []);
 
   const csrf = async () => {
-    const response = await axios.get("http://localhost:8000/token");
-    console.log(response);
-    return response.data;
+    try {
+      const response = await axios.get("http://localhost:8000/token");
+      console.log("ujtoken2 csrf ", ujToken2);
+      setUjToken(response.data); //itt frissul majd a token
+    } catch (error) {
+      console.error("Error fetching CSRF token:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const token = await csrf();
       const response = await axios.post(
         "http://localhost:8000/api/userletrehoz",
-        { ...formData, _token: token }
+        { ...formData },
+        {
+          headers: {
+            "X-CSRF-TOKEN": ujToken2,
+          },
+          withCredentials: true,
+        }
       );
 
-      // Frissítsd a felhasználók állapotot a frissen létrehozott felhasználóval
-      setFelhasznalok((prevFelhasznalok) => [
-        ...prevFelhasznalok,
-        response.data.user,
-      ]);
+      console.log("Új felhasználó létrehozva: ", response.data);
+      setFelhasznalok((prevFelhasznalok) =>
+        [...prevFelhasznalok, response.data.user].filter(
+          (user) => user && user.id
+        )
+      );
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Hiba történt a felhasználó létrehozásakor: ", error);
       console.log(error.response);
     }
   };
@@ -84,9 +90,7 @@ const Felhasznalo = () => {
   };
 
   const handleEditClick = (id) => {
-    setEditableRow((prevEditableRow) =>
-      prevEditableRow === id ? null : id
-    );
+    setEditableRow((prevEditableRow) => (prevEditableRow === id ? null : id));
   };
 
   return (

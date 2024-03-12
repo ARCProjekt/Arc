@@ -33,7 +33,7 @@
     <input type="text" name="angol_leiras" required>
     <br>
 
-    <!-- Képekhez kapcsolódó részek eltávolítva -->
+   
     
     <button type="submit">Csapat létrehozása</button>
 </form>
