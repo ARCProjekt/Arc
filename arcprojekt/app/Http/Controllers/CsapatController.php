@@ -64,14 +64,12 @@ class CsapatController extends Controller
         return $galery;
     }
 
-    public function create()
-    {
-        return view('csapatok.create');
-    }
+  
     
-    public function store(Request $request)
+   /* public function store(Request $request)
     {
         try {
+            $this->middleware('auth');
             $request->validate([
                 'galeria_id' => 'required|exists:galerias,galeria_id',
                 'k_id' => 'required|exists:kategorias,k_id',
@@ -80,36 +78,79 @@ class CsapatController extends Controller
                 'magyar_leiras' => 'required',
                 'angol_leiras' => 'required',
             ]);
-
+    
             // Nyelv létrehozása magyar névvel
             $nyelvMagyarNev = Nyelv::create([
                 'magyar' => $request->magyar_nev,
                 'angol' => $request->angol_nev,
                 'hol' => 'csapat nev',
             ]);
-
+    
             $nyelvMagyarLeiras = Nyelv::create([
                 'magyar' => $request->magyar_leiras,
                 'angol' => $request->angol_leiras,
                 'hol' => 'csapat leiras',
             ]);
-
+    
             $csapat = Csapat::create([
                 'galeria_id' => $request->galeria_id,
                 'k_id' => $request->k_id,
                 'nyelv_id_csapat_nev' => $nyelvMagyarNev->nyelv_id,
                 'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id,
             ]);
-
+    
             // Az új csapat adatainak lekérése
             $createdCsapat = Csapat::with(['nyelvCsapatNev', 'nyelvLeiras', 'alkotok'])->find($csapat->id);
-
-            // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
-            return view('csapatok.create', ['message' => 'Csapat sikeresen létrehozva', 'alkotok' => Alkoto::all(), 'createdCsapat' => $createdCsapat]);
+    
+            return response()->json(['message' => 'Csapat sikeresen létrehozva', 'csapat' => $createdCsapat], 200);
         } catch (\Exception $e) {
             \Log::error('Hiba történt a csapat létrehozása közben: ' . $e->getMessage());
             return response()->json(['error' => 'Hiba történt a csapat létrehozása közben.'], 500);
         }
     }
-    
+    */
+    public function store(Request $request)
+    {
+        $this->middleware('auth:api');
+
+      
+
+        $request->validate([
+            'galeria_id' => 'required|exists:galerias,galeria_id',
+            'k_id' => 'required|exists:kategorias,k_id',
+            'magyar_nev' => 'required',
+            'angol_nev' => 'required',
+            'magyar_leiras' => 'required',
+            'angol_leiras' => 'required',
+        ]);
+
+        // Nyelv létrehozása magyar névvel
+        $nyelvMagyarNev = Nyelv::create([
+            'magyar' => $request->magyar_nev,
+            'angol' => $request->angol_nev,
+            'hol' => 'csapat nev',
+        ]);
+
+        $nyelvMagyarLeiras = Nyelv::create([
+            'magyar' => $request->magyar_leiras,
+            'angol' => $request->angol_leiras,
+            'hol' => 'csapat leiras',
+        ]);
+
+        $csapat = Csapat::create([
+            'galeria_id' => $request->galeria_id,
+            'k_id' => $request->k_id,
+            'nyelv_id_csapat_nev' => $nyelvMagyarNev->nyelv_id,
+            'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id,
+        ]);
+
+        // Az új csapat adatainak lekérése
+        $createdCsapat = Csapat::with(['nyelvCsapatNev', 'nyelvLeiras', 'alkotok'])->find($csapat->id);
+
+        // API token hozzárendelése a válaszhoz
+        $token = Auth::user()->createToken('API Token')->accessToken;
+
+        // Válasz küldése, beleértve a tokent is
+        return response()->json(['message' => 'Csapat sikeresen létrehozva', 'csapat' => $createdCsapat, 'access_token' => $token], 200);
+    }
 }
