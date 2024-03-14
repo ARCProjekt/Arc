@@ -17,9 +17,9 @@ export default function AlkotoModosit() {
     kep_azon: "",
     cs_azon: "",
   });
-  //const imagePath = "alkotokepek/" + kep; 
+  //const imagePath = "alkotokepek/" + kep;
   const [formKep, setFormKep] = useState({
-    kep: "" ,
+    kep: "",
     nyelv_id_leiras_magyar: "",
     nyelv_id_leiras_angol: "",
     fotos_neve: "",
@@ -143,8 +143,8 @@ export default function AlkotoModosit() {
 
   const handleImageChange = (event) => {
     const image = event.target.files[0]; // Az első kiválasztott fájl lesz az új kép
-    const imageName = '/alkotokepek/' + image.name; // Elérési útvonal előtaggal
-  
+    const imageName = "/alkotokepek/" + image.name; // Elérési útvonal előtaggal
+
     setFormKep({ ...formKep, kep: imageName }); // Az elérési útvonal beállítása a formKep objektumban
     setSelectedImage(image);
   };
