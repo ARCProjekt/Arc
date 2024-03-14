@@ -17,8 +17,9 @@ export default function AlkotoModosit() {
     kep_azon: "",
     cs_azon: "",
   });
+  //const imagePath = "alkotokepek/" + kep; 
   const [formKep, setFormKep] = useState({
-    kep: "",
+    kep: "" ,
     nyelv_id_leiras_magyar: "",
     nyelv_id_leiras_angol: "",
     fotos_neve: "",
@@ -43,6 +44,7 @@ export default function AlkotoModosit() {
     const getCsapatok = async () => {
       const apiCsapatok = await axios.get("http://localhost:8000/api/csapatok");
       setCsapatok(apiCsapatok.data.csapatok);
+      //console.log("Csapatok:", apiCsapatok.data.csapatok);
     };
     getCsapatok();
   }, []);
@@ -51,14 +53,16 @@ export default function AlkotoModosit() {
     const getSzakok = async () => {
       const apiSzakok = await axios.get("http://localhost:8000/api/szakok");
       setSzakok(apiSzakok.data.szakok);
+      //console.log("Szakok:", apiSzakok.data.szakok);
     };
     getSzakok();
   }, []);
   //kepek
   useEffect(() => {
     const getKepek = async () => {
-      const apiCsapatok = await axios.get("http://localhost:8000/api/kepek");
-      setKepek(apiCsapatok.data.kepek);
+      const apiKepek = await axios.get("http://localhost:8000/api/kepek");
+      setKepek(apiKepek.data);
+      //console.log("Kepek:", apiKepek.data);
     };
     getKepek();
   }, []);
@@ -69,6 +73,10 @@ export default function AlkotoModosit() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
+      [e.target.name]: e.target.value,
+    });
+    setFormKep({
+      ...formKep,
       [e.target.name]: e.target.value,
     });
   };
@@ -83,15 +91,15 @@ export default function AlkotoModosit() {
       ...formData,
       [key]: e.target.value,
     });
-    const newKep = kepek.map((item)=>
-    item.kep_azon === id ? { ...item, [key]: e.target.value } : item
-  );
+    const newKep = kepek.map((item) =>
+      item.kep_azon === id ? { ...item, [key]: e.target.value } : item
+    );
 
-  setKep(newKep);
-  setFormKep({
-    ...formKep,
-    [key]: e.target.value,
-  });
+    setKep(newKep);
+    setFormKep({
+      ...formKep,
+      [key]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -116,33 +124,108 @@ export default function AlkotoModosit() {
   };
   const ujKep = async (e) => {
     e.preventDefault();
-  
+
     await csrf();
-    setFormKep({
-      ...formKep,
-      _token: token,
-    });
-  
+
     try {
       const response = await axios.post(
         "http://localhost:8000/api/kepek/alkotoKepek",
-        formKep  // Use formKep instead of formData
+        formKep
       );
       console.log(response.data);
     } catch (error) {
-      console.error("Error creating alkoto:", error);
+      console.error("Error creating kep:", error);
       console.log("Server response:", error.response.data);
     }
+  };
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const image = event.target.files[0]; // Az első kiválasztott fájl lesz az új kép
+    const imageName = '/alkotokepek/' + image.name; // Elérési útvonal előtaggal
+  
+    setFormKep({ ...formKep, kep: imageName }); // Az elérési útvonal beállítása a formKep objektumban
+    setSelectedImage(image);
   };
 
   return (
     <div className="summary-section">
       <div className="cont">
+        <div className="kepFeltoltes">
+          <form onSubmit={ujKep}>
+            <div className="kep">
+              <label>Tölts Képet:</label>
+              <div className="td">
+                <label htmlFor="kep">Kép:</label>
+                <input
+                  type="file"
+                  id="kep"
+                  accept="image/*" // Csak képfájlok elfogadása
+                  onChange={handleImageChange}
+                />
+                {selectedImage && (
+                  <div>
+                    <h4>Kiválasztott kép:</h4>
+                    <img
+                      src={URL.createObjectURL(selectedImage)}
+                      alt="Selected"
+                      style={{ maxWidth: "200px" }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="td">
+                <label htmlFor="nyelv_id_leiras_magyar">Magyar leirás:</label>
+                <input
+                  style={{ maxWidth: "300px", marginBottom: "10px" }}
+                  type="text"
+                  id="nyelv_id_leiras_magyar"
+                  name="nyelv_id_leiras_magyar"
+                  value={formKep.nyelv_id_leiras_magyar}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="td">
+                <label htmlFor="nyelv_id_leiras_angol">Angol leirás:</label>
+                <input
+                  style={{ maxWidth: "300px", marginBottom: "10px" }}
+                  type="text"
+                  id="nyelv_id_leiras_angol"
+                  name="nyelv_id_leiras_angol"
+                  value={formKep.nyelv_id_leiras_angol}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="td">
+                <label htmlFor="fotos_neve">Fotós neve:</label>
+                <input
+                  style={{ maxWidth: "300px" }}
+                  type="text"
+                  id="fotos_neve"
+                  name="fotos_neve"
+                  value={formKep.magyar_nev}
+                  onChange={handleChange}
+                />
+              </div>
+              <br />
+              <button
+                type="submit"
+                className="text-center mt-3"
+                style={{ maxWidth: "200px" }}
+                // onClick={handleSubmit}
+              >
+                Mentés
+              </button>
+              <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+            </div>
+          </form>
+        </div>
+
         <div
           className="feltoltes"
           style={{
             padding: "50px",
-
             borderBottom: "1px grey solid",
           }}
         >
@@ -158,7 +241,7 @@ export default function AlkotoModosit() {
                 value={formData.szak_id}
                 onChange={handleChange}
               >
-                <option value="" disabled hidden>
+                <option disabled hidden>
                   Válassz egy szakot
                 </option>
                 {szakok.map((team) => (
@@ -222,58 +305,15 @@ export default function AlkotoModosit() {
             </div>
 
             <div className="td">
-              <label onSubmit={ujKep} htmlFor="kep_azon">Tölts Képet:</label>
-              <div>
-              <label htmlFor="kep">Kép:</label>
-              <input
-                style={{ maxWidth: "300px" }}
-                type="file"
-                id="kep"
-                name="kep"
-                //value={formData.kep_azon}
-                onChange={(e)=>setKep(e.target.files[0])}
-              />
-                <label htmlFor="nyelv_id_leiras_magyar">Magyar leirás:</label>
-                <textarea
-                  style={{ maxWidth: "300px", marginBottom: "10px" }}
-                  type="text"
-                  id="nyelv_id_leiras_magyar"
-                  name="nyelv_id_leiras_magyar"
-                  value={formKep.nyelv_id_leiras_magyar}
-                  onChange={handleChange}
-                ></textarea>
-                <label htmlFor="nyelv_id_leiras_angol">Angol leirás:</label>
-                <textarea
-                  style={{ maxWidth: "300px", marginBottom: "10px" }}
-                  type="text"
-                  id="nyelv_id_leiras_angol"
-                  name="nyelv_id_leiras_angol"
-                  value={formKep.nyelv_id_leiras_angol}
-                  onChange={handleChange}
-                ></textarea>
-                <label htmlFor="fotos_neve">Fotós neve:</label>
-                <textarea
-                  style={{ maxWidth: "300px", marginBottom: "10px" }}
-                  type="text"
-                  id="fotos_neve"
-                  name="fotos_neve"
-                  value={formKep.fotos_neve}
-                  onChange={handleChange}
-                ></textarea>
-              </div>
-
-              <br />
-            </div>
-            <div className="td">
               <label htmlFor="kep_azon">Válassz Képet:</label>
-              {/* <select
+              <select
                 style={{ maxWidth: "300px" }}
-                id="cs_azon"
-                name="cs_azon"
+                id="kep_azon"
+                name="kep_azon"
                 value={formData.kep_azon}
                 onChange={handleChange}
               >
-                <option value="" disabled hidden>
+                <option disabled hidden>
                   Válassz egy képet
                 </option>
                 {kepek.map((team) => (
@@ -281,12 +321,11 @@ export default function AlkotoModosit() {
                     {team.kep}
                   </option>
                 ))}
-              </select> */}
+              </select>
               <br />
             </div>
             <div className="td">
               <label htmlFor="cs_azon">Csapat ID:</label>
-
               <select
                 style={{ maxWidth: "300px" }}
                 id="cs_azon"
@@ -294,7 +333,7 @@ export default function AlkotoModosit() {
                 value={formData.cs_azon}
                 onChange={handleChange}
               >
-                <option value="" disabled hidden>
+                <option disabled hidden>
                   Válassz egy csapatot
                 </option>
                 {csapatok.map((team) => (

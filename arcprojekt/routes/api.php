@@ -44,6 +44,8 @@ Route::middleware('auth.basic')->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
         Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
+        Route::post('/kepek/alkotoKepek',[KepekController::class,'alkotoKepek']);
+
     });
 });
 
@@ -58,7 +60,6 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 });
  */
 
-Route::post('/kepek/alkotoKepek',[KepekController::class,'alkotoKepek']);
 
 Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
