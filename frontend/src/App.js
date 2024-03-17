@@ -12,6 +12,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import AlkotoModosit from "./pages/AlkotoModosit";
 import Felhasznalo from "./pages/Felhasznalo";
 import Csapatletrehoz from "./pages/Csapatletrehoz";
+import GaleriaService from "./pages/GaleriaService";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="alkotomodosit" element={<AlkotoModosit />} />
             <Route path="felhasznalo" element={<Felhasznalo />} />
             <Route path="csapatletrehoz" element={<Csapatletrehoz />} />
+            <Route path="/galeriaservice" element={<GaleriaService />} />
           </Route>
         </Routes>
       </AuthProvider>

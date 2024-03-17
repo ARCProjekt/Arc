@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
         Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
     }); */
     
+Route::get('/galeria/newId', [GaleriaController::class, 'getNewGalleryId']);
 
 Route::middleware('auth.basic')->group(function () {
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
@@ -41,14 +42,14 @@ Route::middleware('auth.basic')->group(function () {
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
     
-    Route::post('/galeria/store', [GaleriaController::class, 'store']);
+  
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
         Route::post('/csapat/store', [CsapatController::class, 'store']);
     }); 
    
 });
-
+Route::post('/galeria/store', [GaleriaController::class, 'store']);
 
 
 

@@ -25,7 +25,6 @@ class GaleriaController extends Controller
     {
         try {
             $request->validate([
-                'kepek' => 'required|array|min:2', // Legalább két kép kötelező
                 'kepek.*' => 'required|image|mimes:jpeg,png,jpg,gif',
                 'galeria_leiras.magyar' => 'required',
                 'galeria_leiras.angol' => 'required',
@@ -78,12 +77,23 @@ class GaleriaController extends Controller
                 ]);
             }
     
-            return response()->json(['message' => 'Képek és galéria sikeresen létrehozva', 'eleresi_utvonalak' => $eleresi_utvonalak]);
+            return response()->json(['galeria_id' => $galeria->galeria_id]);
         } catch (\Exception $e) {
             \Log::error('Hiba történt a képek és galéria létrehozása közben: ' . $e->getMessage());
             return response()->json(['error' => 'Hiba történt a képek és galéria létrehozása közben.'], 500);
         }
     }
-    
+    public function getNewGalleryId()
+    {
+        try {
+            // Új galéria ID létrehozása
+            $galeria = Galeria::latest()->first();
+
+            return response()->json(['galeria_id' => $galeria->galeria_id]);
+        } catch (\Exception $e) {
+            \Log::error('Hiba történt az új galéria ID lekérésekor: ' . $e->getMessage());
+            return response()->json(['error' => 'Hiba történt az új galéria ID lekérésekor.'], 500);
+        }
+    }
     
 }
