@@ -40,23 +40,16 @@ Route::middleware('auth.basic')->group(function () {
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
-    Route::post('/csapat/store', [CsapatController::class, 'store']);
+    
     Route::post('/galeria/store', [GaleriaController::class, 'store']);
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
+        Route::post('/csapat/store', [CsapatController::class, 'store']);
     }); 
    
 });
 
 
-
-/* 
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-    
-    Route::post('/userletrehoz', [UserController::class, 'store']);
-    
-});
- */
 
 
  
@@ -73,13 +66,3 @@ Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGa
 Route::get('/adott_csapat/{csapat_id}', [CsapatController::class, 'show']);
 Route::get('/csapatok', [CsapatController::class, 'csapatokKiir']);
 Route::get('/szakok', [SzakController::class, 'szakokKiir']);
-//Route::get('/api/alkotok', [AlkotoController::class, 'index']);
-/* Route::get('/', function () {
-    return view('welcome');
-}); */
-/*csapat készítlése */
-/* /*csapat készítlése 
-Route::post('/api/csapatok/alkot', [CsapatController::class, 'alkot']);
-Route::post('/api/csapatok', [CsapatController::class, 'store']);
-Route::get('/api/csapatok', [CsapatController::class, 'index']);
-Route::get('/api/csapatok', [CsapatController::class, 'index']); */

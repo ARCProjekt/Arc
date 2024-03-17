@@ -66,7 +66,7 @@ class CsapatController extends Controller
 
   
     
-   /* public function store(Request $request)
+   public function store(Request $request)
     {
         try {
             $this->middleware('auth');
@@ -108,8 +108,8 @@ class CsapatController extends Controller
             return response()->json(['error' => 'Hiba történt a csapat létrehozása közben.'], 500);
         }
     }
-    */
-    public function store(Request $request)
+    
+   /*  public function store(Request $request)
     {
         $this->middleware('auth:api');
 
@@ -152,5 +152,5 @@ class CsapatController extends Controller
 
         // Válasz küldése, beleértve a tokent is
         return response()->json(['message' => 'Csapat sikeresen létrehozva', 'csapat' => $createdCsapat, 'access_token' => $token], 200);
-    }
+    } */
 }
