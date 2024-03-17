@@ -74,73 +74,100 @@ const GaleriaService = ({ onGaleriaCreated }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <label htmlFor="galeria_leiras_magyar">Galéria leírása (Magyar):</label>
-      <input
-        type="text"
-        name="galeria_leiras[magyar]"
-        id="galeria_leiras_magyar"
-        onChange={handleChange}
-        required
-      />
-      <br />
+    <div className="summary-section">
+      <div className="cont">
+        <div className="feltoltes" style={{ textAlign: "center" }}>
+          <h3 style={{ marginBottom: "20px" }}>Galéria létrehozása</h3>
+          <form onSubmit={handleSubmit} encType="multipart/form-data" style={{ display: "grid", gap: "10px", maxWidth: "400px", margin: "0 auto" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor="galeria_leiras_magyar">Galéria leírása (Magyar):</label>
+              <input
+                type="text"
+                name="galeria_leiras[magyar]"
+                id="galeria_leiras_magyar"
+                onChange={handleChange}
+                required
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              />
+            </div>
+            <br />
 
-      <label htmlFor="galeria_leiras_angol">Galéria leírása (Angol):</label>
-      <input
-        type="text"
-        name="galeria_leiras[angol]"
-        id="galeria_leiras_angol"
-        onChange={handleChange}
-        required
-      />
-      <br />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor="galeria_leiras_angol">Galéria leírása (Angol):</label>
+              <input
+                type="text"
+                name="galeria_leiras[angol]"
+                id="galeria_leiras_angol"
+                onChange={handleChange}
+                required
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              />
+            </div>
+            <br />
 
-      <label htmlFor="kep_leiras_magyar">Kép leírása (Magyar):</label>
-      <input
-        type="text"
-        name="kep_leiras[magyar]"
-        id="kep_leiras_magyar"
-        onChange={handleChange}
-        required
-      />
-      <br />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor="kep_leiras_magyar">Kép leírása (Magyar):</label>
+              <input
+                type="text"
+                name="kep_leiras[magyar]"
+                id="kep_leiras_magyar"
+                onChange={handleChange}
+                required
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              />
+            </div>
+            <br />
 
-      <label htmlFor="kep_leiras_angol">Kép leírása (Angol):</label>
-      <input
-        type="text"
-        name="kep_leiras[angol]"
-        id="kep_leiras_angol"
-        onChange={handleChange}
-        required
-      />
-      <br />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor="kep_leiras_angol">Kép leírása (Angol):</label>
+              <input
+                type="text"
+                name="kep_leiras[angol]"
+                id="kep_leiras_angol"
+                onChange={handleChange}
+                required
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              />
+            </div>
+            <br />
 
-      <label htmlFor="kepek">Képek:</label>
-      <input
-        type="file"
-        name="kepek[]"
-        id="kepek"
-        multiple
-        onChange={handleFileChange}
-        required
-      />
-      <button type="button" onClick={addInput}>
-        További kép kiválasztása
-      </button>
-      <br />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor="kepek">Képek:</label>
+              <input
+                type="file"
+                name="kepek[]"
+                id="kepek"
+                multiple
+                onChange={handleFileChange}
+                required
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              />
+              <button type="button" onClick={addInput} style={{ marginLeft: "10px", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}>
+                További kép kiválasztása
+              </button>
+            </div>
+            <br />
 
-      <label htmlFor="fotos_neve">Fotós neve:</label>
-      <input
-        type="text"
-        name="fotos_neve"
-        id="fotos_neve"
-        onChange={handleChange}
-        required
-      />
-      <br />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor="fotos_neve">Fotós neve:</label>
+              <input
+                type="text"
+                name="fotos_neve"
+                id="fotos_neve"
+                onChange={handleChange}
+                required
+                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+              />
+            </div>
+            <br />
 
-      <button type="submit">Galéria létrehozása</button>
-    </form>
+            <button type="submit" style={{ padding: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer" }}>
+              Galéria létrehozása
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
