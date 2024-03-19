@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuthContext from "../contexts/AuthContext";
+import { Button, Modal } from "react-bootstrap";
 
 const Felhasznalo = () => {
   const { user, getUser } = useAuthContext();
@@ -69,6 +70,7 @@ const Felhasznalo = () => {
           (user) => user && user.id
         )
       );
+      window.location.reload();
     } catch (error) {
       console.error("Hiba történt a felhasználó létrehozásakor: ", error);
       console.log(error.response);
@@ -91,6 +93,25 @@ const Felhasznalo = () => {
 
   const handleEditClick = (id) => {
     setEditableRow((prevEditableRow) => (prevEditableRow === id ? null : id));
+  };
+
+  const torol = async (id) => {
+    try {
+      const url = `http://localhost:8000/api/usertorol/${id}`;
+      const response = await axios.delete(url, {
+        headers: {
+          "X-CSRF-TOKEN": ujToken2,
+        },
+        withCredentials: true,
+      });
+      console.log("felhasználó törölve: ", response.data);
+      setFelhasznalok((prevFelhasznalok) =>
+        prevFelhasznalok.filter((user) => user.id !== id)
+      );
+    } catch (error) {
+      console.error("Hiba történt a felhasználó törlésekor: ", error);
+      console.log(error.response);
+    }
   };
 
   return (
@@ -204,6 +225,14 @@ const Felhasznalo = () => {
                         onClick={() => handleEditClick(item.id)}
                       >
                         {editableRow === item.id ? "✔️" : "🖌"}
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        style={{ background: "none", border: "none" }}
+                        onClick={() => torol(item.id)}
+                      >
+                        🗑
                       </button>
                     </td>
                   </tr>
