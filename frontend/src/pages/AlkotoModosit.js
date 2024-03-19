@@ -5,6 +5,7 @@ export default function AlkotoModosit() {
   const [alkotok, setAlkotok] = useState([]);
   const [csapatok, setCsapatok] = useState([]);
   const [szakok, setSzakok] = useState([]);
+  const [kepek, setKepek] = useState([]);
   const [kep, setKep] = useState([]);
   const [editableRow, setEditableRow] = useState(null);
   const [formData, setFormData] = useState({
@@ -16,7 +17,14 @@ export default function AlkotoModosit() {
     kep_azon: "",
     cs_azon: "",
   });
-
+  //const imagePath = "alkotokepek/" + kep;
+  const [formKep, setFormKep] = useState({
+    kep: "",
+    nyelv_id_leiras_magyar: "",
+    nyelv_id_leiras_angol: "",
+    fotos_neve: "",
+  });
+  //alkotok
   useEffect(() => {
     const getAlkotok = async () => {
       const apiAlkotok = await axios.get(
@@ -31,21 +39,33 @@ export default function AlkotoModosit() {
     axios.get("http://localhost:8000/token").then((response) => {
       token = response.data;
     });
+  //csapatok
   useEffect(() => {
     const getCsapatok = async () => {
       const apiCsapatok = await axios.get("http://localhost:8000/api/csapatok");
       setCsapatok(apiCsapatok.data.csapatok);
+      //console.log("Csapatok:", apiCsapatok.data.csapatok);
     };
     getCsapatok();
   }, []);
+  //szakok
   useEffect(() => {
     const getSzakok = async () => {
       const apiSzakok = await axios.get("http://localhost:8000/api/szakok");
       setSzakok(apiSzakok.data.szakok);
+      //console.log("Szakok:", apiSzakok.data.szakok);
     };
     getSzakok();
   }, []);
-
+  //kepek
+  useEffect(() => {
+    const getKepek = async () => {
+      const apiKepek = await axios.get("http://localhost:8000/api/kepek");
+      setKepek(apiKepek.data);
+      //console.log("Kepek:", apiKepek.data);
+    };
+    getKepek();
+  }, []);
   const handleEditClick = (id) => {
     setEditableRow(id === editableRow ? null : id);
   };
@@ -55,15 +75,29 @@ export default function AlkotoModosit() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    setFormKep({
+      ...formKep,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleInputChange = (e, id, key) => {
     const newData = alkotok.map((item) =>
       item.a_azon === id ? { ...item, [key]: e.target.value } : item
     );
+
     setAlkotok(newData);
     setFormData({
       ...formData,
+      [key]: e.target.value,
+    });
+    const newKep = kepek.map((item) =>
+      item.kep_azon === id ? { ...item, [key]: e.target.value } : item
+    );
+
+    setKep(newKep);
+    setFormKep({
+      ...formKep,
       [key]: e.target.value,
     });
   };
@@ -88,15 +122,110 @@ export default function AlkotoModosit() {
       console.log("Server response:", error.response.data);
     }
   };
+  const ujKep = async (e) => {
+    e.preventDefault();
+
+    await csrf();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/kepek/alkotoKepek",
+        formKep
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error creating kep:", error);
+      console.log("Server response:", error.response.data);
+    }
+  };
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const image = event.target.files[0]; // Az első kiválasztott fájl lesz az új kép
+    const imageName = "/alkotokepek/" + image.name; // Elérési útvonal előtaggal
+
+    setFormKep({ ...formKep, kep: imageName }); // Az elérési útvonal beállítása a formKep objektumban
+    setSelectedImage(image);
+  };
 
   return (
     <div className="summary-section">
       <div className="cont">
+        <div className="kepFeltoltes">
+          <form onSubmit={ujKep}>
+            <div className="kep">
+              <label>Tölts Képet:</label>
+              <div className="td">
+                <label htmlFor="kep">Kép:</label>
+                <input
+                  type="file"
+                  id="kep"
+                  accept="image/*" // Csak képfájlok elfogadása
+                  onChange={handleImageChange}
+                />
+                {selectedImage && (
+                  <div>
+                    <h4>Kiválasztott kép:</h4>
+                    <img
+                      src={URL.createObjectURL(selectedImage)}
+                      alt="Selected"
+                      style={{ maxWidth: "200px" }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="td">
+                <label htmlFor="nyelv_id_leiras_magyar">Magyar leirás:</label>
+                <input
+                  style={{ maxWidth: "300px", marginBottom: "10px" }}
+                  type="text"
+                  id="nyelv_id_leiras_magyar"
+                  name="nyelv_id_leiras_magyar"
+                  value={formKep.nyelv_id_leiras_magyar}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="td">
+                <label htmlFor="nyelv_id_leiras_angol">Angol leirás:</label>
+                <input
+                  style={{ maxWidth: "300px", marginBottom: "10px" }}
+                  type="text"
+                  id="nyelv_id_leiras_angol"
+                  name="nyelv_id_leiras_angol"
+                  value={formKep.nyelv_id_leiras_angol}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="td">
+                <label htmlFor="fotos_neve">Fotós neve:</label>
+                <input
+                  style={{ maxWidth: "300px" }}
+                  type="text"
+                  id="fotos_neve"
+                  name="fotos_neve"
+                  value={formKep.magyar_nev}
+                  onChange={handleChange}
+                />
+              </div>
+              <br />
+              <button
+                type="submit"
+                className="text-center mt-3"
+                style={{ maxWidth: "200px" }}
+                // onClick={handleSubmit}
+              >
+                Mentés
+              </button>
+              <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+            </div>
+          </form>
+        </div>
+
         <div
           className="feltoltes"
           style={{
             padding: "50px",
-
             borderBottom: "1px grey solid",
           }}
         >
@@ -112,7 +241,7 @@ export default function AlkotoModosit() {
                 value={formData.szak_id}
                 onChange={handleChange}
               >
-                <option value="" disabled hidden>
+                <option disabled hidden>
                   Válassz egy szakot
                 </option>
                 {szakok.map((team) => (
@@ -175,29 +304,36 @@ export default function AlkotoModosit() {
               ></textarea>
             </div>
 
-            <div className="td">
+            <div>
               <label htmlFor="kep_azon">Tölts Képet:</label>
               <input
                 style={{ maxWidth: "300px" }}
-                type="file"
+                type="number"
                 id="kep_azon"
                 name="kep_azon"
-                //value={formData.kep_azon}
-                onChange={(e)=>setKep(e.target.files[0])}
+                value={formData.kep_azon}
+                onChange={handleChange}
               />
               <br />
             </div>
             <div className="td">
               <label htmlFor="cs_azon">Csapat ID:</label>
-
-              <select
+              <input
+                style={{ maxWidth: "300px" }}
+                type="text"
+                id="cs_azon"
+                name="cs_azon"
+                value={formData.cs_azon}
+                onChange={handleChange}
+              /> 
+               <select
                 style={{ maxWidth: "300px" }}
                 id="cs_azon"
                 name="cs_azon"
                 value={formData.cs_azon}
                 onChange={handleChange}
               >
-                <option value="" disabled hidden>
+                <option disabled hidden>
                   Válassz egy csapatot
                 </option>
                 {csapatok.map((team) => (

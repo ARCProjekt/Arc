@@ -45,11 +45,28 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
         Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
         Route::get('/users', [UserController::class, 'users']);
+         Route::post('/kepek/alkotoKepek',[KepekController::class,'alkotoKepek']);
         Route::delete('/usertorol/{user_id}', [UserController::class, 'userTorol']);
         Route::patch('/updateuser/{user_id}', [UserController::class, 'update']);
     });
 });
 
+       
+
+
+
+
+
+/* 
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    
+    Route::post('/userletrehoz', [UserController::class, 'store']);
+    
+});
+ */
+
+
+Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);
 Route::get('/kepek', [KepekController::class, 'kepek']);

@@ -40,6 +40,19 @@ thead,td{
 .feltoltes button{
  margin: auto;
 }
+.kepFeltoltes td label{
+  text-align: center ;
+}
+
+.kepFeltoltes td{
+  border: 0;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.kepFeltoltes button{
+ margin: auto;
+}
 
 .summary-section {
   display: flex;
