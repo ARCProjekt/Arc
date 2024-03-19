@@ -155,7 +155,7 @@ export default function AlkotoModosit() {
         <div className="kepFeltoltes">
           <form onSubmit={ujKep}>
             <div className="kep">
-              <label>Tölts Képet:</label>
+              <h3>Kép Feltöltés:</h3>
               <div className="td">
                 <label htmlFor="kep">Kép:</label>
                 <input
@@ -306,26 +306,42 @@ export default function AlkotoModosit() {
 
             <div>
               <label htmlFor="kep_azon">Tölts Képet:</label>
-              <input
+              {/* <input
                 style={{ maxWidth: "300px" }}
                 type="number"
                 id="kep_azon"
                 name="kep_azon"
                 value={formData.kep_azon}
                 onChange={handleChange}
-              />
+              /> */}
+              <select
+                style={{ maxWidth: "300px" }}
+                id="kep_azon"
+                name="kep_azon"
+                value={formData.kep_azon}
+                onChange={handleChange}
+              >
+                <option disabled hidden>
+                  Válassz egy képet
+                </option>
+                {kepek.map((team) => (
+                  <option key={team.kep_azon} value={team.kep_azon}>
+                    {team.kep}
+                  </option>
+                ))}
+              </select>
               <br />
             </div>
             <div className="td">
               <label htmlFor="cs_azon">Csapat ID:</label>
-              <input
+            {/*   <input
                 style={{ maxWidth: "300px" }}
                 type="text"
                 id="cs_azon"
                 name="cs_azon"
                 value={formData.cs_azon}
                 onChange={handleChange}
-              /> 
+              />  */}
                <select
                 style={{ maxWidth: "300px" }}
                 id="cs_azon"
