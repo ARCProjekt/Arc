@@ -45,7 +45,8 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
         Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
         Route::get('/users', [UserController::class, 'users']);
-        Route::delete('usertorol/{user_id}', [UserController::class, 'userTorol']);
+        Route::delete('/usertorol/{user_id}', [UserController::class, 'userTorol']);
+        Route::patch('/updateuser/{user_id}', [UserController::class, 'update']);
     });
 });
 
