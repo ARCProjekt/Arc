@@ -64,4 +64,14 @@ class UserController extends Controller
 
         $user->save();
     }
+
+    public function userTorol($id){
+        if (!Auth::check() || Auth::user()->jog !== 1) {
+            abort(401, 'Nincs jogosultsága felhasználókat törölni.');
+        }
+
+        User::find($id)->delete();
+    }
+
+
 }
