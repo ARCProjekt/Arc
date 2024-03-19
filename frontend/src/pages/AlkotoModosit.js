@@ -34,11 +34,21 @@ export default function AlkotoModosit() {
     };
     getAlkotok();
   }, []);
-  let token = "";
-  const csrf = () =>
-    axios.get("http://localhost:8000/token").then((response) => {
-      token = response.data;
-    });
+  //tokenek
+  const [ujToken2, setUjToken] = useState("");
+
+  const csrf = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/token");
+      console.log("ujtoken2 csrf ", ujToken2);
+      setUjToken(response.data); //itt frissul majd a token
+    } catch (error) {
+      console.error("Error fetching CSRF token:", error);
+    }
+  };
+  useEffect(() => {
+    csrf();
+  }, []);
   //csapatok
   useEffect(() => {
     const getCsapatok = async () => {
@@ -105,16 +115,21 @@ export default function AlkotoModosit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await csrf();
-    setFormData({
-      ...formData,
-      _token: token,
-    });
-
     try {
+      // Először CSRF token lekérése
+      const ujToken = await axios.get("http://localhost:8000/token");
+      const ujToken2 = ujToken.data;
+
+      // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
         "http://localhost:8000/api/alkotoletrehoz",
-        formData
+        { ...formData },
+        {
+          headers: {
+            "X-CSRF-TOKEN": ujToken2,
+          },
+          withCredentials: true,
+        }
       );
       console.log(response.data);
     } catch (error) {
@@ -122,15 +137,25 @@ export default function AlkotoModosit() {
       console.log("Server response:", error.response.data);
     }
   };
+
   const ujKep = async (e) => {
     e.preventDefault();
 
-    await csrf();
-
     try {
+      // Először CSRF token lekérése
+      const ujToken = await axios.get("http://localhost:8000/token");
+      const ujToken2 = ujToken.data;
+
+      // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
         "http://localhost:8000/api/kepek/alkotoKepek",
-        formKep
+        { ...formKep },
+        {
+          headers: {
+            "X-CSRF-TOKEN": ujToken2,
+          },
+          withCredentials: true,
+        }
       );
       console.log(response.data);
     } catch (error) {
@@ -204,7 +229,7 @@ export default function AlkotoModosit() {
                   type="text"
                   id="fotos_neve"
                   name="fotos_neve"
-                  value={formKep.magyar_nev}
+                  value={formKep.fotos_neve}
                   onChange={handleChange}
                 />
               </div>
@@ -213,7 +238,6 @@ export default function AlkotoModosit() {
                 type="submit"
                 className="text-center mt-3"
                 style={{ maxWidth: "200px" }}
-                // onClick={handleSubmit}
               >
                 Mentés
               </button>
@@ -241,9 +265,7 @@ export default function AlkotoModosit() {
                 value={formData.szak_id}
                 onChange={handleChange}
               >
-                <option disabled hidden>
-                  Válassz egy szakot
-                </option>
+                <option>Válassz egy szakot</option>
                 {szakok.map((team) => (
                   <option key={team.szak_id} value={team.szak_id}>
                     {team.magyar}
@@ -306,14 +328,7 @@ export default function AlkotoModosit() {
 
             <div>
               <label htmlFor="kep_azon">Tölts Képet:</label>
-              {/* <input
-                style={{ maxWidth: "300px" }}
-                type="number"
-                id="kep_azon"
-                name="kep_azon"
-                value={formData.kep_azon}
-                onChange={handleChange}
-              /> */}
+
               <select
                 style={{ maxWidth: "300px" }}
                 id="kep_azon"
@@ -321,9 +336,7 @@ export default function AlkotoModosit() {
                 value={formData.kep_azon}
                 onChange={handleChange}
               >
-                <option disabled hidden>
-                  Válassz egy képet
-                </option>
+                <option>Válassz egy képet</option>
                 {kepek.map((team) => (
                   <option key={team.kep_azon} value={team.kep_azon}>
                     {team.kep}
@@ -334,24 +347,15 @@ export default function AlkotoModosit() {
             </div>
             <div className="td">
               <label htmlFor="cs_azon">Csapat ID:</label>
-            {/*   <input
-                style={{ maxWidth: "300px" }}
-                type="text"
-                id="cs_azon"
-                name="cs_azon"
-                value={formData.cs_azon}
-                onChange={handleChange}
-              />  */}
-               <select
+
+              <select
                 style={{ maxWidth: "300px" }}
                 id="cs_azon"
                 name="cs_azon"
                 value={formData.cs_azon}
                 onChange={handleChange}
               >
-                <option disabled hidden>
-                  Válassz egy csapatot
-                </option>
+                <option>Válassz egy csapatot</option>
                 {csapatok.map((team) => (
                   <option key={team.cs_azon} value={team.cs_azon}>
                     {team.magyar}
