@@ -12,6 +12,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import AlkotoModosit from "./pages/AlkotoModosit";
 import Felhasznalo from "./pages/Felhasznalo";
 
+
 function App() {
   return (
     <HashRouter>
@@ -27,6 +28,7 @@ function App() {
             <Route path="bejelentkezes" element={<Bejelentkezes />} />
             <Route path="alkotomodosit" element={<AlkotoModosit />} />
             <Route path="felhasznalo" element={<Felhasznalo />} />
+            
           </Route>
         </Routes>
       </AuthProvider>
