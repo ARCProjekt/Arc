@@ -44,6 +44,7 @@ Route::middleware('auth.basic')->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
         Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
+        Route::patch('/alkotoszerkeszt/{alkoto_id}', [AlkotoController::class, 'update']);
         Route::get('/users', [UserController::class, 'users']);
         
         Route::delete('/usertorol/{user_id}', [UserController::class, 'userTorol']);

@@ -8,6 +8,7 @@ export default function AlkotoModosit() {
   const [kepek, setKepek] = useState([]);
   const [kep, setKep] = useState([]);
   const [editableRow, setEditableRow] = useState(null);
+  const [szerkesztAlkoto, setszerkesztAlkoto] = useState(null);
   const [formData, setFormData] = useState({
     szak_id: "",
     magyar_nev: "",
@@ -16,6 +17,7 @@ export default function AlkotoModosit() {
     angol_bemutat: "",
     kep_azon: "",
     cs_azon: "",
+    buszkesegeink:""
   });
   //const imagePath = "alkotokepek/" + kep;
   const [formKep, setFormKep] = useState({
@@ -77,7 +79,8 @@ export default function AlkotoModosit() {
     getKepek();
   }, []);
   const handleEditClick = (id) => {
-    setEditableRow(id === editableRow ? null : id);
+    console.log(id);
+    setEditableRow((prevEditableRow) => (prevEditableRow === id ? null : id));
   };
 
   const handleChange = (e) => {
@@ -95,22 +98,16 @@ export default function AlkotoModosit() {
     const newData = alkotok.map((item) =>
       item.a_azon === id ? { ...item, [key]: e.target.value } : item
     );
-
     setAlkotok(newData);
-    setFormData({
-      ...formData,
-      [key]: e.target.value,
-    });
-    const newKep = kepek.map((item) =>
-      item.kep_azon === id ? { ...item, [key]: e.target.value } : item
-    );
-
-    setKep(newKep);
-    setFormKep({
-      ...formKep,
-      [key]: e.target.value,
-    });
+  
+    if (id === editableRow) {
+      setszerkesztAlkoto({
+        ...szerkesztAlkoto,
+        [key]: e.target.value,
+      });
+    }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -172,6 +169,42 @@ export default function AlkotoModosit() {
 
     setFormKep({ ...formKep, kep: imageName }); // Az elérési útvonal beállítása a formKep objektumban
     setSelectedImage(image);
+  };
+
+  const update = async (a_azon) => {
+    if (!szerkesztAlkoto) {
+      console.error("Nincs szerkesztett felhasználó.");
+      return;
+    }
+    const url = `http://localhost:8000/api/alkotoszerkeszt/${a_azon}`;
+    try {
+      const response = await axios.patch(
+        url,
+        {
+          szak_id: szerkesztAlkoto.szak_id,
+          magyar_nev: szerkesztAlkoto.magyar_nev,
+          angol_nev: szerkesztAlkoto.angol_nev,
+          magyar_bemutat: szerkesztAlkoto.magyar_bemutat,
+          angol_bemutat: szerkesztAlkoto.angol_bemutat,
+          kep_azon: szerkesztAlkoto.kep_azon,
+          cs_azon: szerkesztAlkoto.cs_azon,
+          buszkesegeink: szerkesztAlkoto.buszkesegeink,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": ujToken2,
+          },
+          withCredentials: true,
+        }
+      );
+      console.log("Alkoto frissítve: ", response.data);
+      setEditableRow(null);
+      setszerkesztAlkoto(null);
+    } catch (error) {
+      console.error("Hiba történt a alkotó frissítésekor: ", error);
+      console.log(error.response);
+    }
   };
 
   return (
@@ -388,6 +421,7 @@ export default function AlkotoModosit() {
                   <th>Kép</th>
                   <th>Szak</th>
                   <th>Csapat</th>
+                  <th>Büszkeség</th>
                 </tr>
               </thead>
               <tbody>
@@ -396,39 +430,78 @@ export default function AlkotoModosit() {
                     <td>{item.a_azon}</td>
                     <td>
                       {editableRow === item.a_azon ? (
-                        <input
-                          type="text"
-                          value={item.alkoto_nev}
-                          onChange={(e) =>
-                            handleInputChange(e, item.a_azon, "alkoto_nev")
-                          }
-                        />
+                        <>
+                          <input
+                          placeholder="Magyar Név"
+                            type="text"
+                            value={item.magyar_nev}
+                            onChange={(e) =>
+                              handleInputChange(
+                                e,
+                                item.a_azon,
+                                "magyar_nev"
+                              )
+                            }
+                          />
+                          <input
+                          placeholder="Angol Név"
+                            type="text"
+                            value={item.angol_nev}
+                            onChange={(e) =>
+                              handleInputChange(e, item.a_azon, "angol_nev")
+                            }
+                          />
+                        </>
                       ) : (
                         item.alkoto_nev
                       )}
                     </td>
+
                     <td>
                       {editableRow === item.a_azon ? (
-                        <input
-                          type="text"
-                          value={item.bemutato_nev}
-                          onChange={(e) =>
-                            handleInputChange(e, item.a_azon, "bemutato_nev")
-                          }
-                        />
+                        <>
+                          <input
+                            placeholder="Magyar bemutatkozás"
+                            type="text"
+                            value={item.magyar_bemutat}
+                            onChange={(e) =>
+                              handleInputChange(
+                                e,
+                                item.a_azon,
+                                "magyar_bemutat"
+                              )
+                            }
+                          />
+                          <input
+                            placeholder="Angol bemutatkozás"
+                            type="text"
+                            value={item.angol_bemutat}
+                            onChange={(e) =>
+                              handleInputChange(e, item.a_azon, "angol_bemutat")
+                            }
+                          />
+                        </>
                       ) : (
                         item.bemutato_nev
                       )}
                     </td>
+
                     <td>
                       {editableRow === item.a_azon ? (
-                        <input
-                          type="text"
-                          value={item.kep}
-                          onChange={(e) =>
-                            handleInputChange(e, item.a_azon, "kep")
-                          }
-                        />
+                        <select
+                          style={{ maxWidth: "300px" }}
+                          id="kep_azon"
+                          name="kep_azon"
+                          value={formData.kep_azon}
+                          onChange={handleChange}
+                        >
+                          <option>Válassz egy képet</option>
+                          {kepek.map((team) => (
+                            <option key={team.kep_azon} value={team.kep_azon}>
+                              {team.kep}
+                            </option>
+                          ))}
+                        </select>
                       ) : (
                         item.kep
                       )}
@@ -442,9 +515,7 @@ export default function AlkotoModosit() {
                           value={formData.szak_id}
                           onChange={handleChange}
                         >
-                          <option value="" disabled hidden>
-                            Válassz egy szakot
-                          </option>
+                          <option>Válassz egy szakot</option>
                           {szakok.map((team) => (
                             <option key={team.szak_id} value={team.szak_id}>
                               {team.magyar}
@@ -464,9 +535,7 @@ export default function AlkotoModosit() {
                           value={formData.cs_azon}
                           onChange={handleChange}
                         >
-                          <option value="" disabled hidden>
-                            Válassz egy csapatot
-                          </option>
+                          <option>Válassz egy csapatot</option>
                           {csapatok.map((team) => (
                             <option key={team.cs_azon} value={team.cs_azon}>
                               {team.magyar}
@@ -478,9 +547,26 @@ export default function AlkotoModosit() {
                       )}
                     </td>
                     <td>
+                      {editableRow === item.a_azon ? (
+                        <input
+                          type="number"
+                          value={item.buszkesegeink}
+                          onChange={(e) =>
+                            handleInputChange(e, item.a_azon, "büszkeségeink")
+                          }
+                        />
+                      ) : (
+                        item.buszkesegeink
+                      )}
+                    </td>
+                    <td>
                       <button
                         style={{ background: "none", border: "none" }}
-                        onClick={() => handleEditClick(item.a_azon)}
+                        onClick={() =>
+                          editableRow === item.a_azon
+                            ? update(item.a_azon)
+                            : handleEditClick(item.a_azon)
+                        }
                       >
                         {editableRow === item.a_azon ? "✔️" : "🖌"}
                       </button>
