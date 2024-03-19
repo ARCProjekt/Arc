@@ -64,4 +64,26 @@ class UserController extends Controller
 
         $user->save();
     }
+
+    public function userTorol($id){
+        if (!Auth::check() || Auth::user()->jog !== 1) {
+            abort(401, 'Nincs jogosultsága felhasználókat törölni.');
+        }
+
+        User::find($id)->delete();
+    }
+
+    public function update(Request $request, $id){
+        if (!Auth::check() || Auth::user()->jog !== 1) {
+            abort(401, 'Nincs jogosultsága felhasználókat módosítani.');
+        }
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->jog = $request->jog;
+        $user->save();
+    }
+
 }

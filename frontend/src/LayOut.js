@@ -43,7 +43,7 @@ const LayOut = () => {
                   Bejelentkezés
                 </Nav.Link>
                 <Nav.Link as={Link} to="/AlkotoModosit">
-                  {user && user.jog === 1  && "Alkotó Módosítása"}
+                  {user && user.jog < 3  && "Alkotó Módosítása"}
                 </Nav.Link>
                 <Nav.Link as={Link} to="/Felhasznalo">
                    {user && user.jog === 1 && "Felhasználó Módosítása"} 
