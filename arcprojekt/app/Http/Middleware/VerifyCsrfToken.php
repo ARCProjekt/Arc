@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
         '/api/userletrehoz',
         '/api/alkotoletrehoz',
         '/api/usertorol/*',
-        '/api//kepek/alkotoKepek'
+        '/api//kepek/alkotoKepek',
+        '/api/updateuser/*'
     ];
 }

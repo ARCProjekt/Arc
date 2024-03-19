@@ -7,6 +7,7 @@ const Felhasznalo = () => {
   const { user, getUser } = useAuthContext();
   const [editableRow, setEditableRow] = useState(null);
   const [felhasznalok, setFelhasznalok] = useState([]);
+  const [szerkesztettFelhasznalo, setSzerkesztettFelhasznalo] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,6 +30,7 @@ const Felhasznalo = () => {
         console.error("Error fetching users:", error);
       }
     };
+    console.log(felhasznalok);
 
     if (ujToken2) {
       fetchData();
@@ -51,6 +53,10 @@ const Felhasznalo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (editableRow !== null) {
+      //handleSubmit(e);
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -89,9 +95,16 @@ const Felhasznalo = () => {
       item.id === id ? { ...item, [key]: e.target.value } : item
     );
     setFelhasznalok(newData);
+    if (id === editableRow) {
+      setSzerkesztettFelhasznalo({
+        ...szerkesztettFelhasznalo,
+        [key]: e.target.value,
+      });
+    }
   };
 
   const handleEditClick = (id) => {
+    console.log(id);
     setEditableRow((prevEditableRow) => (prevEditableRow === id ? null : id));
   };
 
@@ -110,6 +123,38 @@ const Felhasznalo = () => {
       );
     } catch (error) {
       console.error("Hiba történt a felhasználó törlésekor: ", error);
+      console.log(error.response);
+    }
+  };
+
+  const frissit = async (id) => {
+    if (!szerkesztettFelhasznalo) {
+      console.error("Nincs szerkesztett felhasználó.");
+      return;
+    }
+    const url = `http://localhost:8000/api/updateuser/${id}`;
+    try {
+      const response = await axios.patch(
+        url,
+        {
+          name: szerkesztettFelhasznalo.name,
+          email: szerkesztettFelhasznalo.email,
+          password: szerkesztettFelhasznalo.password,
+          jog: szerkesztettFelhasznalo.jog,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": ujToken2,
+          },
+          withCredentials: true,
+        }
+      );
+      console.log("Felhasználó frissítve: ", response.data);
+      setEditableRow(null);
+      setSzerkesztettFelhasznalo(null);
+    } catch (error) {
+      console.error("Hiba történt a felhasználó frissítésekor: ", error);
       console.log(error.response);
     }
   };
@@ -158,7 +203,12 @@ const Felhasznalo = () => {
               <option value="admin">Admin</option>
             </select>
 
-            <button type="submit">Felhasználó létrehozása</button>
+            <button
+              type="submit"
+              style={{ background: "none", padding: "5px" }}
+            >
+              Felhasználó létrehozása
+            </button>
           </form>
         </div>
         <div className="tablazat ">
@@ -199,7 +249,8 @@ const Felhasznalo = () => {
                       {editableRow === item.id ? (
                         <input
                           type="text"
-                          value={item.password}
+                          //value={item.password}
+                          placeholder="új jelszó"
                           onChange={(e) =>
                             handleInputChange(e, item.id, "password")
                           }
@@ -222,7 +273,11 @@ const Felhasznalo = () => {
                     <td>
                       <button
                         style={{ background: "none", border: "none" }}
-                        onClick={() => handleEditClick(item.id)}
+                        onClick={() =>
+                          editableRow === item.id
+                            ? frissit(item.id)
+                            : handleEditClick(item.id)
+                        }
                       >
                         {editableRow === item.id ? "✔️" : "🖌"}
                       </button>

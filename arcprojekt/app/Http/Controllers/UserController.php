@@ -78,12 +78,28 @@ class UserController extends Controller
             abort(401, 'Nincs jogosultsága felhasználókat módosítani.');
         }
 
-        $user = User::find($id);
-        $user->name = $request->name;
+         $user = User::find($id);
+        /* $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
-        $user->jog = $request->jog;
-        $user->save();
+        $user->jog = $request->jog; */
+        /* $user->fill($request->only(['name', 'email', 'password', 'jog']));
+        $user->save(); */
+        //return response()->json($user); */
+
+        try {
+            $user->fill($request->only(['name', 'email', 'password', 'jog']));
+            
+            // Itt a jelszót bcrypt-tel kell titkosítani, ha a jelszót is frissíteni szeretnéd
+            if ($request->has('password')) {
+                $user->password = bcrypt($request->password);
+            }
+            
+            $user->save();
+            return response()->json($user);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
+        }
     }
 
 }
