@@ -20,4 +20,16 @@ class KategoriaController extends Controller
         );
         return response()->json(['kategoriak' => $kategoriak]);
     }
+    public function kategoriaElnevezesek()
+    {
+        $kategoriak = DB::select(
+            '
+        SELECT nyelvs.magyar
+        from kategorias 
+        inner join nyelvs
+        on kategorias.nyelv_id_elnevezes = nyelvs.nyelv_id
+        '
+        );
+        return response()->json(['kategoriak' => $kategoriak]);
+    }
 }

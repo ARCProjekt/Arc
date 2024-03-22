@@ -63,6 +63,7 @@ Route::get('/alkotok/create', [AlkotoController::class, 'create']);
 Route::post('/alkotok', [AlkotoController::class, 'store']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
 Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);
+Route::get('/kategoriaElnev', [KategoriaController::class, 'kategoriaElnevezesek']);
 Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGaleriaja']);
 Route::get('/adott_csapat/{csapat_id}', [CsapatController::class, 'show']);
 Route::get('/csapatok', [CsapatController::class, 'csapatokKiir']);

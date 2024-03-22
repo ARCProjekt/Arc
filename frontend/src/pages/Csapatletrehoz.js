@@ -202,6 +202,15 @@ const CsapatLetrehoz = ({ galeriaId }) => {
     fetchData();
   }, [ujToken2]);
 
+  const [kategoriak, setkategoiak] = useState([]);
+  useEffect(() => {
+    const getkategoriak = async () => {
+      const apibejegyzes = await axios.get("http://localhost:8000/api/kategoriaElnev");
+      console.log(apibejegyzes.data.kategoriak.magyar)
+      setkategoiak(apibejegyzes.data.kategoriak);
+    };
+    getkategoriak()
+  }, [])
   useEffect(() => {
     csrf();
   }, []);
@@ -278,7 +287,9 @@ const CsapatLetrehoz = ({ galeriaId }) => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
+
               <label htmlFor="galeria_id">Galeria ID:</label>
+
               <input
                 type="text"
                 id="galeria_id"
@@ -292,24 +303,34 @@ const CsapatLetrehoz = ({ galeriaId }) => {
                   backgroundColor: "#f0f0f0",
                 }}
               />
+              <div> <button
+
+                style={{
+                  padding: "10px",
+                  marginLeft: "10px",
+                  backgroundColor: "#007bff",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                }}
+              >
+                Hozzon létre új Galériát!
+              </button></div>
             </div>
-  
-            {/* További input mezők */}
-            <label htmlFor="k_id">Kategória ID:</label>
-            <input
-              type="text"
-              id="k_id"
-              name="k_id"
-              value={formData.k_id}
+            
+           
+
+            <label htmlFor="k_id">Válassz tevékenységet:</label>
+            <select id="k_id" name="k_id" value={formData.k_id}
               onChange={handleChange}
-              required
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            />
-  
+              required>
+
+              {kategoriak.map((elem, i) => (
+                <option value="k_id"> {elem.magyar}</option>
+
+              ))};
+            </select>
             <label htmlFor="magyar_nev">Magyar Név:</label>
             <input
               type="text"
@@ -324,7 +345,7 @@ const CsapatLetrehoz = ({ galeriaId }) => {
                 border: "1px solid #ccc",
               }}
             />
-  
+
             <label htmlFor="angol_nev">Angol Név:</label>
             <input
               type="text"
@@ -339,37 +360,22 @@ const CsapatLetrehoz = ({ galeriaId }) => {
                 border: "1px solid #ccc",
               }}
             />
-  
-            <label htmlFor="magyar_leiras">Magyar Leírás:</label>
-            <input
-              type="text"
-              id="magyar_leiras"
-              name="magyar_leiras"
-              value={formData.magyar_leiras}
+
+            
+            <p><label htmlFor="magyar_leiras">Magyar Leírás:</label></p>
+            <textarea id="magyar_leiras" name="magyar_leiras" value={formData.magyar_leiras}
               onChange={handleChange}
-              required
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            />
-  
-            <label htmlFor="angol_leiras">Angol Leírás:</label>
-            <input
-              type="text"
-              id="angol_leiras"
-              name="angol_leiras"
-              value={formData.angol_leiras}
+              required rows="4" cols="50"></textarea>
+            <br></br>
+
+
+            <p><label htmlFor="angol_leiras">Angol Leírás:</label></p>
+            <textarea id="angol_leiras" name="angol_leiras" value={formData.angol_leiras}
               onChange={handleChange}
-              required
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            />
-  
+              required rows="4" cols="50"></textarea>
+            <br></br>
+
+            
             <button
               type="submit"
               style={{
@@ -479,11 +485,9 @@ const GaleriaEsCsapatLetrehoz = () => {
 
   return (
     <div>
-      {!galeriaId ? (
-        <GaleriaService onGaleriaCreated={handleGaleriaCreated} />
-      ) : (
-        <CsapatLetrehoz galeriaId={galeriaId} />
-      )}
+
+      <CsapatLetrehoz galeriaId={galeriaId} />
+
     </div>
   );
 };

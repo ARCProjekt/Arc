@@ -52,11 +52,10 @@ class GaleriaController extends Controller
                 'nyelv_id_leiras' => $nyelvGaleriaLeiras->nyelv_id,
             ]);
     
-            $eleresi_utvonalak = [];
-    
             // Elérési útvonalak mentése és képek feltöltése
+            $eleresi_utvonalak = [];
             foreach ($request->file('kepek') as $kep) {
-                $eleresi_utvonal = $kep->storeAs('public/csapatkepek', $kep->getClientOriginalName());
+                $eleresi_utvonal = $kep->store('csapatkepek');
                 $eleresi_utvonalak[] = $eleresi_utvonal;
     
                 // Adatbázisba mentés
@@ -73,16 +72,17 @@ class GaleriaController extends Controller
                 $galeriaKep = Galeria_kep::create([
                     'kep_azon' => $kepObj->kep_azon,
                     'galeria_id' => $galeria->galeria_id,
-                    'kiemelt_kep' => false, // vagy amit beállítottál
+                    'kiemelt_kep' => false, 
                 ]);
             }
     
             return response()->json(['galeria_id' => $galeria->galeria_id]);
         } catch (\Exception $e) {
-            \Log::error('Hiba történt a képek és galéria létrehozása közben: ' . $e->getMessage());
+           // \Log::error('Hiba történt a képek és galéria létrehozása közben: ' . $e->getMessage());
             return response()->json(['error' => 'Hiba történt a képek és galéria létrehozása közben.'], 500);
         }
     }
+    
     public function getNewGalleryId()
     {
         try {
@@ -91,7 +91,7 @@ class GaleriaController extends Controller
 
             return response()->json(['galeria_id' => $galeria->galeria_id]);
         } catch (\Exception $e) {
-            \Log::error('Hiba történt az új galéria ID lekérésekor: ' . $e->getMessage());
+           // \Log::error('Hiba történt az új galéria ID lekérésekor: ' . $e->getMessage());
             return response()->json(['error' => 'Hiba történt az új galéria ID lekérésekor.'], 500);
         }
     }
