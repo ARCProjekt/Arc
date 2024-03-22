@@ -71,7 +71,6 @@ Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);
 Route::get('/kepek', [KepekController::class, 'kepek']);
-//alkoto letrehozasa
 Route::get('/alkotok/create', [AlkotoController::class, 'create']);
 Route::post('/alkotok', [AlkotoController::class, 'store']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
@@ -80,7 +79,7 @@ Route::get('/csapat_galeriaja/{csapat_id}', [GaleriaController::class, 'csapatGa
 Route::get('/adott_csapat/{csapat_id}', [CsapatController::class, 'show']);
 Route::get('/csapatok', [CsapatController::class, 'csapatokKiir']);
 Route::get('/szakok', [SzakController::class, 'szakokKiir']);
-//Route::get('/api/alkotok', [AlkotoController::class, 'index']);
+Route::get('/adottalkoto/{alkotoid}', [AlkotoController::class, 'adottAlkoto']);
 Route::get('/', function () {
     return view('welcome');
 });

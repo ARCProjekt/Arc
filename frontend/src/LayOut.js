@@ -1,11 +1,10 @@
 import React from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import NyelvValtas from "./pages/NyelvValtas";
 import { LanguageProvider } from "./pages/NyelvSegedlet";
 import "./css/Kozos.css";
 import useAuthContext from "./contexts/AuthContext";
-
 
 const LayOut = () => {
   const { user } = useAuthContext();
@@ -39,15 +38,34 @@ const LayOut = () => {
                 <Nav.Link as={Link} to="/projekt">
                   Projekt
                 </Nav.Link>
-                <Nav.Link as={Link} to="/bejelentkezes">
-                  Bejelentkezés
-                </Nav.Link>
-                <Nav.Link as={Link} to="/AlkotoModosit">
-                  {user && user.jog < 3  && "Alkotó Módosítása"}
+                {/* <Nav.Link as={Link} to="/bejelentkezes">
+                  {user ? user.name : "Bejelentkezés"}
+                </Nav.Link> */}
+
+                <Dropdown className="legMenu">
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    {user ? user.name : "Bejelentkezés"}
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item as={Link} to="/AlkotoModosit">
+                      {user && user.jog < 3 && "Alkotó Módosítása"}
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/Felhasznalo">
+                      {user && user.jog === 1 && "Felhasználó Módosítása"}
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/bejelentkezes">
+                      {user ? "Kijelentkezés" : "Bejelentkezés"}
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+
+                {/*  <Nav.Link as={Link} to="/AlkotoModosit">
+                  {user && user.jog < 3 && "Alkotó Módosítása"}
                 </Nav.Link>
                 <Nav.Link as={Link} to="/Felhasznalo">
-                   {user && user.jog === 1 && "Felhasználó Módosítása"} 
-                </Nav.Link>
+                  {user && user.jog === 1 && "Felhasználó Módosítása"}
+                </Nav.Link> */}
               </Nav>
               <Nav style={{ marginLeft: "auto" }}>
                 <NyelvValtas />
