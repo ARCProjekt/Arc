@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../css/Kozos.css";
-import axios from "axios";
+import axios from "../api/axios";
 export default function AlkotoModosit() {
   const [alkotok, setAlkotok] = useState([]);
   const [csapatok, setCsapatok] = useState([]);
@@ -8,6 +8,7 @@ export default function AlkotoModosit() {
   const [kepek, setKepek] = useState([]);
   const [kep, setKep] = useState([]);
   const [editableRow, setEditableRow] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
   const [szerkesztAlkoto, setszerkesztAlkoto] = useState(null);
   const [formData, setFormData] = useState({
     szak_id: "",
@@ -17,7 +18,7 @@ export default function AlkotoModosit() {
     angol_bemutat: "",
     kep_azon: "",
     cs_azon: "",
-    buszkesegeink:""
+    buszkesegeink: ""
   });
   //const imagePath = "alkotokepek/" + kep;
   const [formKep, setFormKep] = useState({
@@ -99,7 +100,7 @@ export default function AlkotoModosit() {
       item.a_azon === id ? { ...item, [key]: e.target.value } : item
     );
     setAlkotok(newData);
-  
+
     if (id === editableRow) {
       setszerkesztAlkoto({
         ...szerkesztAlkoto,
@@ -107,19 +108,36 @@ export default function AlkotoModosit() {
       });
     }
   };
-  
 
+  const torol = async (id) => {
+    try {
+      const url = `http://localhost:8000/api/alkototorol/${a_azon}`;
+      const response = await axios.delete(url, {
+        headers: {
+          "X-CSRF-TOKEN": ujToken2,
+        },
+        withCredentials: true,
+      });
+      console.log("alkoto törölve: ", response.data);
+      setAlkotok((prevAlkotok) =>
+        prevAlkotok.filter((alkoto) => alkoto.id !== id)
+      );
+    } catch (error) {
+      console.error("Hiba történt a felhasználó törlésekor: ", error);
+      console.log(error.response);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // Először CSRF token lekérése
-      const ujToken = await axios.get("http://localhost:8000/token");
+      const ujToken = await axios.get("token");
       const ujToken2 = ujToken.data;
 
       // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
-        "http://localhost:8000/api/alkotoletrehoz",
+        "api/alkotoletrehoz",
         { ...formData },
         {
           headers: {
@@ -129,6 +147,7 @@ export default function AlkotoModosit() {
         }
       );
       console.log(response.data);
+      window.location.reload();
     } catch (error) {
       console.error("Error creating alkoto:", error);
       console.log("Server response:", error.response.data);
@@ -140,12 +159,12 @@ export default function AlkotoModosit() {
 
     try {
       // Először CSRF token lekérése
-      const ujToken = await axios.get("http://localhost:8000/token");
+      const ujToken = await axios.get("token");
       const ujToken2 = ujToken.data;
 
       // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
-        "http://localhost:8000/api/kepek/alkotoKepek",
+        "api/kepek/alkotoKepek",
         { ...formKep },
         {
           headers: {
@@ -155,6 +174,7 @@ export default function AlkotoModosit() {
         }
       );
       console.log(response.data);
+      window.location.reload();
     } catch (error) {
       console.error("Error creating kep:", error);
       console.log("Server response:", error.response.data);
@@ -165,7 +185,7 @@ export default function AlkotoModosit() {
 
   const handleImageChange = (event) => {
     const image = event.target.files[0]; // Az első kiválasztott fájl lesz az új kép
-    const imageName = "/alkotokepek/" + image.name; // Elérési útvonal előtaggal
+    const imageName = "/public/alkotokepek/" + image.name; // Elérési útvonal előtaggal
 
     setFormKep({ ...formKep, kep: imageName }); // Az elérési útvonal beállítása a formKep objektumban
     setSelectedImage(image);
@@ -186,7 +206,7 @@ export default function AlkotoModosit() {
           angol_nev: szerkesztAlkoto.angol_nev,
           magyar_bemutat: szerkesztAlkoto.magyar_bemutat,
           angol_bemutat: szerkesztAlkoto.angol_bemutat,
-          kep_azon: szerkesztAlkoto.kep_azon,
+          kep: szerkesztAlkoto.kep_azon,
           cs_azon: szerkesztAlkoto.cs_azon,
           buszkesegeink: szerkesztAlkoto.buszkesegeink,
         },
@@ -206,6 +226,28 @@ export default function AlkotoModosit() {
       console.log(error.response);
     }
   };
+  const buszkeseg = async (a_azon) => {
+    try {
+        const response = await axios.patch(
+            `api/buszkeseg/${a_azon}`,
+            {},
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": ujToken2,
+                },
+                withCredentials: true,
+            }
+        );
+        console.log("Buszkeseg frissítve: ", response.data);
+        setIsChecked(!isChecked); // Checkbox állapotának megfordítása
+    } catch (error) {
+        console.error("Hiba történt a alkotó frissítésekor: ", error);
+        console.log(error.response);
+    }
+};
+
+
 
   return (
     <div className="summary-section">
@@ -397,12 +439,23 @@ export default function AlkotoModosit() {
               </select>
               <br />
             </div>
+            <div className="td">
+              <label htmlFor="buszkeseg">Büszkeség:</label>
+              <input
+                type="checkbox"
+                checked={isChecked} 
+                onClick={buszkeseg} 
+              />
+              
+               
+              <br />
+            </div>
 
             <button
               type="submit"
               className=" text-center mt-3"
               style={{ maxWidth: "200px" }}
-              //onClick={handleSubmit}
+            //onClick={handleSubmit}
             >
               Mentés
             </button>
@@ -432,7 +485,7 @@ export default function AlkotoModosit() {
                       {editableRow === item.a_azon ? (
                         <>
                           <input
-                          placeholder="Magyar Név"
+                            placeholder="Magyar Név"
                             type="text"
                             value={item.magyar_nev}
                             onChange={(e) =>
@@ -444,7 +497,7 @@ export default function AlkotoModosit() {
                             }
                           />
                           <input
-                          placeholder="Angol Név"
+                            placeholder="Angol Név"
                             type="text"
                             value={item.angol_nev}
                             onChange={(e) =>
@@ -492,7 +545,7 @@ export default function AlkotoModosit() {
                           style={{ maxWidth: "300px" }}
                           id="kep_azon"
                           name="kep_azon"
-                          value={formData.kep_azon}
+                          value={item.kep}
                           onChange={handleChange}
                         >
                           <option>Válassz egy képet</option>
@@ -512,7 +565,7 @@ export default function AlkotoModosit() {
                           style={{ maxWidth: "300px" }}
                           id="szak_id"
                           name="szak_id"
-                          value={formData.szak_id}
+                          value={item.szak_id}
                           onChange={handleChange}
                         >
                           <option>Válassz egy szakot</option>
@@ -532,7 +585,7 @@ export default function AlkotoModosit() {
                           style={{ maxWidth: "300px" }}
                           id="cs_azon"
                           name="cs_azon"
-                          value={formData.cs_azon}
+                          value={item.cs_azon}
                           onChange={handleChange}
                         >
                           <option>Válassz egy csapatot</option>
@@ -569,6 +622,14 @@ export default function AlkotoModosit() {
                         }
                       >
                         {editableRow === item.a_azon ? "✔️" : "🖌"}
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        style={{ background: "none", border: "none" }}
+                        onClick={() => torol(item.a_azon)}
+                      >
+                        🗑
                       </button>
                     </td>
                   </tr>

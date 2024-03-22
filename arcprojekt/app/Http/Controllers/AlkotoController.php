@@ -128,6 +128,16 @@ class AlkotoController extends Controller
     $alkoto = Alkoto::find($id);
 
     try {
+       /*  $nyelvMagyarNev = Nyelv::updateOrCreate(
+            ['nyelv_id' => $alkoto->nyelv_id_nev],
+            ['magyar' => $request->magyar_nev, 'angol' => $request->angol_nev, 'hol' => 'alkoto nev']
+        );
+    
+        // Alkotó bemutatkozásának nyelvi objektumának frissítése
+        $nyelvMagyarBemutat = Nyelv::updateOrCreate(
+            ['nyelv_id' => $alkoto->nyelv_id_bemutat],
+            ['magyar' => $request->magyar_bemutat, 'angol' => $request->angol_bemutat, 'hol' => 'alkoto bemutat']
+        ); */
         $alkoto->fill($request->only([
             'szak_id',
             'magyar_nev',
@@ -142,35 +152,28 @@ class AlkotoController extends Controller
         // Ha a kép azonosítót vagy cs_azon-t is frissíteni szeretnéd, akkor itt frissítsd
     
         // Alkotó nevének nyelvi objektumának frissítése
-        $nyelvMagyarNev = Nyelv::updateOrCreate(
-            ['nyelv_id' => $alkoto->nyelv_id_nev],
-            ['magyar' => $request->magyar_nev, 'angol' => $request->angol_nev, 'hol' => 'alkoto nev']
-        );
-    
-        // Alkotó bemutatkozásának nyelvi objektumának frissítése
-        $nyelvMagyarBemutat = Nyelv::updateOrCreate(
-            ['nyelv_id' => $alkoto->nyelv_id_bemutat],
-            ['magyar' => $request->magyar_bemutat, 'angol' => $request->angol_bemutat, 'hol' => 'alkoto bemutat']
-        );
+       
     
         // Alkotó frissítése
-        $alkoto->update([
+       /*  $alkoto->update([
             'szak_id' => $request->szak_id,
             'nyelv_id_nev' => $nyelvMagyarNev->nyelv_id,
             'nyelv_id_bemutat' => $nyelvMagyarBemutat->nyelv_id,
             'buszkesegeink' => $request->buszkesegeink,
             'kep_azon' => $request->kep_azon,
             'cs_azon' => $request->cs_azon,
-        ]);
-    
-        // Válasz visszaküldése
+        ]); */
+        $alkoto->save();
+       
         return response()->json(['message' => 'Az alkotó sikeresen frissítve lett!'], 200);
     } catch (\Exception $e) {
         return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
     }
     
 }
-
+    public function delete($id){
+        Alkoto::find($id)->delete();
+    }
     
 
 }
