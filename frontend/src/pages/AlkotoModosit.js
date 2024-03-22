@@ -453,7 +453,7 @@ export default function AlkotoModosit() {
                           />
                         </>
                       ) : (
-                        item.alkoto_nev
+                        item.magyar_nev
                       )}
                     </td>
 
@@ -482,7 +482,7 @@ export default function AlkotoModosit() {
                           />
                         </>
                       ) : (
-                        item.bemutato_nev
+                        item.magyar_bemutat
                       )}
                     </td>
 
