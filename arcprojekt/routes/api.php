@@ -40,7 +40,7 @@ Route::middleware('auth.basic')->group(function () {
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::post('/kepek/alkotoKepek',[KepekController::class,'alkotoKepek']);
-
+    Route::delete('/alkototorol/{alkoto_id}', [AlkotoController::class, 'delete']);
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);
         Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
