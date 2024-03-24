@@ -114,6 +114,7 @@ class AlkotoController extends Controller
             'angol_bemutat' => 'required',
             'kep_azon' => 'required|numeric',
             'cs_azon' => 'required|numeric',
+            'buszkesegeink' => 'required|boolean',
         ]);
 
         // Nyelv létrehozása magyar névvel
@@ -135,7 +136,7 @@ class AlkotoController extends Controller
             'szak_id' => $request->szak_id,
             'nyelv_id_nev' => $nyelvMagyarNev->nyelv_id,
             'nyelv_id_bemutat' => $nyelvMagyarBemutat->nyelv_id,
-            'buszkesegeink' => 0,
+            'buszkesegeink' => $request->buszkesegeink,
             'kep_azon' => $request->kep_azon,
             'cs_azon' => $request->cs_azon,
         ]);
@@ -145,51 +146,43 @@ class AlkotoController extends Controller
     public function update(Request $request, $id)
     {
         $alkoto = Alkoto::find($id);
-
-    try {
-       /*  $nyelvMagyarNev = Nyelv::updateOrCreate(
-            ['nyelv_id' => $alkoto->nyelv_id_nev],
-            ['magyar' => $request->magyar_nev, 'angol' => $request->angol_nev, 'hol' => 'alkoto nev']
-        );
     
-        // Alkotó bemutatkozásának nyelvi objektumának frissítése
-        $nyelvMagyarBemutat = Nyelv::updateOrCreate(
-            ['nyelv_id' => $alkoto->nyelv_id_bemutat],
-            ['magyar' => $request->magyar_bemutat, 'angol' => $request->angol_bemutat, 'hol' => 'alkoto bemutat']
-        ); */
-        $alkoto->fill($request->only([
-            'szak_id',
-            'magyar_nev',
-            'angol_nev',
-            'magyar_bemutat',
-            'angol_bemutat',
-            'kep_azon',
-            'cs_azon',
-            'buszkesegeink',
-        ]));
+        try {
+            // Alkotó nevének nyelvi objektumának frissítése
+            if (!empty($request->magyar_nev)) {
+                $nyelvMagyarNev = Nyelv::updateOrCreate(
+                    ['nyelv_id' => $alkoto->nyelv_id_nev],
+                    ['magyar' => $request->magyar_nev, 'angol' => $request->angol_nev, 'hol' => 'alkoto nev']
+                );
+                $alkoto->nyelv_id_nev = $nyelvMagyarNev->nyelv_id;
+            }
     
-        // Ha a kép azonosítót vagy cs_azon-t is frissíteni szeretnéd, akkor itt frissítsd
+            // Alkotó bemutatkozásának nyelvi objektumának frissítése
+            if (!empty($request->magyar_bemutat)) {
+                $nyelvMagyarBemutat = Nyelv::updateOrCreate(
+                    ['nyelv_id' => $alkoto->nyelv_id_bemutat],
+                    ['magyar' => $request->magyar_bemutat, 'angol' => $request->angol_bemutat, 'hol' => 'alkoto bemutat']
+                );
+                $alkoto->nyelv_id_bemutat = $nyelvMagyarBemutat->nyelv_id;
+            }
     
-        // Alkotó nevének nyelvi objektumának frissítése
-       
-    
-        // Alkotó frissítése
-       /*  $alkoto->update([
-            'szak_id' => $request->szak_id,
-            'nyelv_id_nev' => $nyelvMagyarNev->nyelv_id,
-            'nyelv_id_bemutat' => $nyelvMagyarBemutat->nyelv_id,
-            'buszkesegeink' => $request->buszkesegeink,
-            'kep_azon' => $request->kep_azon,
-            'cs_azon' => $request->cs_azon,
-        ]); */
-        $alkoto->save();
-       
-        return response()->json(['message' => 'Az alkotó sikeresen frissítve lett!'], 200);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
+            // Alkotó adatainak frissítése
+            $alkoto->fill($request->only([
+                'szak_id',
+                'kep_azon',
+                'cs_azon',
+                'buszkesegeink',
+            ]));
+        
+            // Alkotó frissítése
+            $alkoto->save();
+           
+            return response()->json(['message' => 'Az alkotó sikeresen frissítve lett!'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
+        }
     }
     
-}
     public function delete($id){
         Alkoto::find($id)->delete();
     }

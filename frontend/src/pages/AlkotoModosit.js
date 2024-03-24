@@ -6,10 +6,11 @@ export default function AlkotoModosit() {
   const [csapatok, setCsapatok] = useState([]);
   const [szakok, setSzakok] = useState([]);
   const [kepek, setKepek] = useState([]);
-  const [kep, setKep] = useState([]);
   const [editableRow, setEditableRow] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [szerkesztAlkoto, setszerkesztAlkoto] = useState(null);
+  const [ujToken2, setUjToken] = useState("");
   const [formData, setFormData] = useState({
     szak_id: "",
     magyar_nev: "",
@@ -18,7 +19,7 @@ export default function AlkotoModosit() {
     angol_bemutat: "",
     kep_azon: "",
     cs_azon: "",
-    buszkesegeink: ""
+    buszkesegeink: "",
   });
   //const imagePath = "alkotokepek/" + kep;
   const [formKep, setFormKep] = useState({
@@ -30,19 +31,16 @@ export default function AlkotoModosit() {
   //alkotok
   useEffect(() => {
     const getAlkotok = async () => {
-      const apiAlkotok = await axios.get(
-        "http://localhost:8000/api/alkotokkiir"
-      );
+      const apiAlkotok = await axios.get("api/alkotokkiir");
       setAlkotok(apiAlkotok.data.alkotok);
     };
     getAlkotok();
   }, []);
   //tokenek
-  const [ujToken2, setUjToken] = useState("");
 
   const csrf = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/token");
+      const response = await axios.get("token");
       console.log("ujtoken2 csrf ", ujToken2);
       setUjToken(response.data); //itt frissul majd a token
     } catch (error) {
@@ -55,7 +53,7 @@ export default function AlkotoModosit() {
   //csapatok
   useEffect(() => {
     const getCsapatok = async () => {
-      const apiCsapatok = await axios.get("http://localhost:8000/api/csapatok");
+      const apiCsapatok = await axios.get("api/csapatok");
       setCsapatok(apiCsapatok.data.csapatok);
       //console.log("Csapatok:", apiCsapatok.data.csapatok);
     };
@@ -64,7 +62,7 @@ export default function AlkotoModosit() {
   //szakok
   useEffect(() => {
     const getSzakok = async () => {
-      const apiSzakok = await axios.get("http://localhost:8000/api/szakok");
+      const apiSzakok = await axios.get("api/szakok");
       setSzakok(apiSzakok.data.szakok);
       //console.log("Szakok:", apiSzakok.data.szakok);
     };
@@ -73,7 +71,7 @@ export default function AlkotoModosit() {
   //kepek
   useEffect(() => {
     const getKepek = async () => {
-      const apiKepek = await axios.get("http://localhost:8000/api/kepek");
+      const apiKepek = await axios.get("api/kepek");
       setKepek(apiKepek.data);
       //console.log("Kepek:", apiKepek.data);
     };
@@ -111,7 +109,7 @@ export default function AlkotoModosit() {
 
   const torol = async (id) => {
     try {
-      const url = `http://localhost:8000/api/alkototorol/${a_azon}`;
+      const url = `http://localhost:8000/api/alkototorol/${id}`;
       const response = await axios.delete(url, {
         headers: {
           "X-CSRF-TOKEN": ujToken2,
@@ -138,7 +136,7 @@ export default function AlkotoModosit() {
       // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
         "api/alkotoletrehoz",
-        { ...formData },
+        { ...formData, buszkesegeink: isChecked ? "1" : "0" },
         {
           headers: {
             "X-CSRF-TOKEN": ujToken2,
@@ -181,8 +179,6 @@ export default function AlkotoModosit() {
     }
   };
 
-  const [selectedImage, setSelectedImage] = useState(null);
-
   const handleImageChange = (event) => {
     const image = event.target.files[0]; // Az első kiválasztott fájl lesz az új kép
     const imageName = "/public/alkotokepek/" + image.name; // Elérési útvonal előtaggal
@@ -196,7 +192,8 @@ export default function AlkotoModosit() {
       console.error("Nincs szerkesztett felhasználó.");
       return;
     }
-    const url = `http://localhost:8000/api/alkotoszerkeszt/${a_azon}`;
+
+    const url = `api/alkotoszerkeszt/${a_azon}`;
     try {
       const response = await axios.patch(
         url,
@@ -208,7 +205,7 @@ export default function AlkotoModosit() {
           angol_bemutat: szerkesztAlkoto.angol_bemutat,
           kep: szerkesztAlkoto.kep_azon,
           cs_azon: szerkesztAlkoto.cs_azon,
-          buszkesegeink: szerkesztAlkoto.buszkesegeink,
+          buszkesegeink: szerkesztAlkoto.isChecked ? "1" : "0",
         },
         {
           headers: {
@@ -218,36 +215,16 @@ export default function AlkotoModosit() {
           withCredentials: true,
         }
       );
+
       console.log("Alkoto frissítve: ", response.data);
       setEditableRow(null);
       setszerkesztAlkoto(null);
+      setIsChecked(szerkesztAlkoto.isChecked); // isChecked érték beállítása
     } catch (error) {
       console.error("Hiba történt a alkotó frissítésekor: ", error);
       console.log(error.response);
     }
   };
-  const buszkeseg = async (a_azon) => {
-    try {
-        const response = await axios.patch(
-            `api/buszkeseg/${a_azon}`,
-            {},
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": ujToken2,
-                },
-                withCredentials: true,
-            }
-        );
-        console.log("Buszkeseg frissítve: ", response.data);
-        setIsChecked(!isChecked); // Checkbox állapotának megfordítása
-    } catch (error) {
-        console.error("Hiba történt a alkotó frissítésekor: ", error);
-        console.log(error.response);
-    }
-};
-
-
 
   return (
     <div className="summary-section">
@@ -440,14 +417,25 @@ export default function AlkotoModosit() {
               <br />
             </div>
             <div className="td">
-              <label htmlFor="buszkeseg">Büszkeség:</label>
+              <label htmlFor="buszkesegeink">Büszkeség:</label>
               <input
-                type="checkbox"
-                checked={isChecked} 
-                onClick={buszkeseg} 
+                type="radio"
+                id="buszkesegeink-nem"
+                name="buszkesegeink"
+                value="0"
+                checked={!isChecked}
+                onChange={() => setIsChecked(false)}
               />
-              
-               
+              <label htmlFor="buszkesegeink-nem">Nem</label>
+              <input
+                type="radio"
+                id="buszkesegeink-igen"
+                name="buszkesegeink"
+                value="1"
+                checked={isChecked}
+                onChange={() => setIsChecked(true)}
+              />
+              <label htmlFor="buszkesegeink-igen">Igen</label>
               <br />
             </div>
 
@@ -455,7 +443,7 @@ export default function AlkotoModosit() {
               type="submit"
               className=" text-center mt-3"
               style={{ maxWidth: "200px" }}
-            //onClick={handleSubmit}
+              //onClick={handleSubmit}
             >
               Mentés
             </button>
@@ -469,8 +457,8 @@ export default function AlkotoModosit() {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Név</th>
-                  <th>Bemutatkozás</th>
+                  <th>Név *</th>
+                  <th>Bemutatkozás *</th>
                   <th>Kép</th>
                   <th>Szak</th>
                   <th>Csapat</th>
@@ -489,11 +477,7 @@ export default function AlkotoModosit() {
                             type="text"
                             value={item.magyar_nev}
                             onChange={(e) =>
-                              handleInputChange(
-                                e,
-                                item.a_azon,
-                                "magyar_nev"
-                              )
+                              handleInputChange(e, item.a_azon, "magyar_nev")
                             }
                           />
                           <input
@@ -504,6 +488,9 @@ export default function AlkotoModosit() {
                               handleInputChange(e, item.a_azon, "angol_nev")
                             }
                           />
+                          <span className="text-danger">
+                            *:Mindkét mezőt módosítani kell!!
+                          </span>
                         </>
                       ) : (
                         item.magyar_nev
@@ -533,6 +520,9 @@ export default function AlkotoModosit() {
                               handleInputChange(e, item.a_azon, "angol_bemutat")
                             }
                           />
+                          <span className="text-danger">
+                            *:Mindkét mezőt módosítani kell!!
+                          </span>
                         </>
                       ) : (
                         item.magyar_bemutat
@@ -601,17 +591,33 @@ export default function AlkotoModosit() {
                     </td>
                     <td>
                       {editableRow === item.a_azon ? (
-                        <input
-                          type="number"
-                          value={item.buszkesegeink}
-                          onChange={(e) =>
-                            handleInputChange(e, item.a_azon, "büszkeségeink")
-                          }
-                        />
-                      ) : (
-                        item.buszkesegeink
-                      )}
+                        <>
+                          <input
+                            type="radio"
+                            id={`nem_${item.a_azon}`}
+                            name={`buszkesegeink_${item.a_azon}`}
+                            value="0"
+                            //checked={!alkotoBuszke[item.a_azon]}
+                            onChange={() => update(item.a_azon, false)}
+                          />
+                          <label htmlFor={`buszkesegeink-nem_${item.a_azon}`}>
+                            Nem
+                          </label>
+                          <input
+                            type="radio"
+                            id={`igen_${item.a_azon}`}
+                            name={`buszkesegeink_${item.a_azon}`}
+                            value="1"
+                            //checked={alkotoBuszke[item.a_azon]}
+                            onChange={() => update(item.a_azon, true)}
+                          />
+                          <label htmlFor={`buszkesegeink-igen_${item.a_azon}`}>
+                            Igen
+                          </label>
+                        </>
+                      ) :item.buszkesegeink == "1" ? "Igen" : "Nem" }
                     </td>
+
                     <td>
                       <button
                         style={{ background: "none", border: "none" }}
