@@ -1,94 +1,101 @@
-// Fooldal.js
 import "../css/Fooldal.css";
 import "../css/Kozos.css";
-import React from 'react';
-import BgImageWithNavbar from '../BgImageWithNavbar';
-import  { useEffect } from "react";
+import React from "react";
+import BgImageWithNavbar from "../BgImageWithNavbar";
+import { useEffect } from "react";
 import useAuthContext from "../contexts/AuthContext";
+import { useLanguage } from "./NyelvSegedlet";
 const Fooldal = () => {
+  const { selectedLanguage } = useLanguage();
   const { user, getUser } = useAuthContext();
-    useEffect(() => {
-        if (!user) {
-            getUser();
-        }
-    });
+  useEffect(() => {
+    if (!user) {
+      getUser();
+    }
+  });
   return (
     <div>
       <BgImageWithNavbar />
 
       <div>
-     
         <div className="summary-section">
-          
-            <div className="cont">
-              <div className="summary-content">
-                <div className="summary-text">
-                  <div className="bem">
-                  <p>Bejelentkezett felhasználó: {user?.name}</p>
-                    <h1>Bemutatkozás</h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis cupiditate atque ex itaque consequuntur molestias! Ipsam nulla veritatis, laudantium nostrum itaque non sunt accusantium rem sapiente aliquam doloribus. Eum, ducimus?
-                      Eius officia aut illum iusto sequi sunt nam exercitationem modi asperiores porro odit aliquid accusamus voluptas rem doloremque ab perferendis iure labore laborum, corporis dignissimos tenetur, laudantium ipsa! Dolorum, quasi.
-                      Qui alias dolorum magnam itaque aperiam aliquid blanditiis ullam magni odio consequatur recusandae sequi quasi incidunt earum vero aliquam quas placeat quaerat, voluptatum error cum totam ex quod? Quidem, quia.
-                      Odio fugiat, esse excepturi deserunt aliquam provident illum ipsum! Et officiis omnis eligendi eum modi atque quibusdam voluptate obcaecati, libero, laborum soluta necessitatibus enim! Aut harum veritatis molestiae provident voluptates?</p>
-                  </div>
-                </div>
-              </div>
-              <div className="summary-content">
-
-                <div className="summary-text felul">
-                  <h1>Csapatok</h1>
-
+          <div className="cont">
+            <div className="summary-content">
+              <div className="summary-text">
+                <div className="bem">
+                  <h1>
+                    {selectedLanguage === "hu"
+                      ? "Bemutatkozás"
+                      : "Introduction"}
+                  </h1>
                   <p>
-
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    {selectedLanguage === "hu"
+                      ? "Iskolánk összművészeti projekttel mutatkozik be az észtországi Tartuban megrendezendő Európa kulturális fővárosa rendezvénysorozat keretein belül. A projekt neve az angol “arc” (jelentése “ív”) szóból ered, ami egyben az adaptation : rebirth : change (direkt csupa kisbetűvel írva) szavak kezdőbetűi által létrehozott akronim is, kettőspontokkal elválasztva ez egyes betűket. Ezek fogalmak a túlélésért folytatott harcunk/küzdelmünk/erőfeszítéseink állomásaiként egymásból következnek, egymásra épülnek, az ív/arc tehát egy jól felépíthető folyamatot reprezentál."
+                      : "Our school presents itself with an overall art project within the framework of the Cultural Capital of Europe event series to be held in Tartu, Estonia. The name of the project comes from the English word 'arc' (meaning 'ív' in Hungarian), which is also an acronym created by the initial letters of the words adaptation : rebirth : change (written directly in all lowercase letters), separated by colons. These concepts follow each other as the stages of our fight/struggle/efforts for survival, they build on each other, the arc/face therefore represents a well-structured process."}{" "}
                   </p>
                 </div>
-                <div className="summary-image alul">
-
-                  <img src={process.env.PUBLIC_URL+"/kepek/bg2.jpg"} alt="Kép leírása" style={{ maxWidth: '600px', width: '100%', height: 'auto' }} />
-                </div>
               </div>
+            </div>
 
-
-              <span></span>
-
-
-              <div className="summary-content left">
-                <div className="summary-text left felul">
-                  <h1>Alkotók</h1>
-
-                  <p>
-
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-                </div>
-                <div className="summary-image left alul">
-
-                  <img src={process.env.PUBLIC_URL+"/kepek/bg3.jpg"} alt="Kép leírása" style={{ maxWidth: '600px', width: '100%' }} />
-                </div>
+            <div className="summary-content">
+              <div className="summary-text felul">
+                <h1>{selectedLanguage === "hu" ? "Csapatok" : "Teams"}</h1>
+                <p>
+                  {selectedLanguage === "hu"
+                    ? "Az a:r:c projekt művész diákokból álló csapatai, mind külön-külön kategóriákban alkottak..."
+                    : "The teams of student artists of the a:r:c project all created in separate categories..."}
+                </p>
               </div>
+              <div className="summary-image alul">
+                <img
+                  src={process.env.PUBLIC_URL + "/kepek/bg2.jpg"}
+                  alt="Kép leírása"
+                  style={{ maxWidth: "600px", width: "100%", height: "auto" }}
+                />
+              </div>
+            </div>
 
-              <span></span>
+            <span></span>
 
-              <div className="summary-content">
-                <div className="summary-text felul">
-                  <h1>Projektek</h1>
+            <div className="summary-content left">
+              <div className="summary-text left felul">
+                <h1>{selectedLanguage === "hu" ? "Alkotók" : "Creators"}</h1>
+                <p>
+                  {selectedLanguage === "hu"
+                    ? "Diákjaink, kiknek munkája nélkül ez az egész nem jöhetett volna létre..."
+                    : "Our students, without whose work all this would not have been possible..."}
+                </p>
+              </div>
+              <div className="summary-image left alul">
+                <img
+                  src={process.env.PUBLIC_URL + "/kepek/bg3.jpg"}
+                  alt="Kép leírása"
+                  style={{ maxWidth: "600px", width: "100%" }}
+                />
+              </div>
+            </div>
 
-                  <p>
+            <span></span>
 
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-                </div>
-                <div className="summary-image alul">
-
-                  <img src={process.env.PUBLIC_URL+"/kepek/bg.jpg"} alt="Kép leírása" style={{ maxWidth: '600px', width: '100%' }} />
-                </div>
+            <div className="summary-content">
+              <div className="summary-text felul">
+                <h1>Projektek</h1>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+              </div>
+              <div className="summary-image alul">
+                <img
+                  src={process.env.PUBLIC_URL + "/kepek/bg.jpg"}
+                  alt="Kép leírása"
+                  style={{ maxWidth: "600px", width: "100%" }}
+                />
               </div>
             </div>
           </div>
         </div>
-       
-    
+      </div>
     </div>
   );
 };
