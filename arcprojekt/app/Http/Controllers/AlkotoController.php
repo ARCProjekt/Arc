@@ -54,12 +54,11 @@ class AlkotoController extends Controller
             ->where('buszkesegeink', '=', false)
             ->update(['buszkesegeink' => 1]);
     }
-    //adott alkoto
+
     public function adottAlkoto($alkoto_id)
     {
         $alkoto = DB::table('alkotos')
-            //->select('nev_nyelv.magyar as nev', 'bemutat_nyelv.magyar as bemutatkozas', 'szak_nyelv.magyar as szak')
-            ->select('nev_nyelv.magyar as nevHU', 'nev_nyelv.angol as nevEN', 'bemutat_nyelv.magyar as bemutatHU', 'bemutat_nyelv.angol as bemutatEN', 'szak_nyelv.magyar as szakHU', 'szak_nyelv.angol as szakEN', 'kepeks.kep_azon as kep', 'kategoria_nyelv.magyar as kategoriaHU', 'kategoria_nyelv.angol as kategoriaEN')
+            ->select('nev_nyelv.magyar as nevHU', 'nev_nyelv.angol as nevEN', 'bemutat_nyelv.magyar as bemutatHU', 'bemutat_nyelv.angol as bemutatEN', 'szak_nyelv.magyar as szakHU', 'szak_nyelv.angol as szakEN', 'kepeks.kep_azon as kep', 'kategoria_nyelv.magyar as kategoriaHU', 'kategoria_nyelv.angol as kategoriaEN', 'csapats.cs_azon as csapat_id')
             ->join('nyelvs as nev_nyelv', 'alkotos.nyelv_id_nev', '=', 'nev_nyelv.nyelv_id')
             ->join('nyelvs as bemutat_nyelv', 'alkotos.nyelv_id_bemutat', '=', 'bemutat_nyelv.nyelv_id')
             ->join('szaks', 'alkotos.szak_id', '=', 'szaks.szak_id')
@@ -70,25 +69,16 @@ class AlkotoController extends Controller
             ->join('nyelvs as kategoria_nyelv', 'kategorias.nyelv_id_elnevezes', '=', 'kategoria_nyelv.nyelv_id')
             ->where('a_azon', '=', $alkoto_id)
             ->get();
-        //return $alkoto; 
-
-        /* $alkoto = DB::select('
-        SELECT nev_nyelv.magyar
-        from alkotos
-        inner join nyelvs as nev_nyelv
-        on alkotos.nyelv_id_nev = nev_nyelv.nyelv_id
-        where a_azon = {}
-        '); */
         return response()->json(['adottalkoto' => $alkoto]);
     }
-    //buszkeseg listazasa
+
     public function buszkesegKiir()
     {
         $buszkesegeink = DB::select('
-            SELECT nyelvs.magyar as alkoto_nev, nyelvs_bemutat.magyar as bemutato_nev, kepeks.kep, szak_elnev.magyar as szak
+            SELECT nev_nyelv.magyar as alkoto_nevHU, nev_nyelv.angol as alkoto_nevEN, nyelvs_bemutat.magyar as bemutatoHU, nyelvs_bemutat.angol as bemutatoEN, kepeks.kep as kep, szak_elnev.magyar as szakHU, szak_elnev.angol as szakEN, a_azon as id
             from alkotos
-            inner join nyelvs
-            on alkotos.nyelv_id_nev = nyelvs.nyelv_id
+            inner join nyelvs as nev_nyelv
+            on alkotos.nyelv_id_nev = nev_nyelv.nyelv_id
             INNER JOIN nyelvs AS nyelvs_bemutat 
             ON alkotos.nyelv_id_bemutat = nyelvs_bemutat.nyelv_id
             inner join kepeks
@@ -146,7 +136,7 @@ class AlkotoController extends Controller
     public function update(Request $request, $id)
     {
         $alkoto = Alkoto::find($id);
-    
+
         try {
             // Alkotó nevének nyelvi objektumának frissítése
             if (!empty($request->magyar_nev)) {
@@ -156,7 +146,7 @@ class AlkotoController extends Controller
                 );
                 $alkoto->nyelv_id_nev = $nyelvMagyarNev->nyelv_id;
             }
-    
+
             // Alkotó bemutatkozásának nyelvi objektumának frissítése
             if (!empty($request->magyar_bemutat)) {
                 $nyelvMagyarBemutat = Nyelv::updateOrCreate(
@@ -165,7 +155,7 @@ class AlkotoController extends Controller
                 );
                 $alkoto->nyelv_id_bemutat = $nyelvMagyarBemutat->nyelv_id;
             }
-    
+
             // Alkotó adatainak frissítése
             $alkoto->fill($request->only([
                 'szak_id',
@@ -173,19 +163,18 @@ class AlkotoController extends Controller
                 'cs_azon',
                 'buszkesegeink',
             ]));
-        
+
             // Alkotó frissítése
             $alkoto->save();
-           
+
             return response()->json(['message' => 'Az alkotó sikeresen frissítve lett!'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
         }
     }
-    
-    public function delete($id){
+
+    public function delete($id)
+    {
         Alkoto::find($id)->delete();
     }
-    
-
 }
