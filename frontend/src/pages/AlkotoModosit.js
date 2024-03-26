@@ -183,7 +183,7 @@ const AlkotoLetrehoz = () => {
   const [kepek, setKepek] = useState([]);
   const [editableRow, setEditableRow] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
-  const [szerkesztAlkoto, setszerkesztAlkoto] = useState(null);
+  const [szerkesztAlkoto, setszerkesztAlkoto] = useState({});
   const [csapatok, setCsapatok] = useState([]);
   const [szakok, setSzakok] = useState([]);
   const [formData, setFormData] = useState({
@@ -247,10 +247,6 @@ const AlkotoLetrehoz = () => {
     };
     getKepek();
   }, []);
-  const handleEditClick = (id) => {
-    console.log(id);
-    setEditableRow((prevEditableRow) => (prevEditableRow === id ? null : id));
-  };
 
   const handleChange = (e) => {
     setFormData({
@@ -260,19 +256,29 @@ const AlkotoLetrehoz = () => {
   };
 
   const handleInputChange = (e, id, key) => {
+    const value = e.target.type === 'file' ? e.target.files[0] : e.target.value;
     const newData = alkotok.map((item) =>
-      item.a_azon === id ? { ...item, [key]: e.target.value } : item
+      item.a_azon === id
+        ? { ...item, [key]: value }
+        : item
     );
     setAlkotok(newData);
-
+  
     if (id === editableRow) {
-      setszerkesztAlkoto({
-        ...szerkesztAlkoto,
-        [key]: e.target.value,
-      });
+      // Frissítsük az állapotot egy funkció segítségével az aktuális érték alapján
+      setszerkesztAlkoto(prevState => ({
+        ...prevState,
+        [key]: value,
+      }));
     }
   };
+  
+  
 
+  const handleEditClick = (id) => {
+    console.log(id);
+    setEditableRow((prevEditableRow) => (prevEditableRow === id ? null : id));
+  };
   const torol = async (id) => {
     try {
       const url = `api/alkototorol/${id}`;
@@ -320,12 +326,11 @@ const AlkotoLetrehoz = () => {
   };
 
   const update = async (a_azon) => {
+    const url = `api/alkotoszerkeszt/${a_azon}`;
     if (!szerkesztAlkoto) {
-      console.error("Nincs szerkesztett alkotó.");
+      console.error("Nincs szerkesztett alkotó.", a_azon.data);
       return;
     }
-
-    const url = `api/alkotoszerkeszt/${a_azon}`;
     try {
       const response = await axios.patch(
         url,
@@ -337,7 +342,8 @@ const AlkotoLetrehoz = () => {
           angol_bemutat: szerkesztAlkoto.angol_bemutat,
           kep: szerkesztAlkoto.kep_azon,
           cs_azon: szerkesztAlkoto.cs_azon,
-          buszkesegeink: szerkesztAlkoto.isChecked ? "1" : "0",
+          buszkesegeink: szerkesztAlkoto.buszkesegeink,
+          isChecked: szerkesztAlkoto.isChecked, // Hozzáadva
         },
         {
           headers: {
@@ -352,7 +358,6 @@ const AlkotoLetrehoz = () => {
       setEditableRow(null);
       setszerkesztAlkoto(null);
       setIsChecked(szerkesztAlkoto.isChecked);
-      window.location.reload(); // isChecked érték beállítása
     } catch (error) {
       console.error("Hiba történt a alkotó frissítésekor: ", error);
       console.log(error.response);
@@ -558,7 +563,6 @@ const AlkotoLetrehoz = () => {
                       item.magyar_nev
                     )}
                   </td>
-
                   <td>
                     {editableRow === item.a_azon ? (
                       <>
@@ -586,15 +590,16 @@ const AlkotoLetrehoz = () => {
                       item.magyar_bemutat
                     )}
                   </td>
-
                   <td>
                     {editableRow === item.a_azon ? (
                       <select
                         style={{ maxWidth: "300px" }}
                         id="kep_azon"
                         name="kep_azon"
-                        value={item.kep}
-                        onChange={handleChange}
+                        value={item.kep_azon}
+                        onChange={(e) =>
+                          handleInputChange(e, item.a_azon, "kep")
+                        }
                       >
                         <option>Válassz egy képet</option>
                         {kepek.map((team) => (
@@ -614,7 +619,9 @@ const AlkotoLetrehoz = () => {
                         id="szak_id"
                         name="szak_id"
                         value={item.szak_id}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          handleInputChange(e, item.a_azon, "szak_id")
+                        }
                       >
                         <option>Válassz egy szakot</option>
                         {szakok.map((team) => (
@@ -634,7 +641,9 @@ const AlkotoLetrehoz = () => {
                         id="cs_azon"
                         name="cs_azon"
                         value={item.cs_azon}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          handleInputChange(e, item.a_azon, "cs_azon")
+                        }
                       >
                         <option>Válassz egy csapatot</option>
                         {csapatok.map((team) => (
@@ -651,25 +660,31 @@ const AlkotoLetrehoz = () => {
                     {editableRow === item.a_azon ? (
                       <>
                         <input
-                          type="radio"
-                          id={`nem_${item.a_azon}`}
+                          type="checkbox"
+                          id={`buszkesegeink-nem-${item.a_azon}`}
                           name={`buszkesegeink_${item.a_azon}`}
                           value="0"
-                          //checked={!alkotoBuszke[item.a_azon]}
-                          onChange={() => update(item.a_azon, false)}
+                          //checked={item.isChecked === "0"} // Ellenőrizzük, hogy a rádiógomb 0 értékű-e
+                          onChange={(e) =>
+                            handleInputChange(e, item.a_azon, "buszkesegeink")
+                          }
                         />
-                        <label htmlFor={`buszkesegeink-nem_${item.a_azon}`}>
+                        <label htmlFor={`buszkesegeink-nem-${item.a_azon}`}>
                           Nem
                         </label>
+
                         <input
-                          type="radio"
-                          id={`igen_${item.a_azon}`}
+                          type="checkbox"
+                          id={`buszkesegeink-igen-${item.a_azon}`}
                           name={`buszkesegeink_${item.a_azon}`}
                           value="1"
-                          //checked={alkotoBuszke[item.a_azon]}
-                          onChange={() => update(item.a_azon, true)}
+                          //checked={item.isChecked === "1"} // Ellenőrizzük, hogy a rádiógomb 1 értékű-e
+                          onChange={(e) =>
+                            handleInputChange(e, item.a_azon, "buszkesegeink")
+                          }
                         />
-                        <label htmlFor={`buszkesegeink-igen_${item.a_azon}`}>
+
+                        <label htmlFor={`buszkesegeink-igen-${item.a_azon}`}>
                           Igen
                         </label>
                       </>
