@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "../css/Kozos.css";
 import axios from "../api/axios";
-const Kepletrehoz = ({}) => {
-  const [ujToken2, setUjToken] = useState("");
+const Kepletrehoz = () => {
+  // const [ujToken2, setUjToken] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
     kep: "",
@@ -17,7 +17,7 @@ const Kepletrehoz = ({}) => {
       [e.target.name]: e.target.value,
     });
   };
-  
+
   const handleFileChange = (e) => {
     const image = e.target.files[0];
     setFormData({
@@ -38,8 +38,14 @@ const Kepletrehoz = ({}) => {
       // Képfeltöltés kódja
       const formDataWithImage = new FormData();
       formDataWithImage.append("kep", formData.kep);
-      formDataWithImage.append("nyelv_id_leiras_magyar", formData.kep_leiras_magyar); // Módosítás: Hozzáadva
-      formDataWithImage.append("nyelv_id_leiras_angol", formData.kep_leiras_angol); // Módosítás: Hozzáadva
+      formDataWithImage.append(
+        "nyelv_id_leiras_magyar",
+        formData.kep_leiras_magyar
+      ); // Módosítás: Hozzáadva
+      formDataWithImage.append(
+        "nyelv_id_leiras_angol",
+        formData.kep_leiras_angol
+      ); // Módosítás: Hozzáadva
       formDataWithImage.append("fotos_neve", formData.fotos_neve);
 
       const response = await axios.post(
@@ -170,9 +176,8 @@ const Kepletrehoz = ({}) => {
       </form>
     </div>
   );
-}
-;
-const AlkotoLetrehoz = ({}) => {
+};
+const AlkotoLetrehoz = () => {
   const [ujToken2, setUjToken] = useState("");
   const [alkotok, setAlkotok] = useState([]);
   const [kepek, setKepek] = useState([]);
@@ -316,7 +321,7 @@ const AlkotoLetrehoz = ({}) => {
 
   const update = async (a_azon) => {
     if (!szerkesztAlkoto) {
-      console.error("Nincs szerkesztett felhasználó.");
+      console.error("Nincs szerkesztett alkotó.");
       return;
     }
 
@@ -346,8 +351,8 @@ const AlkotoLetrehoz = ({}) => {
       console.log("Alkoto frissítve: ", response.data);
       setEditableRow(null);
       setszerkesztAlkoto(null);
-      setIsChecked(szerkesztAlkoto.isChecked); 
-      window.location.reload();// isChecked érték beállítása
+      setIsChecked(szerkesztAlkoto.isChecked);
+      window.location.reload(); // isChecked érték beállítása
     } catch (error) {
       console.error("Hiba történt a alkotó frissítésekor: ", error);
       console.log(error.response);
@@ -505,7 +510,6 @@ const AlkotoLetrehoz = ({}) => {
           >
             Mentés
           </button>
-          <input type="hidden" name="_token" value="{{ csrf_token() }}" />
         </form>
       </div>
       <div className="tablazat ">
