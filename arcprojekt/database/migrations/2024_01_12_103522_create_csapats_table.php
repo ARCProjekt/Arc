@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('csapats', function (Blueprint $table) {
-            $table->id('cs_azon');
+            $table->id('cs_azon')->nullable();
             $table->foreignId('galeria_id')->references('galeria_id')->on('galerias');
             $table->foreignId('k_id')->references('k_id')->on('kategorias');
             $table->foreignId('nyelv_id_csapat_nev')->references('nyelv_id')->on('nyelvs');

@@ -260,6 +260,20 @@ const CsapatLetrehoz = ({ galeriaId }) => {
   useEffect(() => {
     csrf();
   }, []);
+  const [kategoriak, setkategoiak] = useState([]);
+  useEffect(() => {
+    const getkategoriak = async () => {
+      const apibejegyzes = await axios.get(
+        "http://localhost:8000/api/kategoriaElnev"
+      );
+      console.log(apibejegyzes.data.kategoriak.magyar);
+      setkategoiak(apibejegyzes.data.kategoriak);
+    };
+    getkategoriak();
+  }, []);
+  useEffect(() => {
+    csrf();
+  }, []);
 
   const csrf = async () => {
     try {
@@ -298,16 +312,17 @@ const CsapatLetrehoz = ({ galeriaId }) => {
     }
   };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+ const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({
+    ...formData,
+    [name]: value,
+  });
+};
 
   const handleInputChange = (e, cs_azon, key) => {
-    const newData = csapatok.map((item) =>
-      item.cs_azon === cs_azon ? { ...item, [key]: e.target.value } : item
+    const newData = csapatok.map((csapat) =>
+      csapat.cs_azon === cs_azon ? { ...csapat, [key]: e.target.value } : csapat
     );
     setCsapatok(newData);
   };
@@ -318,210 +333,256 @@ const CsapatLetrehoz = ({ galeriaId }) => {
     );
   };
 
+  const torol = async (cs_azon) => {
+    try {
+      const url = `http://localhost:8000/api/csapatTorol/${cs_azon}`;
+      const response = await axios.delete(url, {
+        headers: {
+          "X-CSRF-TOKEN": ujToken2,
+        },
+        withCredentials: true,
+      });
+      console.log("Csapat törölve: ", response.data);
+      setCsapatok((prevCsapatok) =>
+        prevCsapatok.filter((csapat) => csapat.cs_azon !== cs_azon)
+      );
+    } catch (error) {
+      console.error("Hiba történt a csapat törlésekor: ", error);
+      console.log(error.response);
+    }
+  };
+
   return (
-      <div>
-        <div className="feltoltes" style={{ textAlign: "center" }}>
-          <h3 style={{ marginBottom: "20px" }}>Új csapat</h3>
-          <form
-            onSubmit={handleSubmit}
+    <div>
+      <div className="feltoltes" style={{ textAlign: "center" }}>
+        <h3 style={{ marginBottom: "20px" }}>Új csapat</h3>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "grid",
+            gap: "10px",
+            maxWidth: "400px",
+            margin: "0 auto",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <label htmlFor="galeria_id">Galeria ID:</label>
+            <input
+              type="text"
+              id="galeria_id"
+              name="galeria_id"
+              value={galeriaId}
+              readOnly
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                backgroundColor: "#f0f0f0",
+              }}
+            />
+          </div>
+
+         {/* <label htmlFor="k_id">Válassz Kategóriát:</label>
+          <select
+            id="k_id"
+            name="k_id"
+            value={formData.k_id}
+            onChange={handleChange}
+            required
+          >
+            {kategoriak.map((elem) => (
+              <option key={elem.id} value={elem.id}>
+                {elem.magyar}
+              </option>
+              
+            ))}
+          </select>
+           */}
+           <label htmlFor="k_id">Kategória ID:</label>
+           <input
+             type="text"
+             id="k_id"
+             name="k_id"
+             value={formData.k_id}
+             onChange={handleChange}
+             required
+             style={{
+               padding: "8px",
+               borderRadius: "4px",
+               border: "1px solid #ccc",
+             }}
+           />
+
+          <label htmlFor="magyar_nev">Magyar Név:</label>
+          <input
+            type="text"
+            id="magyar_nev"
+            name="magyar_nev"
+            value={formData.magyar_nev}
+            onChange={handleChange}
+            required
             style={{
-              display: "grid",
-              gap: "10px",
-              maxWidth: "400px",
-              margin: "0 auto",
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+          />
+
+          <label htmlFor="angol_nev">Angol Név:</label>
+          <input
+            type="text"
+            id="angol_nev"
+            name="angol_nev"
+            value={formData.angol_nev}
+            onChange={handleChange}
+            required
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+          />
+
+          <label htmlFor="magyar_leiras">Magyar Leírás:</label>
+          <input
+            type="text"
+            id="magyar_leiras"
+            name="magyar_leiras"
+            value={formData.magyar_leiras}
+            onChange={handleChange}
+            required
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+          />
+
+          <label htmlFor="angol_leiras">Angol Leírás:</label>
+          <input
+            type="text"
+            id="angol_leiras"
+            name="angol_leiras"
+            value={formData.angol_leiras}
+            onChange={handleChange}
+            required
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+          />
+
+          <button
+            type="submit"
+            style={{
+              padding: "10px",
+              backgroundColor: "#007bff",
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <label htmlFor="galeria_id">Galeria ID:</label>
-              <input
-                type="text"
-                id="galeria_id"
-                name="galeria_id"
-                value={galeriaId}
-                readOnly
-                style={{
-                  padding: "8px",
-                  borderRadius: "4px",
-                  border: "1px solid #ccc",
-                  backgroundColor: "#f0f0f0",
-                }}
-              />
-            </div>
-
-            {/* További input mezők */}
-            <label htmlFor="k_id">Kategória ID:</label>
-            <input
-              type="text"
-              id="k_id"
-              name="k_id"
-              value={formData.k_id}
-              onChange={handleChange}
-              required
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            />
-
-            <label htmlFor="magyar_nev">Magyar Név:</label>
-            <input
-              type="text"
-              id="magyar_nev"
-              name="magyar_nev"
-              value={formData.magyar_nev}
-              onChange={handleChange}
-              required
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            />
-
-            <label htmlFor="angol_nev">Angol Név:</label>
-            <input
-              type="text"
-              id="angol_nev"
-              name="angol_nev"
-              value={formData.angol_nev}
-              onChange={handleChange}
-              required
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            />
-
-            <label htmlFor="magyar_leiras">Magyar Leírás:</label>
-            <input
-              type="text"
-              id="magyar_leiras"
-              name="magyar_leiras"
-              value={formData.magyar_leiras}
-              onChange={handleChange}
-              required
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            />
-
-            <label htmlFor="angol_leiras">Angol Leírás:</label>
-            <input
-              type="text"
-              id="angol_leiras"
-              name="angol_leiras"
-              value={formData.angol_leiras}
-              onChange={handleChange}
-              required
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-            />
-
-            <button
-              type="submit"
-              style={{
-                padding: "10px",
-                backgroundColor: "#007bff",
-                color: "#fff",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
-              Csapat létrehozása
-            </button>
-          </form>
-        </div>
-        <div className="tablazat" style={{ width: "48%" }}>
-          <div>
-            <h3>Csapatok</h3>
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr>
-                  <th>Azonosító</th>
-                  <th>Galeria ID</th>
-                  <th>Kategória ID</th>
-                  <th>Csapat Nev </th>
-                  <th>Csapat Bemutat Magyar</th>
-                  <th>Actions</th>
+            Csapat létrehozása
+          </button>
+        </form>
+      </div>
+      <div className="tablazat" style={{ width: "48%" }}>
+        <div>
+          <h3>Csapatok</h3>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th>Azonosító</th>
+                <th>Galeria ID</th>
+                <th>Kategória ID</th>
+                <th>Csapat Nev</th>
+                <th>Csapat Bemutat Magyar</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {csapatok.map((csapat) => (
+                <tr key={csapat.cs_azon}>
+                  <td>{csapat.cs_azon}</td>
+                  <td>{csapat.galeria_id}</td>
+                  <td>
+                    {editableRow === csapat.cs_azon ? (
+                      <input
+                        type="text"
+                        value={csapat.k_id}
+                        onChange={(e) =>
+                          handleInputChange(e, csapat.cs_azon, "k_id")
+                        }
+                      />
+                    ) : (
+                      csapat.k_id
+                    )}
+                  </td>
+                  <td>
+                    {editableRow === csapat.cs_azon ? (
+                      <input
+                        type="text"
+                        value={csapat.csapat_nev_magyar}
+                        onChange={(e) =>
+                          handleInputChange(
+                            e,
+                            csapat.cs_azon,
+                            "csapat_nev_magyar"
+                          )
+                        }
+                      />
+                    ) : (
+                      csapat.csapat_nev_magyar
+                    )}
+                  </td>
+                  <td>
+                    {editableRow === csapat.cs_azon ? (
+                      <input
+                        type="text"
+                        value={csapat.csapat_bemutat_magyar}
+                        onChange={(e) =>
+                          handleInputChange(
+                            e,
+                            csapat.cs_azon,
+                            "csapat_bemutat_magyar"
+                          )
+                        }
+                      />
+                    ) : (
+                      csapat.csapat_bemutat_magyar
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() => torol(csapat.cs_azon)}
+                      style={{
+                        padding: "8px",
+                        backgroundColor: "#dc3545",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Törlés
+                    </button>
+                    <button
+                      style={{ background: "none", border: "none" }}
+                      onClick={() => handleEditClick(csapat.cs_azon)}
+                    >
+                      {editableRow === csapat.cs_azon ? "✔️" : "🖌"}
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {csapatok.map((item) => (
-                  <tr key={item.cs_azon}>
-                    <td>{item.cs_azon}</td>
-                    <td>{item.galeria_id}</td>
-                    <td>
-                      {editableRow === item.cs_azon ? (
-                        <input
-                          type="text"
-                          value={item.k_id}
-                          onChange={(e) =>
-                            handleInputChange(e, item.cs_azon, "k_id")
-                          }
-                        />
-                      ) : (
-                        item.k_id
-                      )}
-                    </td>
-                    <td>
-                      {editableRow === item.cs_azon ? (
-                        <input
-                          type="text"
-                          value={item.csapat_nev_magyar}
-                          onChange={(e) =>
-                            handleInputChange(
-                              e,
-                              item.cs_azon,
-                              "csapat_nev_magyar"
-                            )
-                          }
-                        />
-                      ) : (
-                        item.csapat_nev_magyar
-                      )}
-                    </td>
-                    <td>
-                      {editableRow === item.cs_azon ? (
-                        <input
-                          type="text"
-                          value={item.csapat_bemutat_magyar}
-                          onChange={(e) =>
-                            handleInputChange(
-                              e,
-                              item.cs_azon,
-                              "csapat_bemutat_magyar"
-                            )
-                          }
-                        />
-                      ) : (
-                        item.csapat_bemutat_magyar
-                      )}
-                    </td>
-                    <td>
-                      <button
-                        style={{ background: "none", border: "none" }}
-                        onClick={() => handleEditClick(item.cs_azon)}
-                      >
-                        {editableRow === item.cs_azon ? "✔️" : "🖌"}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
-        </div>
-
-     
+      </div>
+    </div>
   );
 };
 const GaleriaEsCsapatLetrehoz = () => {
@@ -539,14 +600,17 @@ const GaleriaEsCsapatLetrehoz = () => {
   return (
     <div className="summary-section">
       <div className="cont">
-      <button onClick={handleButtonClick}>
-        Hozzon létre új Galériát!
-      </button>
-      {showGaleriaService && <GaleriaService onGaleriaCreated={handleGaleriaCreated} />}
-      <CsapatLetrehoz galeriaId={galeriaId} onGaleriaCreated={handleGaleriaCreated} />
-    </div>
+        <button onClick={handleButtonClick}>Hozzon létre új Galériát!</button>
+        {showGaleriaService && (
+          <GaleriaService onGaleriaCreated={handleGaleriaCreated} />
+        )}
+        <CsapatLetrehoz
+          galeriaId={galeriaId}
+          onGaleriaCreated={handleGaleriaCreated}
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default GaleriaEsCsapatLetrehoz;

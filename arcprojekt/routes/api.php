@@ -41,6 +41,7 @@ Route::middleware('auth.basic')->group(function () {
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
+    Route::delete('csapatTorol/{cs_azon}', [CsapatController::class, 'csapatTorol']);
     
   
     Route::middleware(['admin'])->group(function () {

@@ -153,4 +153,8 @@ class CsapatController extends Controller
         // Válasz küldése, beleértve a tokent is
         return response()->json(['message' => 'Csapat sikeresen létrehozva', 'csapat' => $createdCsapat, 'access_token' => $token], 200);
     } */
+    public function csapatTorol($id){
+        Alkoto::where('cs_azon', $id)->delete();
+        Csapat::destroy($id);
+    }
 }

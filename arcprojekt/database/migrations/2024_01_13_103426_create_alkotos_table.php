@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('kep_azon')->references('kep_azon')->on('kepeks');
             $table->foreignId('nyelv_id_bemutat')->references('nyelv_id')->on('nyelvs');
             $table->boolean('buszkesegeink')->default(0);
-            $table->foreignId('cs_azon')->references('cs_azon')->on('csapats');
+            $table->foreignId('cs_azon')->nullable()->references('cs_azon')->on('csapats');
             $table->timestamps();
         });
 
