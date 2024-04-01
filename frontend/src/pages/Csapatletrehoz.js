@@ -67,7 +67,6 @@ const GaleriaService = ({ onGaleriaCreated }) => {
 
       const { galeria_id } = response.data;
       onGaleriaCreated(galeria_id);
-
     } catch (error) {
       console.error("Hiba történt a galéria létrehozása során:", error);
     }
@@ -78,29 +77,50 @@ const GaleriaService = ({ onGaleriaCreated }) => {
       <div className="cont">
         <div className="feltoltes" style={{ textAlign: "center" }}>
           <h3 style={{ marginBottom: "20px" }}>Galéria létrehozása</h3>
-          <form onSubmit={handleSubmit} encType="multipart/form-data" style={{ display: "grid", gap: "10px", maxWidth: "400px", margin: "0 auto" }}>
+          <form
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+            style={{
+              display: "grid",
+              gap: "10px",
+              maxWidth: "400px",
+              margin: "0 auto",
+            }}
+          >
             <div style={{ display: "flex", alignItems: "center" }}>
-              <label htmlFor="galeria_leiras_magyar">Galéria leírása (Magyar):</label>
+              <label htmlFor="galeria_leiras_magyar">
+                Galéria leírása (Magyar):
+              </label>
               <input
                 type="text"
                 name="galeria_leiras[magyar]"
                 id="galeria_leiras_magyar"
                 onChange={handleChange}
                 required
-                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+                style={{
+                  padding: "8px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
               />
             </div>
             <br />
 
             <div style={{ display: "flex", alignItems: "center" }}>
-              <label htmlFor="galeria_leiras_angol">Galéria leírása (Angol):</label>
+              <label htmlFor="galeria_leiras_angol">
+                Galéria leírása (Angol):
+              </label>
               <input
                 type="text"
                 name="galeria_leiras[angol]"
                 id="galeria_leiras_angol"
                 onChange={handleChange}
                 required
-                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+                style={{
+                  padding: "8px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
               />
             </div>
             <br />
@@ -113,7 +133,11 @@ const GaleriaService = ({ onGaleriaCreated }) => {
                 id="kep_leiras_magyar"
                 onChange={handleChange}
                 required
-                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+                style={{
+                  padding: "8px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
               />
             </div>
             <br />
@@ -126,7 +150,11 @@ const GaleriaService = ({ onGaleriaCreated }) => {
                 id="kep_leiras_angol"
                 onChange={handleChange}
                 required
-                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+                style={{
+                  padding: "8px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
               />
             </div>
             <br />
@@ -140,9 +168,22 @@ const GaleriaService = ({ onGaleriaCreated }) => {
                 multiple
                 onChange={handleFileChange}
                 required
-                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+                style={{
+                  padding: "8px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
               />
-              <button type="button" onClick={addInput} style={{ marginLeft: "10px", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}>
+              <button
+                type="button"
+                onClick={addInput}
+                style={{
+                  marginLeft: "10px",
+                  padding: "8px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
+              >
                 További kép kiválasztása
               </button>
             </div>
@@ -156,12 +197,26 @@ const GaleriaService = ({ onGaleriaCreated }) => {
                 id="fotos_neve"
                 onChange={handleChange}
                 required
-                style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+                style={{
+                  padding: "8px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
               />
             </div>
             <br />
 
-            <button type="submit" style={{ padding: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer" }}>
+            <button
+              type="submit"
+              style={{
+                padding: "10px",
+                backgroundColor: "#007bff",
+                color: "#fff",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
               Galéria létrehozása
             </button>
           </form>
@@ -202,15 +257,6 @@ const CsapatLetrehoz = ({ galeriaId }) => {
     fetchData();
   }, [ujToken2]);
 
-  const [kategoriak, setkategoiak] = useState([]);
-  useEffect(() => {
-    const getkategoriak = async () => {
-      const apibejegyzes = await axios.get("http://localhost:8000/api/kategoriaElnev");
-      console.log(apibejegyzes.data.kategoriak.magyar)
-      setkategoiak(apibejegyzes.data.kategoriak);
-    };
-    getkategoriak()
-  }, [])
   useEffect(() => {
     csrf();
   }, []);
@@ -273,8 +319,7 @@ const CsapatLetrehoz = ({ galeriaId }) => {
   };
 
   return (
-    <div className="summary-section">
-      <div className="cont">
+      <div>
         <div className="feltoltes" style={{ textAlign: "center" }}>
           <h3 style={{ marginBottom: "20px" }}>Új csapat</h3>
           <form
@@ -287,9 +332,7 @@ const CsapatLetrehoz = ({ galeriaId }) => {
             }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
-
               <label htmlFor="galeria_id">Galeria ID:</label>
-
               <input
                 type="text"
                 id="galeria_id"
@@ -303,34 +346,24 @@ const CsapatLetrehoz = ({ galeriaId }) => {
                   backgroundColor: "#f0f0f0",
                 }}
               />
-              <div> <button
-
-                style={{
-                  padding: "10px",
-                  marginLeft: "10px",
-                  backgroundColor: "#007bff",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
-              >
-                Hozzon létre új Galériát!
-              </button></div>
             </div>
-            
-           
 
-            <label htmlFor="k_id">Válassz tevékenységet:</label>
-            <select id="k_id" name="k_id" value={formData.k_id}
+            {/* További input mezők */}
+            <label htmlFor="k_id">Kategória ID:</label>
+            <input
+              type="text"
+              id="k_id"
+              name="k_id"
+              value={formData.k_id}
               onChange={handleChange}
-              required>
+              required
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
+            />
 
-              {kategoriak.map((elem, i) => (
-                <option value="k_id"> {elem.magyar}</option>
-
-              ))};
-            </select>
             <label htmlFor="magyar_nev">Magyar Név:</label>
             <input
               type="text"
@@ -361,21 +394,36 @@ const CsapatLetrehoz = ({ galeriaId }) => {
               }}
             />
 
-            
-            <p><label htmlFor="magyar_leiras">Magyar Leírás:</label></p>
-            <textarea id="magyar_leiras" name="magyar_leiras" value={formData.magyar_leiras}
+            <label htmlFor="magyar_leiras">Magyar Leírás:</label>
+            <input
+              type="text"
+              id="magyar_leiras"
+              name="magyar_leiras"
+              value={formData.magyar_leiras}
               onChange={handleChange}
-              required rows="4" cols="50"></textarea>
-            <br></br>
+              required
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
+            />
 
-
-            <p><label htmlFor="angol_leiras">Angol Leírás:</label></p>
-            <textarea id="angol_leiras" name="angol_leiras" value={formData.angol_leiras}
+            <label htmlFor="angol_leiras">Angol Leírás:</label>
+            <input
+              type="text"
+              id="angol_leiras"
+              name="angol_leiras"
+              value={formData.angol_leiras}
               onChange={handleChange}
-              required rows="4" cols="50"></textarea>
-            <br></br>
+              required
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
+            />
 
-            
             <button
               type="submit"
               style={{
@@ -471,25 +519,34 @@ const CsapatLetrehoz = ({ galeriaId }) => {
             </table>
           </div>
         </div>
-      </div>
-    </div>
+        </div>
+
+     
   );
 };
-
 const GaleriaEsCsapatLetrehoz = () => {
   const [galeriaId, setGaleriaId] = useState(null);
+  const [showGaleriaService, setShowGaleriaService] = useState(false);
 
   const handleGaleriaCreated = (id) => {
     setGaleriaId(id);
   };
 
+  const handleButtonClick = () => {
+    setShowGaleriaService(true);
+  };
+
   return (
-    <div>
-
-      <CsapatLetrehoz galeriaId={galeriaId} />
-
+    <div className="summary-section">
+      <div className="cont">
+      <button onClick={handleButtonClick}>
+        Hozzon létre új Galériát!
+      </button>
+      {showGaleriaService && <GaleriaService onGaleriaCreated={handleGaleriaCreated} />}
+      <CsapatLetrehoz galeriaId={galeriaId} onGaleriaCreated={handleGaleriaCreated} />
+    </div>
     </div>
   );
-};
+}
 
 export default GaleriaEsCsapatLetrehoz;
