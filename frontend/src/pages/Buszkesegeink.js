@@ -39,7 +39,7 @@ export default function Buszkesegeink() {
                   <div className="col-md-8 d-flex flex-column">
                     <div className="card-body text-center p-3">
                       <h5 className="card-title">{elem.alkoto_nev}</h5>
-                      <p className="card-text">{"Szak: " + elem.szak}</p>
+                      <p className="card-text">{"Szak: " + elem.szakHU}</p>
                     </div>
                     <div className="mt-auto text-center p-3">
                       <Nav.Link className="link" as={Link} to="/alkoto">

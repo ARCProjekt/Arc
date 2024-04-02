@@ -29,12 +29,12 @@ const Kepletrehoz = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       // Először CSRF token lekérése
       const ujToken = await axios.get("token");
       const ujToken2 = ujToken.data;
-
+  
       // Képfeltöltés kódja
       const formDataWithImage = new FormData();
       formDataWithImage.append("kep", formData.kep);
@@ -47,7 +47,8 @@ const Kepletrehoz = () => {
         formData.kep_leiras_angol
       ); // Módosítás: Hozzáadva
       formDataWithImage.append("fotos_neve", formData.fotos_neve);
-
+      formDataWithImage.append("kep_azon", formData.kep_azon); // Ez az új sor
+  
       const response = await axios.post(
         "api/kepek/alkotoKepek",
         formDataWithImage,
@@ -66,6 +67,7 @@ const Kepletrehoz = () => {
       console.log("Server response:", error.response.data);
     }
   };
+  
 
   return (
     <div className="kepFeltoltes">
@@ -255,25 +257,28 @@ const AlkotoLetrehoz = () => {
     });
   };
 
-  const handleInputChange = (e, id, key) => {
-    const value = e.target.type === 'file' ? e.target.files[0] : e.target.value;
-    const newData = alkotok.map((item) =>
-      item.a_azon === id
-        ? { ...item, [key]: value }
-        : item
-    );
-    setAlkotok(newData);
-  
-    if (id === editableRow) {
-      // Frissítsük az állapotot egy funkció segítségével az aktuális érték alapján
-      setszerkesztAlkoto(prevState => ({
-        ...prevState,
-        [key]: value,
-      }));
+  const handleInputChange = (e, a_azon, key) => {
+    const value = e.target.value;
+
+    // Megkeressük az alkotót a_azon alapján
+    const index = alkotok.findIndex((item) => item.a_azon === a_azon);
+    if (index !== -1) {
+      // Ha találtunk egyezést, akkor csak az adott elemet módosítjuk
+      const updatedAlkoto = { ...alkotok[index], [key]: value };
+      const newData = [...alkotok];
+      newData[index] = updatedAlkoto;
+      console.log(newData[index]);
+      setAlkotok(newData);
+
+      if (a_azon === editableRow) {
+        // Frissítsük az állapotot egy funkció segítségével az aktuális érték alapján
+        setszerkesztAlkoto((prevState) => ({
+          ...prevState,
+          [key]: value,
+        }));
+      }
     }
   };
-  
-  
 
   const handleEditClick = (id) => {
     console.log(id);
@@ -309,7 +314,7 @@ const AlkotoLetrehoz = () => {
       // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
         "api/alkotoletrehoz",
-        { ...formData, buszkesegeink: isChecked ? "1" : "0" },
+        { ...formData, buszkesegeink: isChecked ? "1" : "0" ,},
         {
           headers: {
             "X-CSRF-TOKEN": ujToken2,
@@ -340,10 +345,9 @@ const AlkotoLetrehoz = () => {
           angol_nev: szerkesztAlkoto.angol_nev,
           magyar_bemutat: szerkesztAlkoto.magyar_bemutat,
           angol_bemutat: szerkesztAlkoto.angol_bemutat,
-          kep: szerkesztAlkoto.kep_azon,
+          kep_azon: szerkesztAlkoto.kep_azon,
           cs_azon: szerkesztAlkoto.cs_azon,
           buszkesegeink: szerkesztAlkoto.buszkesegeink,
-          isChecked: szerkesztAlkoto.isChecked, // Hozzáadva
         },
         {
           headers: {
@@ -355,8 +359,9 @@ const AlkotoLetrehoz = () => {
       );
 
       console.log("Alkoto frissítve: ", response.data);
+      window.location.reload();
       setEditableRow(null);
-      setszerkesztAlkoto(null);
+      //setszerkesztAlkoto(null);
       setIsChecked(szerkesztAlkoto.isChecked);
     } catch (error) {
       console.error("Hiba történt a alkotó frissítésekor: ", error);
@@ -517,10 +522,9 @@ const AlkotoLetrehoz = () => {
           </button>
         </form>
       </div>
-      <div className="tablazat ">
-        <div>
-          <h3>Alkotók</h3>
-          <table>
+      <div className="tablazat" style={{ backgroundColor: "#edf9ff" }}>
+        <div className="table-responsive">
+          <table className="table table-striped">
             <thead>
               <tr>
                 <th>ID</th>
@@ -530,11 +534,12 @@ const AlkotoLetrehoz = () => {
                 <th>Szak</th>
                 <th>Csapat</th>
                 <th>Büszkeség</th>
+                <th>Műveletek</th>
               </tr>
             </thead>
             <tbody>
               {alkotok.map((item) => (
-                <tr key={item.a_azon}>
+                <tr key={item.a_azon} className="table-row">
                   <td>{item.a_azon}</td>
                   <td>
                     {editableRow === item.a_azon ? (
@@ -598,7 +603,7 @@ const AlkotoLetrehoz = () => {
                         name="kep_azon"
                         value={item.kep_azon}
                         onChange={(e) =>
-                          handleInputChange(e, item.a_azon, "kep")
+                          handleInputChange(e, item.a_azon, "kep_azon")
                         }
                       >
                         <option>Válassz egy képet</option>
@@ -706,8 +711,6 @@ const AlkotoLetrehoz = () => {
                     >
                       {editableRow === item.a_azon ? "✔️" : "🖌"}
                     </button>
-                  </td>
-                  <td>
                     <button
                       style={{ background: "none", border: "none" }}
                       onClick={() => torol(item.a_azon)}

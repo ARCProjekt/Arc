@@ -5,8 +5,6 @@ export default function KepGaleria(props) {
   function kattintas(index) {
     console.log(index);
     props.kattintas(index);
-    /* setAktTermek(index) */
-    /*itt kapja a gyerekkomponenstol az adatot*/
   }
   return (
     <div className="row galeria justify-content-center">

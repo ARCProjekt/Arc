@@ -163,7 +163,6 @@ class AlkotoController extends Controller
                 'cs_azon',
                 'buszkesegeink'
             ]));
-            //$alkoto->buszkesegeink = $request->buszkesegeink;
             // Alkotó frissítése
             $alkoto->save();
 
