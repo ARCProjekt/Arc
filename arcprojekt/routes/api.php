@@ -42,7 +42,7 @@ Route::middleware('auth.basic')->group(function () {
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
     Route::delete('csapatTorol/{cs_azon}', [CsapatController::class, 'csapatTorol']);
-    Route::put('csapatmodosit/{id}', [CsapatController::class, 'update']);
+    Route::put('csapatmodosit/{cs_azon}', [CsapatController::class, 'update']);
   
     Route::middleware(['admin'])->group(function () {
         Route::post('/userletrehoz', [UserController::class, 'store']);

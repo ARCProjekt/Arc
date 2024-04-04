@@ -260,20 +260,6 @@ const CsapatLetrehoz = ({ galeriaId }) => {
   useEffect(() => {
     csrf();
   }, []);
-  const [kategoriak, setkategoiak] = useState([]);
-  useEffect(() => {
-    const getkategoriak = async () => {
-      const apibejegyzes = await axios.get(
-        "http://localhost:8000/api/kategoriaElnev"
-      );
-      console.log(apibejegyzes.data.kategoriak.magyar);
-      setkategoiak(apibejegyzes.data.kategoriak);
-    };
-    getkategoriak();
-  }, []);
-  useEffect(() => {
-    csrf();
-  }, []);
 
   const csrf = async () => {
     try {
@@ -312,13 +298,13 @@ const CsapatLetrehoz = ({ galeriaId }) => {
     }
   };
 
- const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({
-    ...formData,
-    [name]: value,
-  });
-};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleInputChange = (e, cs_azon, key) => {
     const newData = csapatok.map((csapat) =>
@@ -351,7 +337,6 @@ const CsapatLetrehoz = ({ galeriaId }) => {
       console.log(error.response);
     }
   };
-
   return (
     <div>
       <div className="feltoltes" style={{ textAlign: "center" }}>
@@ -382,36 +367,20 @@ const CsapatLetrehoz = ({ galeriaId }) => {
             />
           </div>
 
-         {/* <label htmlFor="k_id">Válassz Kategóriát:</label>
-          <select
+          <label htmlFor="k_id">Kategória ID:</label>
+          <input
+            type="text"
             id="k_id"
             name="k_id"
             value={formData.k_id}
             onChange={handleChange}
             required
-          >
-            {kategoriak.map((elem) => (
-              <option key={elem.id} value={elem.id}>
-                {elem.magyar}
-              </option>
-              
-            ))}
-          </select>
-           */}
-           <label htmlFor="k_id">Kategória ID:</label>
-           <input
-             type="text"
-             id="k_id"
-             name="k_id"
-             value={formData.k_id}
-             onChange={handleChange}
-             required
-             style={{
-               padding: "8px",
-               borderRadius: "4px",
-               border: "1px solid #ccc",
-             }}
-           />
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+          />
 
           <label htmlFor="magyar_nev">Magyar Név:</label>
           <input
