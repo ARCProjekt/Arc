@@ -29,12 +29,12 @@ const Kepletrehoz = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       // Először CSRF token lekérése
       const ujToken = await axios.get("token");
       const ujToken2 = ujToken.data;
-  
+
       // Képfeltöltés kódja
       const formDataWithImage = new FormData();
       formDataWithImage.append("kep", formData.kep);
@@ -48,7 +48,7 @@ const Kepletrehoz = () => {
       ); // Módosítás: Hozzáadva
       formDataWithImage.append("fotos_neve", formData.fotos_neve);
       formDataWithImage.append("kep_azon", formData.kep_azon); // Ez az új sor
-  
+
       const response = await axios.post(
         "api/kepek/alkotoKepek",
         formDataWithImage,
@@ -67,7 +67,7 @@ const Kepletrehoz = () => {
       console.log("Server response:", error.response.data);
     }
   };
-  
+
 
   return (
     <div className="kepFeltoltes">
@@ -314,7 +314,7 @@ const AlkotoLetrehoz = () => {
       // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
         "api/alkotoletrehoz",
-        { ...formData, buszkesegeink: isChecked ? "1" : "0" ,},
+        { ...formData, buszkesegeink: isChecked ? "1" : "0", },
         {
           headers: {
             "X-CSRF-TOKEN": ujToken2,
@@ -373,18 +373,24 @@ const AlkotoLetrehoz = () => {
     <div>
       <div
         className="feltoltes"
-        style={{
-          padding: "50px",
-          borderBottom: "1px grey solid",
-        }}
       >
         <h3>Új Alkotó</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="td">
-            <label htmlFor="szak_id">Szak ID:</label>
+        <form onSubmit={handleSubmit} style={{
+          display: "grid",
+          gap: "10px",
+          maxWidth: "400px",
+          margin: "0 auto",
+          textAlign: "center", // Középre igazítás
+        }}>
+          <div className="td" style={{ display: "flex", alignItems: "center" }}>
+            <label htmlFor="szak_id">Szak:</label>
 
             <select
-              style={{ maxWidth: "300px" }}
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
               id="szak_id"
               name="szak_id"
               value={formData.szak_id}
@@ -400,10 +406,14 @@ const AlkotoLetrehoz = () => {
             <br />
           </div>
 
-          <div className="td">
+          <div className="td" style={{ display: "flex", alignItems: "center" }}>
             <label htmlFor="magyar_nev">Magyar Név:</label>
             <input
-              style={{ maxWidth: "300px" }}
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
               type="text"
               id="magyar_nev"
               name="magyar_nev"
@@ -413,10 +423,14 @@ const AlkotoLetrehoz = () => {
             <br />
           </div>
 
-          <div className="td">
+          <div className="td" style={{ display: "flex", alignItems: "center" }}>
             <label htmlFor="angol_nev">Angol Név:</label>
             <input
-              style={{ maxWidth: "300px" }}
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
               type="text"
               id="angol_nev"
               name="angol_nev"
@@ -426,10 +440,14 @@ const AlkotoLetrehoz = () => {
             <br />
           </div>
 
-          <div className="td">
+          <div className="td" style={{ display: "flex", alignItems: "center" }}>
             <label htmlFor="magyar_bemutat">Magyar Bemutatkozás:</label>
             <textarea
-              style={{ maxWidth: "300px" }}
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
               type="text"
               id="magyar_bemutat"
               name="magyar_bemutat"
@@ -439,10 +457,15 @@ const AlkotoLetrehoz = () => {
             <br />
           </div>
 
-          <div className="td">
+          <div className="td" style={{ display: "flex", alignItems: "center" }}>
             <label htmlFor="angol_bemutat">Angol Bemutatkozás:</label>
             <textarea
-              style={{ maxWidth: "300px", marginBottom: "10px" }}
+              style={{
+                padding: "8px",
+                maxHeight: "150px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
               type="text"
               id="angol_bemutat"
               name="angol_bemutat"
@@ -451,11 +474,15 @@ const AlkotoLetrehoz = () => {
             ></textarea>
           </div>
 
-          <div>
-            <label htmlFor="kep_azon">Tölts Képet:</label>
+          <div className="td" style={{ display: "flex", alignItems: "center" }}>
+            <label htmlFor="kep_azon">Kép:</label>
 
             <select
-              style={{ maxWidth: "300px" }}
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
               id="kep_azon"
               name="kep_azon"
               value={formData.kep_azon}
@@ -470,11 +497,15 @@ const AlkotoLetrehoz = () => {
             </select>
             <br />
           </div>
-          <div className="td">
-            <label htmlFor="cs_azon">Csapat ID:</label>
+          <div className="td" style={{ display: "flex", alignItems: "center" }}>
+            <label htmlFor="cs_azon">Csapat:</label>
 
             <select
-              style={{ maxWidth: "300px" }}
+              style={{
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
               id="cs_azon"
               name="cs_azon"
               value={formData.cs_azon}
@@ -489,7 +520,7 @@ const AlkotoLetrehoz = () => {
             </select>
             <br />
           </div>
-          <div className="td">
+          <div className="td" style={{ display: "flex", alignItems: "center" }}>
             <label htmlFor="buszkesegeink">Büszkeség:</label>
             <input
               type="radio"
@@ -514,9 +545,15 @@ const AlkotoLetrehoz = () => {
 
           <button
             type="submit"
-            className=" text-center mt-3"
-            style={{ maxWidth: "200px" }}
-            //onClick={handleSubmit}
+            className="text-center mt-3"
+            style={{
+              padding: "10px",
+              backgroundColor: "#007bff",
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
           >
             Mentés
           </button>
