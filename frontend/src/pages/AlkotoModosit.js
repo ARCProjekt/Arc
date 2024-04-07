@@ -68,9 +68,9 @@ const Kepletrehoz = () => {
     }
   };
 
-
   return (
-    <div className="kepFeltoltes">
+    <div className="kepFeltoltes" style={{ textAlign: "center" }}>
+      <h3 style={{ marginBottom: "20px" }}>Kép Feltöltés:</h3>
       <form onSubmit={handleSubmit}>
         <div
           className="kep"
@@ -79,25 +79,22 @@ const Kepletrehoz = () => {
             gap: "10px",
             maxWidth: "400px",
             margin: "0 auto",
-            textAlign: "center", // Középre igazítás
           }}
         >
-          <h3>Kép Feltöltés:</h3>
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="kep">Kép:</label>
-            <input
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="file"
-              id="kep"
-              required
-              accept="image/*" // Csak képfájlok elfogadása
-              onChange={handleFileChange}
-            />
-          </div>
+          <label htmlFor="kep">Kép:</label>
+          <input
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            type="file"
+            id="kep"
+            required
+            accept="image/*" // Csak képfájlok elfogadása
+            onChange={handleFileChange}
+          />
+
           {selectedImage && (
             <div
               style={{
@@ -114,51 +111,48 @@ const Kepletrehoz = () => {
               />
             </div>
           )}
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="kep_leiras_magyar">Magyar leírás:</label>
-            <input
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="text"
-              required
-              name="kep_leiras_magyar"
-              id="kep_leiras_magyar"
-              onChange={handlekepChange}
-            />
-          </div>
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="kep_leiras_angol">Angol leírás:</label>
-            <input
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="text"
-              required
-              name="kep_leiras_angol"
-              id="kep_leiras_angol"
-              onChange={handlekepChange}
-            />
-          </div>
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="fotos_neve">Fotós neve:</label>
-            <input
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="text"
-              id="fotos_neve"
-              required
-              name="fotos_neve"
-              onChange={handlekepChange}
-            />
-          </div>
+          <label htmlFor="kep_leiras_magyar">Magyar leírás:</label>
+          <input
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            type="text"
+            required
+            name="kep_leiras_magyar"
+            id="kep_leiras_magyar"
+            onChange={handlekepChange}
+          />
+
+          <label htmlFor="kep_leiras_angol">Angol leírás:</label>
+          <input
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            type="text"
+            required
+            name="kep_leiras_angol"
+            id="kep_leiras_angol"
+            onChange={handlekepChange}
+          />
+
+          <label htmlFor="fotos_neve">Fotós neve:</label>
+          <input
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            type="text"
+            id="fotos_neve"
+            required
+            name="fotos_neve"
+            onChange={handlekepChange}
+          />
+
           <br />
           <button
             type="submit"
@@ -314,7 +308,7 @@ const AlkotoLetrehoz = () => {
       // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
         "api/alkotoletrehoz",
-        { ...formData, buszkesegeink: isChecked ? "1" : "0", },
+        { ...formData, buszkesegeink: isChecked ? "1" : "0" },
         {
           headers: {
             "X-CSRF-TOKEN": ujToken2,
@@ -371,157 +365,145 @@ const AlkotoLetrehoz = () => {
 
   return (
     <div>
-      <div
-        className="feltoltes"
-      >
-        <h3>Új Alkotó</h3>
-        <form onSubmit={handleSubmit} style={{
-          display: "grid",
-          gap: "10px",
-          maxWidth: "400px",
-          margin: "0 auto",
-          textAlign: "center", // Középre igazítás
-        }}>
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="szak_id">Szak:</label>
+      <div className="feltoltes" style={{ textAlign: "center" }}>
+        <h3 style={{ marginBottom: "20px" }}>Új Alkotó:</h3>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "grid",
+            gap: "10px",
+            maxWidth: "400px",
+            margin: "0 auto",
+          }}
+        >
+          <label htmlFor="szak_id">Szak:</label>
 
-            <select
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              id="szak_id"
-              name="szak_id"
-              value={formData.szak_id}
-              onChange={handleChange}
-            >
-              <option>Válassz egy szakot</option>
-              {szakok.map((team) => (
-                <option key={team.szak_id} value={team.szak_id}>
-                  {team.magyar}
-                </option>
-              ))}
-            </select>
-            <br />
-          </div>
+          <select
+            readOnly
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            id="szak_id"
+            name="szak_id"
+            value={formData.szak_id}
+            onChange={handleChange}
+          >
+            <option>Válassz egy szakot</option>
+            {szakok.map((team) => (
+              <option key={team.szak_id} value={team.szak_id}>
+                {team.magyar}
+              </option>
+            ))}
+          </select>
+          <br />
 
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="magyar_nev">Magyar Név:</label>
-            <input
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="text"
-              id="magyar_nev"
-              name="magyar_nev"
-              value={formData.magyar_nev}
-              onChange={handleChange}
-            />
-            <br />
-          </div>
+          <label htmlFor="magyar_nev">Magyar Név:</label>
+          <input
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            type="text"
+            id="magyar_nev"
+            name="magyar_nev"
+            value={formData.magyar_nev}
+            onChange={handleChange}
+          />
+          <br />
 
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="angol_nev">Angol Név:</label>
-            <input
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="text"
-              id="angol_nev"
-              name="angol_nev"
-              value={formData.angol_nev}
-              onChange={handleChange}
-            />
-            <br />
-          </div>
+          <label htmlFor="angol_nev">Angol Név:</label>
+          <input
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            type="text"
+            id="angol_nev"
+            name="angol_nev"
+            value={formData.angol_nev}
+            onChange={handleChange}
+          />
+          <br />
 
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="magyar_bemutat">Magyar Bemutatkozás:</label>
-            <textarea
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="text"
-              id="magyar_bemutat"
-              name="magyar_bemutat"
-              value={formData.magyar_bemutat}
-              onChange={handleChange}
-            ></textarea>
-            <br />
-          </div>
+          <label htmlFor="magyar_bemutat">Magyar Bemutatkozás:</label>
+          <textarea
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            type="text"
+            id="magyar_bemutat"
+            name="magyar_bemutat"
+            value={formData.magyar_bemutat}
+            onChange={handleChange}
+          ></textarea>
+          <br />
 
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="angol_bemutat">Angol Bemutatkozás:</label>
-            <textarea
-              style={{
-                padding: "8px",
-                maxHeight: "150px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              type="text"
-              id="angol_bemutat"
-              name="angol_bemutat"
-              value={formData.angol_bemutat}
-              onChange={handleChange}
-            ></textarea>
-          </div>
+          <label htmlFor="angol_bemutat">Angol Bemutatkozás:</label>
+          <textarea
+            style={{
+              padding: "8px",
+              maxHeight: "150px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            type="text"
+            id="angol_bemutat"
+            name="angol_bemutat"
+            value={formData.angol_bemutat}
+            onChange={handleChange}
+          ></textarea>
 
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="kep_azon">Kép:</label>
+          <label htmlFor="kep_azon">Kép:</label>
 
-            <select
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              id="kep_azon"
-              name="kep_azon"
-              value={formData.kep_azon}
-              onChange={handleChange}
-            >
-              <option>Válassz egy képet</option>
-              {kepek.map((team) => (
-                <option key={team.kep_azon} value={team.kep_azon}>
-                  {team.kep}
-                </option>
-              ))}
-            </select>
-            <br />
-          </div>
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="cs_azon">Csapat:</label>
+          <select
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            id="kep_azon"
+            name="kep_azon"
+            value={formData.kep_azon}
+            onChange={handleChange}
+          >
+            <option>Válassz egy képet</option>
+            {kepek.map((team) => (
+              <option key={team.kep_azon} value={team.kep_azon}>
+                {team.kep}
+              </option>
+            ))}
+          </select>
+          <br />
 
-            <select
-              style={{
-                padding: "8px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
-              id="cs_azon"
-              name="cs_azon"
-              value={formData.cs_azon}
-              onChange={handleChange}
-            >
-              <option>Válassz egy csapatot</option>
-              {csapatok.map((team) => (
-                <option key={team.cs_azon} value={team.cs_azon}>
-                  {team.magyar}
-                </option>
-              ))}
-            </select>
-            <br />
-          </div>
-          <div className="td" style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="buszkesegeink">Büszkeség:</label>
+          <label htmlFor="cs_azon">Csapat:</label>
+
+          <select
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
+            id="cs_azon"
+            name="cs_azon"
+            value={formData.cs_azon}
+            onChange={handleChange}
+          >
+            <option>Válassz egy csapatot</option>
+            {csapatok.map((team) => (
+              <option key={team.cs_azon} value={team.cs_azon}>
+                {team.magyar}
+              </option>
+            ))}
+          </select>
+          <br />
+          <label htmlFor="buszkesegeink">Büszkeség:</label>
+          <div style={{ alignItems: "center" }}>
             <input
               type="radio"
               id="buszkesegeink-nem"
@@ -542,7 +524,6 @@ const AlkotoLetrehoz = () => {
             <label htmlFor="buszkesegeink-igen">Igen</label>
             <br />
           </div>
-
           <button
             type="submit"
             className="text-center mt-3"
@@ -559,6 +540,7 @@ const AlkotoLetrehoz = () => {
           </button>
         </form>
       </div>
+
       <div className="tablazat" style={{ backgroundColor: "#edf9ff" }}>
         <div className="table-responsive">
           <table className="table table-striped">
