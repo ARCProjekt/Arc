@@ -154,6 +154,7 @@ const Kepletrehoz = () => {
           />
 
           <br />
+          <label className="text-danger">*= Kötelező kitölteni!!!</label>
           <button
             type="submit"
             className="text-center mt-3"
@@ -168,7 +169,7 @@ const Kepletrehoz = () => {
           >
             Mentés
           </button>
-          <label>*= Kötelező kitölteni!!!</label>
+          <br />
         </div>
       </form>
     </div>
@@ -494,7 +495,6 @@ const AlkotoLetrehoz = () => {
             name="cs_azon"
             value={formData.cs_azon}
             onChange={handleChange}
-            
           >
             <option>Válassz egy csapatot</option>
             {csapatok.map((team) => (
@@ -526,6 +526,7 @@ const AlkotoLetrehoz = () => {
             <label htmlFor="buszkesegeink-igen">Igen</label>
             <br />
           </div>
+          <label className="text-danger">*= Kötelező kitölteni!!</label>
           <button
             type="submit"
             className="text-center mt-3"
@@ -540,7 +541,7 @@ const AlkotoLetrehoz = () => {
           >
             Mentés
           </button>
-          <label>*= Kötelező kitölteni!!</label>
+          <br />
         </form>
       </div>
 
