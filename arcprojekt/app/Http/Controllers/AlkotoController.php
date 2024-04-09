@@ -132,6 +132,7 @@ class AlkotoController extends Controller
         ]);
 
         $alkoto->save();
+        return response()->json(['message' => 'Az alkotó sikeresen létrehozva !'], 200);
     }
     public function update(Request $request, $id)
     {

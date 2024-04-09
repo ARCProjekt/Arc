@@ -81,7 +81,7 @@ const Kepletrehoz = () => {
             margin: "0 auto",
           }}
         >
-          <label htmlFor="kep">Kép:</label>
+          <label htmlFor="kep">Kép*:</label>
           <input
             style={{
               padding: "8px",
@@ -111,7 +111,7 @@ const Kepletrehoz = () => {
               />
             </div>
           )}
-          <label htmlFor="kep_leiras_magyar">Magyar leírás:</label>
+          <label htmlFor="kep_leiras_magyar">Magyar leírás*:</label>
           <input
             style={{
               padding: "8px",
@@ -125,7 +125,7 @@ const Kepletrehoz = () => {
             onChange={handlekepChange}
           />
 
-          <label htmlFor="kep_leiras_angol">Angol leírás:</label>
+          <label htmlFor="kep_leiras_angol">Angol leírás*:</label>
           <input
             style={{
               padding: "8px",
@@ -139,7 +139,7 @@ const Kepletrehoz = () => {
             onChange={handlekepChange}
           />
 
-          <label htmlFor="fotos_neve">Fotós neve:</label>
+          <label htmlFor="fotos_neve">Fotós neve*:</label>
           <input
             style={{
               padding: "8px",
@@ -168,6 +168,7 @@ const Kepletrehoz = () => {
           >
             Mentés
           </button>
+          <label>*= Kötelező kitölteni!!!</label>
         </div>
       </form>
     </div>
@@ -376,7 +377,7 @@ const AlkotoLetrehoz = () => {
             margin: "0 auto",
           }}
         >
-          <label htmlFor="szak_id">Szak:</label>
+          <label htmlFor="szak_id">Szak*:</label>
 
           <select
             readOnly
@@ -399,7 +400,7 @@ const AlkotoLetrehoz = () => {
           </select>
           <br />
 
-          <label htmlFor="magyar_nev">Magyar Név:</label>
+          <label htmlFor="magyar_nev">Magyar Név*:</label>
           <input
             style={{
               padding: "8px",
@@ -414,7 +415,7 @@ const AlkotoLetrehoz = () => {
           />
           <br />
 
-          <label htmlFor="angol_nev">Angol Név:</label>
+          <label htmlFor="angol_nev">Angol Név*:</label>
           <input
             style={{
               padding: "8px",
@@ -429,7 +430,7 @@ const AlkotoLetrehoz = () => {
           />
           <br />
 
-          <label htmlFor="magyar_bemutat">Magyar Bemutatkozás:</label>
+          <label htmlFor="magyar_bemutat">Magyar Bemutatkozás*:</label>
           <textarea
             style={{
               padding: "8px",
@@ -444,7 +445,7 @@ const AlkotoLetrehoz = () => {
           ></textarea>
           <br />
 
-          <label htmlFor="angol_bemutat">Angol Bemutatkozás:</label>
+          <label htmlFor="angol_bemutat">Angol Bemutatkozás*:</label>
           <textarea
             style={{
               padding: "8px",
@@ -459,7 +460,7 @@ const AlkotoLetrehoz = () => {
             onChange={handleChange}
           ></textarea>
 
-          <label htmlFor="kep_azon">Kép:</label>
+          <label htmlFor="kep_azon">Kép*:</label>
 
           <select
             style={{
@@ -481,7 +482,7 @@ const AlkotoLetrehoz = () => {
           </select>
           <br />
 
-          <label htmlFor="cs_azon">Csapat:</label>
+          <label htmlFor="cs_azon">Csapat*:</label>
 
           <select
             style={{
@@ -493,6 +494,7 @@ const AlkotoLetrehoz = () => {
             name="cs_azon"
             value={formData.cs_azon}
             onChange={handleChange}
+            
           >
             <option>Válassz egy csapatot</option>
             {csapatok.map((team) => (
@@ -502,7 +504,7 @@ const AlkotoLetrehoz = () => {
             ))}
           </select>
           <br />
-          <label htmlFor="buszkesegeink">Büszkeség:</label>
+          <label htmlFor="buszkesegeink">Büszkeség*:</label>
           <div style={{ alignItems: "center" }}>
             <input
               type="radio"
@@ -538,6 +540,7 @@ const AlkotoLetrehoz = () => {
           >
             Mentés
           </button>
+          <label>*= Kötelező kitölteni!!</label>
         </form>
       </div>
 
