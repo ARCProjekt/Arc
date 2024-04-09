@@ -78,16 +78,45 @@ class UserController extends Controller
             abort(401, 'Nincs jogosultsága felhasználókat módosítani.');
         }
 
-         $user = User::find($id);
-        /* $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->jog = $request->jog; */
-        /* $user->fill($request->only(['name', 'email', 'password', 'jog']));
-        $user->save(); */
-        //return response()->json($user); */
-
+        $rules = [
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:users,email,' . $id,
+            'password' => 'sometimes|required|string|min:8',
+            'jog' => 'sometimes|required|integer'
+        ];
+    
+        $messages = [
+            'email.email' => 'Hibás email formátum.',
+            'email.unique' => 'Az email cím már használatban van.',
+            'password.min' => 'A jelszónak legalább 8 karakter hosszúnak kell lennie.',
+        ];
+    
+        $validatedData = $request->validate($rules, $messages);
+    
+    
+        $user = User::find($id);
         try {
+            // Csak a validált és a kérésben szereplő adatok frissítése
+            foreach ($validatedData as $key => $value) {
+                if ($key == 'password') {
+                    // A jelszó esetében külön kezeljük a titkosítást
+                    $user->password = bcrypt($value);
+                } else {
+                    // Egyéb adatok frissítése
+                    $user->$key = $value;
+                }
+            }
+    
+            $user->save();
+            return response()->json($user);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
+        }
+    
+
+        // $user = User::find($id);
+
+       /*  try {
             $user->fill($request->only(['name', 'email', 'password', 'jog']));
             
             // Itt a jelszót bcrypt-tel kell titkosítani, ha a jelszót is frissíteni szeretnéd
@@ -99,7 +128,13 @@ class UserController extends Controller
             return response()->json($user);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
-        }
+        } */
     }
+
+    public function checkEmail(Request $request) {
+        $email = $request->input('email');
+        $egyedi = !User::where('email', $email)->exists();
+        return response()->json(['egyedi' => $egyedi]);
+      }
 
 }

@@ -25,16 +25,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-/* Route::post('/alkotoLetrehoz', [AlkotoController::class, 'store']);
- *//* 
-    Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
-    Route::middleware(['admin'])->group(function () {
-        Route::post('/userletrehoz', [UserController::class, 'store']);
-        Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
-    }); */
-
-
 Route::middleware('auth.basic')->group(function () {
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
@@ -46,26 +36,11 @@ Route::middleware('auth.basic')->group(function () {
         Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
         Route::patch('/alkotoszerkeszt/{alkoto_id}', [AlkotoController::class, 'update']);
         Route::get('/users', [UserController::class, 'users']);
-        
+        Route::get('/checkemail', [UserController::class, 'checkEmail']);
         Route::delete('/usertorol/{user_id}', [UserController::class, 'userTorol']);
         Route::patch('/updateuser/{user_id}', [UserController::class, 'update']);
     });
 });
-
-       
-
-
-
-
-
-/* 
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-    
-    Route::post('/userletrehoz', [UserController::class, 'store']);
-    
-});
- */
-
 
 Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
@@ -83,9 +58,3 @@ Route::get('/adottalkoto/{alkotoid}', [AlkotoController::class, 'adottAlkoto']);
 Route::get('/', function () {
     return view('welcome');
 });
-/*csapat készítlése */
-/* /*csapat készítlése 
-Route::post('/api/csapatok/alkot', [CsapatController::class, 'alkot']);
-Route::post('/api/csapatok', [CsapatController::class, 'store']);
-Route::get('/api/csapatok', [CsapatController::class, 'index']);
-Route::get('/api/csapatok', [CsapatController::class, 'index']); */

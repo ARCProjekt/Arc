@@ -13,7 +13,7 @@ const LayOut = () => {
     <div>
       <LanguageProvider>
         <header className="szin p-3">
-          <h1>Art Of Survival</h1>
+          <h1>Arts Of Survival</h1>
         </header>
         <Navbar bg="dark" variant="dark" expand="sm" className="p-2 navvv">
           <Container fluid>
@@ -38,9 +38,6 @@ const LayOut = () => {
                 <Nav.Link as={Link} to="/projekt">
                   Projekt
                 </Nav.Link>
-                {/* <Nav.Link as={Link} to="/bejelentkezes">
-                  {user ? user.name : "Bejelentkezés"}
-                </Nav.Link> */}
 
                 <Dropdown className="legMenu">
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -60,12 +57,6 @@ const LayOut = () => {
                   </Dropdown.Menu>
                 </Dropdown>
 
-                {/*  <Nav.Link as={Link} to="/AlkotoModosit">
-                  {user && user.jog < 3 && "Alkotó Módosítása"}
-                </Nav.Link>
-                <Nav.Link as={Link} to="/Felhasznalo">
-                  {user && user.jog === 1 && "Felhasználó Módosítása"}
-                </Nav.Link> */}
               </Nav>
               <Nav style={{ marginLeft: "auto" }}>
                 <NyelvValtas />
