@@ -51,6 +51,9 @@ const LayOut = () => {
                     <Dropdown.Item as={Link} to="/Felhasznalo">
                       {user && user.jog === 1 && "Felhasználó Módosítása"}
                     </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/csapatletrehoz">
+                    {user && user.jog < 3 && "Csapat Módosítása"}
+                  </Dropdown.Item>
                     <Dropdown.Item as={Link} to="/bejelentkezes">
                       {user ? "Kijelentkezés" : "Bejelentkezés"}
                     </Dropdown.Item>

@@ -11,6 +11,7 @@ import Bejelentkezes from "./pages/Bejelentkezes";
 import { AuthProvider } from "./contexts/AuthContext";
 import AlkotoModosit from "./pages/AlkotoModosit";
 import Felhasznalo from "./pages/Felhasznalo";
+import GaleriaEsCsapatLetrehoz, { CsapatLetrehoz } from "./pages/CsapatLetrehoz";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="bejelentkezes" element={<Bejelentkezes />} />
             <Route path="alkotomodosit" element={<AlkotoModosit />} />
             <Route path="felhasznalo" element={<Felhasznalo />} />
+            <Route path="csapatletrehoz" element={<GaleriaEsCsapatLetrehoz />} />
             
           </Route>
         </Routes>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Galeria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Nyelv;
+use App\Models\Kepek;
+use App\Models\Galeria_kep;
 
 class GaleriaController extends Controller
 {

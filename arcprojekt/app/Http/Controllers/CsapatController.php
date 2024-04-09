@@ -12,14 +12,20 @@ class CsapatController extends Controller
     public function csapatok(){
         return Csapat::all();
     }
-    public function csapatokKiir(){
+    public function csapatokKiir()
+    {
         $csapatok = DB::select('
+        SELECT
+            nyelvs.magyar as magyar_kategoria,
+            csapats.*,
+            csapat_nev.magyar as csapat_nev_magyar,
+            csapat_bemutat.magyar as csapat_bemutat_magyar
+        FROM csapats
+        INNER JOIN nyelvs as csapat_nev ON csapats.nyelv_id_csapat_nev = csapat_nev.nyelv_id
+        INNER JOIN nyelvs as csapat_bemutat ON csapats.nyelv_id_leiras = csapat_bemutat.nyelv_id
+        INNER JOIN kategorias ON csapats.k_id = kategorias.k_id
+        INNER JOIN nyelvs ON kategorias.nyelv_id_elnevezes = nyelvs.nyelv_id
 
-        SELECT cs_azon, csapat_nev.magyar
-        from csapats
-        inner join nyelvs as csapat_nev
-        on csapats.nyelv_id_csapat_nev = csapat_nev.nyelv_id
-       
 
         ');
         return response()->json(['csapatok' => $csapatok]);
