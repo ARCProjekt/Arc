@@ -14,5 +14,13 @@ class Galeria_kep extends Model
         'galeria_id',
         'kiemelt_kep'
     ];
+    public function kep()
+    {
+        return $this->belongsTo(Kepek::class, 'kep_azon', 'kep_azon');
+    }
 
+    public function galeria()
+    {
+        return $this->belongsTo(Galeria::class, 'galeria_id', 'galeria_id');
+    }
 }

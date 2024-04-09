@@ -63,55 +63,137 @@ class CsapatController extends Controller
         ->get();
         return $galery;
     }
-    public function create()
-    {
-        // Alkotók lekérdezése
-        $alkotok = Alkoto::all();
-
-        // Űrlap nézetének megjelenítése és az alkotók átadása
-        return view('csapatok.create', compact('alkotok'));
-    }
-
     public function store(Request $request)
     {
+        try {
+            $this->middleware('auth');
+            $request->validate([
+                'galeria_id' => 'required|exists:galerias,galeria_id',
+                'k_id' => 'required|exists:kategorias,k_id',
+                'magyar_nev' => 'required',
+                'angol_nev' => 'required',
+                'magyar_leiras' => 'required',
+                'angol_leiras' => 'required',
+            ]);
+    
+            // Nyelv létrehozása magyar névvel
+            $nyelvMagyarNev = Nyelv::create([
+                'magyar' => $request->magyar_nev,
+                'angol' => $request->angol_nev,
+                'hol' => 'csapat nev',
+            ]);
+    
+            $nyelvMagyarLeiras = Nyelv::create([
+                'magyar' => $request->magyar_leiras,
+                'angol' => $request->angol_leiras,
+                'hol' => 'csapat leiras',
+            ]);
+    
+            $csapat = Csapat::create([
+                'galeria_id' => $request->galeria_id,
+                'k_id' => $request->k_id,
+                'nyelv_id_csapat_nev' => $nyelvMagyarNev->nyelv_id,
+                'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id,
+            ]);
+    
+            // Az új csapat adatainak lekérése
+            $createdCsapat = Csapat::with(['nyelvCsapatNev', 'nyelvLeiras', 'alkotok'])->find($csapat->id);
+    
+            return response()->json(['message' => 'Csapat sikeresen létrehozva', 'csapat' => $createdCsapat], 200);
+        } catch (\Exception $e) {
+            \Log::error('Hiba történt a csapat létrehozása közben: ' . $e->getMessage());
+            return response()->json(['error' => 'Hiba történt a csapat létrehozása közben.'], 500);
+        }
+    }
+    
+   /*  public function store(Request $request)
+    {
+        $this->middleware('auth:api');
+
+      
+
         $request->validate([
-            'galeria_id' => 'required',
-            'k_id' => 'required',
-            'alkotok' => 'required|array',
+            'galeria_id' => 'required|exists:galerias,galeria_id',
+            'k_id' => 'required|exists:kategorias,k_id',
             'magyar_nev' => 'required',
             'angol_nev' => 'required',
             'magyar_leiras' => 'required',
             'angol_leiras' => 'required',
         ]);
-    
+
         // Nyelv létrehozása magyar névvel
         $nyelvMagyarNev = Nyelv::create([
             'magyar' => $request->magyar_nev,
             'angol' => $request->angol_nev,
             'hol' => 'csapat nev',
         ]);
-    
-        // Nyelv létrehozása magyar leírással
+
         $nyelvMagyarLeiras = Nyelv::create([
             'magyar' => $request->magyar_leiras,
             'angol' => $request->angol_leiras,
             'hol' => 'csapat leiras',
         ]);
-    
-        // Csapat létrehozása
+
         $csapat = Csapat::create([
             'galeria_id' => $request->galeria_id,
             'k_id' => $request->k_id,
-            'nyelv_id_csapat_nev' => $nyelvMagyarNev->nyelv_id, // Megváltoztatva
-            'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id, // Megváltoztatva
+            'nyelv_id_csapat_nev' => $nyelvMagyarNev->nyelv_id,
+            'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id,
         ]);
-    
+
         // Az új csapat adatainak lekérése
         $createdCsapat = Csapat::with(['nyelvCsapatNev', 'nyelvLeiras', 'alkotok'])->find($csapat->id);
-    
-        // Visszatérés az űrlap nézettel, például sikerüzenettel és alkotókkal
-        return view('csapatok.create', ['message' => 'Csapat sikeresen létrehozva', 'alkotok' => Alkoto::all(), 'createdCsapat' => $createdCsapat]);
+
+        // API token hozzárendelése a válaszhoz
+        $token = Auth::user()->createToken('API Token')->accessToken;
+
+        // Válasz küldése, beleértve a tokent is
+        return response()->json(['message' => 'Csapat sikeresen létrehozva', 'csapat' => $createdCsapat, 'access_token' => $token], 200);
+    } */
+    public function csapatTorol($id){
+        Alkoto::where('cs_azon', $id)->delete();
+        Csapat::destroy($id);
     }
-    
-    
+    public function update(Request $request, $id)
+{
+    try {
+        $csapat = Csapat::findOrFail($id);
+
+        $request->validate([
+            'galeria_id' => 'nullable|exists:galerias,galeria_id',
+            'k_id' => 'nullable|exists:kategorias,k_id',
+            'magyar_nev' => 'nullable',
+            'angol_nev' => 'nullable',
+            'magyar_leiras' => 'nullable',
+            'angol_leiras' => 'nullable',
+        ]);
+
+        // Csapat név nyelvi objektumának frissítése, ha van megadva új név
+        if ($request->filled('magyar_nev')) {
+            $csapat->nyelvCsapatNev->update(['magyar' => $request->magyar_nev]);
+        }
+
+        if ($request->filled('angol_nev')) {
+            $csapat->nyelvCsapatNev->update(['angol' => $request->angol_nev]);
+        }
+
+        // Csapat leírás nyelvi objektumának frissítése, ha van megadva új leírás
+        if ($request->filled('magyar_leiras')) {
+            $csapat->nyelvLeiras->update(['magyar' => $request->magyar_leiras]);
+        }
+
+        if ($request->filled('angol_leiras')) {
+            $csapat->nyelvLeiras->update(['angol' => $request->angol_leiras]);
+        }
+
+        // Egyéb csapat adatok frissítése, ha vannak megadva
+        $csapat->update($request->only(['galeria_id', 'k_id']));
+
+        // Csapat neve és leírása frissítve
+        return response()->json(['message' => 'A csapat sikeresen frissítve lett.', 'csapat' => $csapat], 200);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Hiba történt a csapat módosítása közben: ' . $e->getMessage()], 500);
+    }
+}
+
 }
