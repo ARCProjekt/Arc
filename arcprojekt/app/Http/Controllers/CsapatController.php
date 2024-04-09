@@ -157,58 +157,47 @@ class CsapatController extends Controller
         Alkoto::where('cs_azon', $id)->delete();
         Csapat::destroy($id);
     }
-    public function update(Request $request, $id){
-        try {
-            
-          
-        $csapat = Csapat::find($id);
-        if (!$csapat) {
-            return response()->json(['error' => 'A csapat nem található.'], 404);
+    public function update(Request $request, $id)
+{
+    try {
+        $csapat = Csapat::findOrFail($id);
+
+        $request->validate([
+            'galeria_id' => 'nullable|exists:galerias,galeria_id',
+            'k_id' => 'nullable|exists:kategorias,k_id',
+            'magyar_nev' => 'nullable',
+            'angol_nev' => 'nullable',
+            'magyar_leiras' => 'nullable',
+            'angol_leiras' => 'nullable',
+        ]);
+
+        // Csapat név nyelvi objektumának frissítése, ha van megadva új név
+        if ($request->filled('magyar_nev')) {
+            $csapat->nyelvCsapatNev->update(['magyar' => $request->magyar_nev]);
         }
 
-        // Csak azokat a mezőket validáljuk, amelyeket valóban frissíteni szeretnénk
-        $rules = [];
-        if ($request->has('magyar_nev')) {
-            $rules['magyar_nev'] = 'required';
-        }
-        if ($request->has('angol_nev')) {
-            $rules['angol_nev'] = 'required';
-        }
-        if ($request->has('magyar_leiras')) {
-            $rules['magyar_leiras'] = 'required';
-        }
-        if ($request->has('angol_leiras')) {
-            $rules['angol_leiras'] = 'required';
+        if ($request->filled('angol_nev')) {
+            $csapat->nyelvCsapatNev->update(['angol' => $request->angol_nev]);
         }
 
-        // Módosítható adatok ellenőrzése
-        $request->validate($rules);
+        // Csapat leírás nyelvi objektumának frissítése, ha van megadva új leírás
+        if ($request->filled('magyar_leiras')) {
+            $csapat->nyelvLeiras->update(['magyar' => $request->magyar_leiras]);
+        }
 
-        // Csapat módosítása csak azokkal a mezőkkel, amelyeket validáltunk
-        if ($request->has('magyar_nev')) {
-            $csapat->nyelvCsapatNev->update([
-                'magyar' => $request->magyar_nev,
-            ]);
+        if ($request->filled('angol_leiras')) {
+            $csapat->nyelvLeiras->update(['angol' => $request->angol_leiras]);
         }
-        if ($request->has('angol_nev')) {
-            $csapat->nyelvCsapatNev->update([
-                'angol' => $request->angol_nev,
-            ]);
-        }
-        if ($request->has('magyar_leiras')) {
-            $csapat->nyelvLeiras->update([
-                'magyar' => $request->magyar_leiras,
-            ]);
-        }
-        if ($request->has('angol_leiras')) {
-            $csapat->nyelvLeiras->update([
-                'angol' => $request->angol_leiras,
-            ]);
-        }
-        $csapat->save();
 
-        return response()->json(['message' => 'A csapat sikeresen módosítva lett.', 'csapat' => $csapat], 200);
+        // Egyéb csapat adatok frissítése, ha vannak megadva
+        $csapat->update($request->only(['galeria_id', 'k_id']));
+
+        // Csapat neve és leírása frissítve
+        return response()->json(['message' => 'A csapat sikeresen frissítve lett.', 'csapat' => $csapat], 200);
     } catch (\Exception $e) {
         return response()->json(['error' => 'Hiba történt a csapat módosítása közben: ' . $e->getMessage()], 500);
     }
-}}
+}
+
+    
+}

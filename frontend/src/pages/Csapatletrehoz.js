@@ -226,6 +226,9 @@ const GaleriaService = ({ onGaleriaCreated }) => {
   );
 };
 
+
+
+
 const CsapatLetrehoz = ({ galeriaId }) => {
   const { getUser } = useAuthContext();
   const [editableRow, setEditableRow] = useState(null);
@@ -337,6 +340,36 @@ const CsapatLetrehoz = ({ galeriaId }) => {
       console.log(error.response);
     }
   };
+
+  const updateCsapat = async (cs_azon) => {
+    const url = `http://localhost:8000/api/csapatModosit/${cs_azon}`;
+    
+    try {
+      const response = await axios.patch(
+        url,
+        {
+          magyar_nev: formData.magyar_nev,
+          angol_nev: formData.angol_nev,
+          magyar_leiras: formData.magyar_leiras,
+          angol_leiras: formData.angol_leiras,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": ujToken2,
+          },
+          withCredentials: true,
+        }
+      );
+
+      console.log("Csapat frissítve:", response.data);
+      window.location.reload();
+      setEditableRow(null);
+    } catch (error) {
+      console.error("Hiba történt a csapat frissítésekor:", error);
+    }
+  };
+
   return (
     <div>
       <div className="feltoltes" style={{ textAlign: "center" }}>
@@ -554,6 +587,172 @@ const CsapatLetrehoz = ({ galeriaId }) => {
     </div>
   );
 };
+const CsapatModosit = () => {
+  const [ujToken2, setUjToken] = useState("");
+  const [editableRow, setEditableRow] = useState(null);
+  const [csapatok, setCsapatok] = useState([]);
+  const [formData, setFormData] = useState({
+    magyar_nev: "",
+    angol_nev: "",
+    magyar_leiras: "",
+    angol_leiras: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch csapatok from API
+        const response = await axios.get("api/csapatok");
+        setCsapatok(response.data.csapatok);
+      } catch (error) {
+        console.error("Error fetching csapatok:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        // Fetch CSRF token
+        const response = await axios.get("token");
+        setUjToken(response.data);
+      } catch (error) {
+        console.error("Error fetching CSRF token:", error);
+      }
+    };
+
+    fetchCsrfToken();
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEditClick = (id) => {
+    setEditableRow((prevEditableRow) => (prevEditableRow === id ? null : id));
+  };
+
+  const updateCsapat = async (cs_azon) => {
+    const url = `api/csapatModosit/${cs_azon}`;
+    
+    try {
+      const response = await axios.patch(
+        url,
+        {
+          magyar_nev: formData.magyar_nev,
+          angol_nev: formData.angol_nev,
+          magyar_leiras: formData.magyar_leiras,
+          angol_leiras: formData.angol_leiras,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": ujToken2,
+          },
+          withCredentials: true,
+        }
+      );
+
+      console.log("Csapat frissítve:", response.data);
+      window.location.reload();
+      setEditableRow(null);
+    } catch (error) {
+      console.error("Hiba történt a csapat frissítésekor:", error);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Csapat Szerkesztése</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Magyar Név</th>
+            <th>Angol Név</th>
+            <th>Magyar Leírás</th>
+            <th>Angol Leírás</th>
+            <th>Műveletek</th>
+          </tr>
+        </thead>
+        <tbody>
+          {csapatok.map((csapat) => (
+            <tr key={csapat.cs_azon}>
+              <td>
+                {editableRow === csapat.cs_azon ? (
+                  <input
+                    type="text"
+                    value={formData.magyar_nev}
+                    onChange={(e) => handleChange(e)}
+                    name="magyar_nev"
+                  />
+                ) : (
+                  csapat.magyar_nev
+                )}
+              </td>
+              <td>
+                {editableRow === csapat.cs_azon ? (
+                  <input
+                    type="text"
+                    value={formData.angol_nev}
+                    onChange={(e) => handleChange(e)}
+                    name="angol_nev"
+                  />
+                ) : (
+                  csapat.angol_nev
+                )}
+              </td>
+              <td>
+                {editableRow === csapat.cs_azon ? (
+                  <input
+                    type="text"
+                    value={formData.magyar_leiras}
+                    onChange={(e) => handleChange(e)}
+                    name="magyar_leiras"
+                  />
+                ) : (
+                  csapat.magyar_leiras
+                )}
+              </td>
+              <td>
+                {editableRow === csapat.cs_azon ? (
+                  <input
+                    type="text"
+                    value={formData.angol_leiras}
+                    onChange={(e) => handleChange(e)}
+                    name="angol_leiras"
+                  />
+                ) : (
+                  csapat.angol_leiras
+                )}
+              </td>
+              <td>
+                {editableRow === csapat.cs_azon ? (
+                  <button onClick={() => updateCsapat(csapat.cs_azon)}>
+                    Mentés
+                  </button>
+                ) : (
+                  <button onClick={() => handleEditClick(csapat.cs_azon)}>
+                    Szerkesztés
+                  </button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+
+export { CsapatLetrehoz };
+
+
 const GaleriaEsCsapatLetrehoz = () => {
   const [galeriaId, setGaleriaId] = useState(null);
   const [showGaleriaService, setShowGaleriaService] = useState(false);

@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         '/api/alkotoletrehoz',
         '/api/csapat/store',
         'api/galeria/store',
-        '/api/csapatTorol/*'
+        '/api/csapatTorol/*',
+        '/api/csapatmodosit/*'
     ];
 }
