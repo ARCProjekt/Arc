@@ -367,7 +367,7 @@ const AlkotoLetrehoz = () => {
 
   return (
     <div>
-      <div className="feltoltes" style={{ textAlign: "center" }}>
+      <div className="feltoltes" style={{ textAlign: "center" ,alignItems:"center"}}>
         <h3 style={{ marginBottom: "20px" }}>Új Alkotó:</h3>
         <form
           onSubmit={handleSubmit}
@@ -499,7 +499,7 @@ const AlkotoLetrehoz = () => {
             <option>Válassz egy csapatot</option>
             {csapatok.map((team) => (
               <option key={team.cs_azon} value={team.cs_azon}>
-                {team.magyar}
+                {team.csapat_nev_magyar}
               </option>
             ))}
           </select>
@@ -676,7 +676,7 @@ const AlkotoLetrehoz = () => {
                         <option>Válassz egy csapatot</option>
                         {csapatok.map((team) => (
                           <option key={team.cs_azon} value={team.cs_azon}>
-                            {team.magyar}
+                            {team.csapat_nev_magyar}
                           </option>
                         ))}
                       </select>
