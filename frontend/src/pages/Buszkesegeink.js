@@ -6,7 +6,9 @@ import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react"; 
+import { useLanguage } from "./NyelvSegedlet";
 export default function Buszkesegeink() {
+  const { selectedLanguage } = useLanguage();
    const [buszkeseg, setBuszkeseg] = useState([]); 
     useEffect(() => {
     const getBuszkeseg = async () => {
@@ -22,7 +24,7 @@ export default function Buszkesegeink() {
     <div className="summary-section">
       <div className="cont">
         <div className="cim">
-          <h1>Iskolánk Büszkeségei</h1>
+          <h1>{selectedLanguage === "hu" ? "Iskolánk büszkeségei" : "The Pride of our School"}</h1>
         </div>
         <div className="row row-cols-1 row-cols-md-2 g-3 kartya">
           {buszkeseg.map((elem, index) => (
@@ -38,12 +40,12 @@ export default function Buszkesegeink() {
                   </div>
                   <div className="col-md-8 d-flex flex-column">
                     <div className="card-body text-center p-3">
-                      <h5 className="card-title">{elem.alkoto_nev}</h5>
-                      <p className="card-text">{"Szak: " + elem.szakHU}</p>
+                      <h5 className="card-title">{selectedLanguage === "hu" ? elem.alkoto_nevHU : elem.alkoto_nevEN}</h5>
+                      <p className="card-text">{selectedLanguage === "hu" ? "Szak: "+elem.szakHU : "Technical: "+elem.szakEN}</p>
                     </div>
                     <div className="mt-auto text-center p-3">
                       <Nav.Link className="link" as={Link} to="/alkoto">
-                        Megtekintés
+                      {selectedLanguage === "hu" ? "Megtekintés" : "View"}
                       </Nav.Link>
                     </div>
                   </div>

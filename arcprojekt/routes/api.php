@@ -32,7 +32,7 @@ Route::middleware('auth.basic')->group(function () {
     Route::post('/alkotok/alkot', [AlkotoController::class, 'create']);
     Route::post('/kepek/alkotoKepek',[KepekController::class,'alkotoKepek']);
     Route::delete('/alkototorol/{alkoto_id}', [AlkotoController::class, 'delete']);
-    Route::delete('csapatTorol/{cs_azon}', [CsapatController::class, 'csapatTorol']);
+    Route::delete('csapattorol/{cs_azon}', [CsapatController::class, 'csapatTorol']);
     Route::patch('csapatmodosit/{cs_azon}', [CsapatController::class, 'update']);
     Route::post('/csapat/store', [CsapatController::class, 'store']);
     Route::middleware(['admin'])->group(function () {
