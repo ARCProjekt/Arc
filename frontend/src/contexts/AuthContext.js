@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -6,13 +6,35 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
+  const [loading, setLoading] = useState(true);
   const [errors] = useState({
     name: "hiba",
     email: "hiba",
     password: "hiba",
     password_confirmation: "hiba",
   });
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        const { data } = await axios.get("/api/user");
+        setUser(data);
+        localStorage.setItem("user", JSON.stringify(data));
+      } catch (error) {
+        console.error("Hiba a felhasználó lekérésekor:", error);
+        setUser(null);
+        localStorage.removeItem("user");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (!user) verifyUser();
+    else setLoading(false);
+  }, []);
 
   let token = "";
 
@@ -26,13 +48,13 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await axios.get("/api/user");
       setUser(data);
+      localStorage.setItem("user", JSON.stringify(data));
     } catch (error) {
       console.error("Hiba a felhasználó lekérésekor:", error);
     }
   };
 
   const loginReg = async ({ ...adat }, vegpont) => {
-   
     await csrf();
     adat._token = token;
     try {
@@ -48,7 +70,7 @@ export const AuthProvider = ({ children }) => {
       } else if (error.request) {
         console.log(error.request);
       } else {
-        console.log('Error', error.message);
+        console.log("Error", error.message);
       }
       console.log(error.config);
     }
@@ -58,6 +80,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axios.post("/logout");
       setUser(null);
+      localStorage.removeItem("user");
       navigate("/login");
     } catch (error) {
       console.error("Hiba történt a kijelentkezés során:", error);
@@ -65,7 +88,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loginReg, errors, getUser, user, logout }}>
+    <AuthContext.Provider
+      value={{ loginReg, errors, getUser, user, logout, loading, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
