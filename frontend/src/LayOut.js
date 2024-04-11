@@ -2,41 +2,41 @@ import React from "react";
 import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import NyelvValtas from "./pages/NyelvValtas";
-import { LanguageProvider } from "./pages/NyelvSegedlet";
+import { LanguageProvider, useLanguage } from "./pages/NyelvSegedlet";
 import "./css/Kozos.css";
 import useAuthContext from "./contexts/AuthContext";
 
 const LayOut = () => {
   const { user } = useAuthContext();
+  const { selectedLanguage } = useLanguage();
 
   return (
     <div>
-      <LanguageProvider>
         <header className="szin p-3">
           <h1>Arts Of Survival</h1>
         </header>
         <Navbar bg="dark" variant="dark" expand="sm" className="p-2 navvv">
           <Container fluid>
             <Navbar.Brand as={Link} to="/">
-              Főoldal
+              {selectedLanguage === "hu" ? "Főoldal" : "Main page" }
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/alkoto">
-                  Alkotó
+                {selectedLanguage === "hu" ? "Alkotó" : "Creator" }
                 </Nav.Link>
                 <Nav.Link as={Link} to="/csapat">
-                  Csapat
+                {selectedLanguage === "hu" ? "Csapat" : "Team" }
                 </Nav.Link>
                 <Nav.Link as={Link} to="/kategoria">
-                  Kategóriák
+                {selectedLanguage === "hu" ? "Kategóriák" : "Categories" }
                 </Nav.Link>
                 <Nav.Link as={Link} to="/buszkesegeink">
-                  Büszkeségeink
+                {selectedLanguage === "hu" ? "Büszkeségeink" : "Our Pride" }
                 </Nav.Link>
                 <Nav.Link as={Link} to="/projekt">
-                  Projekt
+                {selectedLanguage === "hu" ? "A projekt" : "The Project" }
                 </Nav.Link>
 
                 <Dropdown className="legMenu">
@@ -77,7 +77,6 @@ const LayOut = () => {
             <p className="footer-contact">E-mail: info@iskola.hu</p>
           </div>
         </footer>
-      </LanguageProvider>
     </div>
   );
 };

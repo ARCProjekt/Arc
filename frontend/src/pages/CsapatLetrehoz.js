@@ -361,7 +361,7 @@ const CsapatLetrehoz = ({ galeriaId }) => {
 
     const handleDelete = async (cs_azon) => {
         try {
-            await axios.delete(`http://localhost:8000/api/csapatok/${cs_azon}`, {
+            await axios.delete(`http://localhost:8000/api/csapattorol/${cs_azon}`, {
                 headers: {
                     "X-CSRF-TOKEN": ujToken2,
                 },
