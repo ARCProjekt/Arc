@@ -1,101 +1,79 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
-  const [loading, setLoading] = useState(true);
-  const [errors] = useState({
-    name: "hiba",
-    email: "hiba",
-    password: "hiba",
-    password_confirmation: "hiba",
-  });
+    const navigate = useNavigate();
+    const [user, setUser] = useState(
+      JSON.parse(localStorage.getItem("user")) || null
+    );
+    const [errors, setErrors] = useState({
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+    });
+    //const csrf = () => axios.get("/sanctum/csrf-cookie");
+    let token = "";
+    const csrf = () =>
+        axios.get("/token").then((response) => {
+            console.log(response);
+            token = response.data;
+        });
 
-  useEffect(() => {
-    const verifyUser = async () => {
+    //bejelentkezett felhasználó adatainak lekérdezése
+    const getUser = async () => {
       try {
         const { data } = await axios.get("/api/user");
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
       } catch (error) {
         console.error("Hiba a felhasználó lekérésekor:", error);
-        setUser(null);
-        localStorage.removeItem("user");
-      } finally {
-        setLoading(false);
       }
     };
+    const logout = async () => {
+        await csrf()
+        console.log(token)
+        axios.post("/logout",{_token:token}).then((resp) => {
+            setUser(null);
+            localStorage.removeItem("user");
+            console.log(resp);
+        });
+    };
+    
+    const loginReg = async ({ ...adat }, vegpont) => {
+        await csrf()
+        console.log(token)
+        adat._token = token;
+        console.log(adat)
+        
+        await csrf();
+       
+        try {
+            await axios.post(vegpont, adat);
+            console.log("siker");
+           
+            await getUser();
+           
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+            if (error.response.status === 422) {
+                setErrors(error.response.data.errors);
+            }
+        }
+    };
 
-    if (!user) verifyUser();
-    else setLoading(false);
-  }, []);
-
-  let token = "";
-
-  const csrf = () =>
-    axios.get("/token").then((response) => {
-      console.log(response);
-      token = response.data;
-    });
-
-  const getUser = async () => {
-    try {
-      const { data } = await axios.get("/api/user");
-      setUser(data);
-      localStorage.setItem("user", JSON.stringify(data));
-    } catch (error) {
-      console.error("Hiba a felhasználó lekérésekor:", error);
-    }
-  };
-
-  const loginReg = async ({ ...adat }, vegpont) => {
-    await csrf();
-    adat._token = token;
-    try {
-      await axios.post(vegpont, adat);
-      console.log("Sikeres bejelentkezés");
-      getUser();
-      navigate("/");
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log("Error", error.message);
-      }
-      console.log(error.config);
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await axios.post("/logout");
-      setUser(null);
-      localStorage.removeItem("user");
-      navigate("/login");
-    } catch (error) {
-      console.error("Hiba történt a kijelentkezés során:", error);
-    }
-  };
-
-  return (
-    <AuthContext.Provider
-      value={{ loginReg, errors, getUser, user, logout, loading, setUser }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider
+            value={{ logout, loginReg, errors, getUser, user }}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
 };
-
 export default function useAuthContext() {
-  return useContext(AuthContext);
+    return useContext(AuthContext);
 }
