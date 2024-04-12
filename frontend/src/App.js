@@ -17,6 +17,7 @@ import GaleriaEsCsapatLetrehoz, {
 import { LanguageProvider } from "./pages/NyelvSegedlet";
 import RequireAuth from "./RequireAuth";
 import NoPage from "./pages/NoPage";
+import Csapatok from "./pages/Csapatok";
 
 function App() {
   return (
@@ -32,9 +33,7 @@ function App() {
               <Route path="buszkesegeink" element={<Buszkesegeink />} />
               <Route path="projekt" element={<Projekt />} />
               <Route path="bejelentkezes" element={<Bejelentkezes />} />
-
-              {/*  <Route path="alkotomodosit" element={<AlkotoModosit />} /> */}
-              {/* <Route path="felhasznalo" element={<Felhasznalo />} /> */}
+              <Route path="csapatok" element={<Csapatok />} />
               <Route
                 path="alkotomodosit"
                 element={

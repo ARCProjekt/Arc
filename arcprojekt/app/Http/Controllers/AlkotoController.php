@@ -46,6 +46,35 @@ class AlkotoController extends Controller
         ');
         return response()->json(['alkotok' => $alkotok]);
     }
+
+    public function csapathozAlkoto($cs_azon)
+    {
+        $alkotok = DB::table('alkotos')
+        ->select(
+            'a_azon',
+            'nyelvs.magyar as magyar_nev',
+            'nyelvs.angol as angol_nev',
+            'nyelvs_bemutat.magyar as magyar_bemutat',
+            'nyelvs_bemutat.angol as angol_bemutat',
+            'kepeks.kep',
+            'szak_elnev.magyar as szak',
+            'alkotos.cs_azon as csapat',
+            'csap_nev_nyelv.magyar as csapat_nev',
+            'buszkesegeink'
+        )
+        ->join('nyelvs', 'alkotos.nyelv_id_nev', '=', 'nyelvs.nyelv_id')
+        ->join('nyelvs as nyelvs_bemutat', 'alkotos.nyelv_id_bemutat', '=', 'nyelvs_bemutat.nyelv_id')
+        ->join('kepeks', 'alkotos.kep_azon', '=', 'kepeks.kep_azon')
+        ->join('szaks', 'alkotos.szak_id', '=', 'szaks.szak_id')
+        ->join('nyelvs as szak_elnev', 'szaks.nyelv_id_elnevezes', '=', 'szak_elnev.nyelv_id')
+        ->join('csapats', 'alkotos.cs_azon', '=', 'csapats.cs_azon')
+        ->join('nyelvs as csap_nev_nyelv', 'csapats.nyelv_id_csapat_nev', '=', 'csap_nev_nyelv.nyelv_id')
+        ->where('alkotos.cs_azon', '=', $cs_azon)
+        ->orderBy('a_azon')
+        ->get();
+    
+        return response()->json(['alkotok' => $alkotok]);
+    }
     public function buszkeseg($alkoto)
     {
         $user = Auth::user();
