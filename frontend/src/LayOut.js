@@ -26,9 +26,9 @@ const LayOut = () => {
                 <Nav.Link as={Link} to="/alkoto">
                 {selectedLanguage === "hu" ? "Alkotó" : "Creator" }
                 </Nav.Link>
-                <Nav.Link as={Link} to="/csapat">
+                {/* <Nav.Link as={Link} to="/csapat">
                 {selectedLanguage === "hu" ? "Csapat" : "Team" }
-                </Nav.Link>
+                </Nav.Link> */}
                 <Nav.Link as={Link} to="/kategoria">
                 {selectedLanguage === "hu" ? "Kategóriák" : "Categories" }
                 </Nav.Link>
@@ -38,7 +38,9 @@ const LayOut = () => {
                 <Nav.Link as={Link} to="/projekt">
                 {selectedLanguage === "hu" ? "A projekt" : "The Project" }
                 </Nav.Link>
-
+                <Nav.Link as={Link} to="/csapatok">
+                {selectedLanguage === "hu" ? "Csapatok" : "Teams" }
+                </Nav.Link>
                 <Dropdown className="legMenu">
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
                     {user ? user.name : "Bejelentkezés"}

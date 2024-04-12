@@ -7,6 +7,7 @@ import { useState } from "react";
 import "../css/Kozos.css";
 import GaleriaKep from "./GaleriaKep";
 export default function Csapat() {
+//localhost:8000/api/csapathozalkoto/{cs_azon}
   const [nagyKepLathato, setNagyKepLathato] = useState(false);
   const [aktKep, setAktKep] = useState(0);
   function kattintas(index) {
@@ -26,6 +27,7 @@ export default function Csapat() {
             Csapattagok
           </h3>
           <ul className="list-unstyled">
+            
             <li className="mb-2">
               <Nav.Link
               className="link"
@@ -37,7 +39,7 @@ export default function Csapat() {
                   textAlign: "justify",
                 }}
               >
-                Zöldlomb Legolas - designer
+              
               </Nav.Link>
             </li>
             <li className="mb-2">
@@ -51,7 +53,7 @@ export default function Csapat() {
                   textAlign: "justify",
                 }}
               >
-                Zöldlomb Legolas - designer
+               
               </Nav.Link>
             </li>
             <li className="mb-2">
@@ -65,7 +67,7 @@ export default function Csapat() {
                   textAlign: "justify",
                 }}
               >
-                Zöldlomb Legolas - designer
+                
               </Nav.Link>
             </li>
           </ul>
@@ -79,16 +81,7 @@ export default function Csapat() {
               textAlign: "justify",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam
-            lacus, vulputate ac porta ac, vehicula pharetra enim. In ipsum
-            felis, eleifend at erat in, volutpat condimentum dolor. Vivamus ac
-            orci lobortis nisl cursus sollicitudin eu a sem. Integer tristique,
-            lacus pellentesque fringilla porttitor, massa tellus semper odio, ac
-            ultrices felis purus vitae tortor. Curabitur varius nisi arcu, at
-            sollicitudin enim suscipit vitae. In hac habitasse platea dictumst.
-            Phasellus ac ligula finibus, eleifend justo eget, dignissim risus.
-            Aliquam sodales feugiat pellentesque. Aliquam pharetra eget lorem ac
-            eleifend. Maecenas et purus eget erat convallis interdum.
+          { cs_azon.csapat_bemutat_magyar}
           </p>
         </div>
         <h3 style={{ textAlign: "justify" }}>Képek a Csapatmunkájáról: </h3>
