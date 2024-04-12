@@ -1,84 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "../api/axios";
-import { Modal, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import useAuthContext from "../contexts/AuthContext";
 
 export default function Bejelentkezes() {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({
-    name: "hiba",
-    email: "hiba",
-    password: "hiba",
-    password_confirmation: "hiba",
-  });
-
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
-
-  let token = "";
-  const navigate = useNavigate();
-
-  const csrf = () =>
-    axios.get("/token").then((response) => {
-      console.log(response);
-      token = response.data;
-    });
+  const { user, logout } = useAuthContext();
+  const { loginReg, errors } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    await csrf();
-  
+
+    //bejelentkezés
+    //Összegyűjtjük egyetlen objektumban az űrlap adatokat
     const adat = {
       email: email,
       password: password,
-      _token: token,
     };
-  
-    try {
-      await axios.post("/login", adat);
-      console.log("Sikeres bejelentkezés");
-      setShowSuccessModal(true);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    try {
-      await csrf();
-      await axios.post("/logout", { _token: token });
-      console.log("Sikeres kijelentkezés");
-      setShowLogoutModal(true);
-    } catch (error) {
-      console.log(error);
-    }
+    loginReg(adat, "/login");
   };
-
-  const handleSuccessModalClose = () => {
-    setShowSuccessModal(false);
-    // Frissítheted az oldalt, amikor bezáródik a sikeres bejelentkezés ablak
-    window.location.reload();
-  };
-
-  const handleLogoutModalClose = () => {
-    setShowLogoutModal(false);
-    // Frissítheted az oldalt, amikor bezáródik a sikeres kijelentkezés ablak
-    window.location.reload();
-  };
-
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const loginSuccess = query.get("loginSuccess");
-  
-    if (loginSuccess) {
-      setShowSuccessModal(true);
-    }
-  }, []); 
 
   return (
     <div className="m-auto" style={{ maxWidth: "400px" }}>
@@ -90,7 +31,9 @@ export default function Bejelentkezes() {
           </label>
           <input
             type="email"
+            // value beállítása a state értékére
             value={email}
+            // state értékének módosítása ha változik a beviteli mező tartalma
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -122,49 +65,25 @@ export default function Bejelentkezes() {
           />
           <div>
             {errors.password && (
-              <span className="text-danger">{errors.password[0]}</span>
+              <span className="text-danger">
+                {errors.password[0]}
+              </span>
             )}
           </div>
         </div>
 
         <div className=" text-center">
           <button type="submit" className="btn btn-primary w-100">
-            Bejelentkezés
+            Login
           </button>
+
+          <div className=" text-center mt-3">
+            <button onClick={logout} className="btn btn-danger">
+              Kijelentkezés
+            </button>
+          </div>
         </div>
       </form>
-
-      <div className=" text-center mt-3">
-        <button onClick={handleLogout} className="btn btn-danger">
-          Kijelentkezés
-        </button>
-      </div>
-
-      {/* Sikeres bejelentkezés modal */}
-      <Modal show={showSuccessModal} onHide={handleSuccessModalClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Sikeres bejelentkezés</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Üdvözöllek! Sikeresen bejelentkeztél.</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleSuccessModalClose}>
-            Bezárás
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      {/* Sikeres kijelentkezés modal */}
-      <Modal show={showLogoutModal} onHide={handleLogoutModalClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Sikeres kijelentkezés</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Sikeresen kijelentkeztél. Viszlát!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleLogoutModalClose}>
-            Bezárás
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 }
