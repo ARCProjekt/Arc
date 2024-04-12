@@ -6,7 +6,9 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(
+      JSON.parse(localStorage.getItem("user")) || null
+    );
     const [errors, setErrors] = useState({
         name: "",
         email: "",
@@ -25,12 +27,14 @@ export const AuthProvider = ({ children }) => {
     const getUser = async () => {
         const { data } = await axios.get("/api/user");
         setUser(data);
+        localStorage.setItem("user", JSON.stringify(data));
     };
     const logout = async () => {
         await csrf()
         console.log(token)
         axios.post("/logout",{_token:token}).then((resp) => {
             setUser(null);
+            localStorage.removeItem("user");
             console.log(resp);
         });
     };
