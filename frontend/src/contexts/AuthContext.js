@@ -25,9 +25,13 @@ export const AuthProvider = ({ children }) => {
 
     //bejelentkezett felhasználó adatainak lekérdezése
     const getUser = async () => {
+      try {
         const { data } = await axios.get("/api/user");
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
+      } catch (error) {
+        console.error("Hiba a felhasználó lekérésekor:", error);
+      }
     };
     const logout = async () => {
         await csrf()
