@@ -6,6 +6,32 @@
 h1 {
   text-align: center;
 }
+.half-circle-card {
+  width: 300px;
+  height: 300px; /* Módosítottuk a magasságot a képhez */
+  
+  border-radius: 50% 50% 0 0;
+  border: 1px solid #ccc;
+  overflow: hidden; /* Hozzáadtuk az overflow-t, hogy a kép ne lógjon ki a kártya alakjából */
+  position: relative; /* Hozzáadtuk a relatív pozíciót az abszolút pozíciózáshoz */
+}
+
+.half-circle-card img {
+  width: 100%;
+  height: auto;
+}
+
+.half-circle-card .content {
+  position: absolute;
+  background-color: #ecead1;
+  border-radius: 50% 50% 0 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
 body {
   background-image: url("https://4kwallpapers.com/images/walls/thumbs_3t/5661.jpg");
   background-repeat: no-repeat;
