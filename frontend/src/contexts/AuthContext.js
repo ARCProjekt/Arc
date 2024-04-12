@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
         password: "",
         password_confirmation: "",
     });
-    //const csrf = () => axios.get("/sanctum/csrf-cookie");
+  
     let token = "";
     const csrf = () =>
         axios.get("/token").then((response) => {
