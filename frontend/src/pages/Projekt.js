@@ -1,6 +1,6 @@
 import { Carousel } from "react-bootstrap";
 import { kepek } from "../KepLista";
-import "../css/Kozos.css";
+import "../css/Kozos2.css";
 import { useLanguage } from "./NyelvSegedlet";
 export default function Projekt() {
   const { selectedLanguage } = useLanguage();

@@ -3,7 +3,7 @@ import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 import NyelvValtas from "./pages/NyelvValtas";
 import { LanguageProvider, useLanguage } from "./pages/NyelvSegedlet";
-import "./css/Kozos.css";
+import "./css/Kozos2.css";
 import useAuthContext from "./contexts/AuthContext";
 
 const LayOut = () => {
@@ -13,7 +13,9 @@ const LayOut = () => {
   return (
     <div>
         <header className="szin p-3">
-          <h1>Arts Of Survival</h1>
+        <div><img src={process.env.PUBLIC_URL + "/kepek/logo.png"} alt="" />
+        <h1>Arts Of Survival</h1></div>
+        
         </header>
         <Navbar bg="dark" variant="dark" expand="sm" className="p-2 navvv">
           <Container fluid>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../css/Kozos.css";
+import "../css/Kozos2.css";
 import axios from "../api/axios";
 const Kepletrehoz = () => {
   // const [ujToken2, setUjToken] = useState("");

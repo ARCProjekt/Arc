@@ -1,7 +1,7 @@
 import { Nav } from "react-bootstrap";
 //import { kategoriak } from "../KatLista";
 import { Link } from "react-router-dom";
-import "../css/Kozos.css";
+import "../css/Kozos2.css";
 import { useLanguage } from "./NyelvSegedlet";
 import axios from "axios";
 import { useEffect, useState } from "react"; 

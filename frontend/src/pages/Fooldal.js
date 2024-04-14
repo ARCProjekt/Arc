@@ -1,22 +1,19 @@
-import "../css/Fooldal.css";
-import "../css/Kozos.css";
+import "../css/Fooldal2.css";
+import "../css/Kozos2.css";
 import React from "react";
 import BgImageWithNavbar from "../BgImageWithNavbar";
+import Bg2 from "../Bg2";
 import { useEffect } from "react";
 import useAuthContext from "../contexts/AuthContext";
 import { useLanguage } from "./NyelvSegedlet";
+
 const Fooldal = () => {
   const { selectedLanguage } = useLanguage();
-  const { user, getUser } = useAuthContext();
-  useEffect(() => {
-    if (!user) {
-      getUser();
-    }
-  });
+
+
   return (
     <div>
-      <BgImageWithNavbar />
-
+      <Bg2 />
       <div>
         <div className="summary-section">
           <div className="cont">
@@ -37,60 +34,55 @@ const Fooldal = () => {
               </div>
             </div>
 
-            <div className="summary-content">
-              <div className="summary-text felul">
-                <h1>{selectedLanguage === "hu" ? "Csapatok" : "Teams"}</h1>
-                <p>
-                  {selectedLanguage === "hu"
-                    ? "Az a:r:c projekt művész diákokból álló csapatai, mind külön-külön kategóriákban alkottak..."
-                    : "The teams of student artists of the a:r:c project all created in separate categories..."}
-                </p>
+            <div className="tartalom">
+              <div className="summary-content">
+                <div className="summary-text felul">
+                  <h1>{selectedLanguage === "hu" ? "Csapatok" : "Teams"}</h1>
+                  <p>
+                    {selectedLanguage === "hu"
+                      ? "Az a:r:c projekt művész diákokból álló csapatai, mind külön-külön kategóriákban alkottak..."
+                      : "The teams of student artists of the a:r:c project all created in separate categories..."}
+                  </p>
+                </div>
+                <div className="summary-image alul">
+                  <img
+                    src={process.env.PUBLIC_URL + "/kepek/bgk3.png"}
+                    alt="Kép leírása"
+                  />
+                </div>
               </div>
-              <div className="summary-image alul">
-                <img
-                  src={process.env.PUBLIC_URL + "/kepek/bg2.jpg"}
-                  alt="Kép leírása"
-                  style={{ maxWidth: "600px", width: "100%", height: "auto" }}
-                />
-              </div>
-            </div>
 
-            <span></span>
-
-            <div className="summary-content left">
-              <div className="summary-text left felul">
-                <h1>{selectedLanguage === "hu" ? "Alkotók" : "Creators"}</h1>
-                <p>
-                  {selectedLanguage === "hu"
-                    ? "Diákjaink, kiknek munkája nélkül ez az egész nem jöhetett volna létre..."
-                    : "Our students, without whose work all this would not have been possible..."}
-                </p>
+              <div className="summary-content">
+                <div className="summary-text felul">
+                  <h1>{selectedLanguage === "hu" ? "Alkotók" : "Creators"}</h1>
+                  <p>
+                    {selectedLanguage === "hu"
+                      ? "Diákjaink, kiknek munkája nélkül ez az egész nem jöhetett volna létre..."
+                      : "Our students, without whose work all this would not have been possible..."}
+                  </p>
+                </div>
+                <div className="summary-image alul">
+                  <img
+                    src={process.env.PUBLIC_URL + "/kepek/bgk2.png"}
+                    alt="Kép leírása"
+                  />
+                </div>
               </div>
-              <div className="summary-image left alul">
-                <img
-                  src={process.env.PUBLIC_URL + "/kepek/bg3.jpg"}
-                  alt="Kép leírása"
-                  style={{ maxWidth: "600px", width: "100%" }}
-                />
-              </div>
-            </div>
 
-            <span></span>
-
-            <div className="summary-content">
-              <div className="summary-text felul">
-                <h1>Projektek</h1>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-              <div className="summary-image alul">
-                <img
-                  src={process.env.PUBLIC_URL + "/kepek/bg.jpg"}
-                  alt="Kép leírása"
-                  style={{ maxWidth: "600px", width: "100%" }}
-                />
+              <div className="summary-content">
+                <div className="summary-text felul">
+                  <h1>Projektek</h1>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  </p>
+                </div>
+                <div className="summary-image alul">
+                  <img
+                    src={process.env.PUBLIC_URL + "/kepek/bgk.png"}
+                    alt="Kép leírása"
+                  />
+                </div>
               </div>
             </div>
           </div>

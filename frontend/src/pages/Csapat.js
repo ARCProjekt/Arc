@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { kepek } from "../KepLista";
 import KepGaleria from "./Galeria";
 import { useState } from "react";
-import "../css/Kozos.css";
+import "../css/Kozos2.css";
 import GaleriaKep from "./GaleriaKep";
 export default function Csapat() {
 //localhost:8000/api/csapathozalkoto/{cs_azon}
@@ -81,7 +81,7 @@ export default function Csapat() {
               textAlign: "justify",
             }}
           >
-          { cs_azon.csapat_bemutat_magyar}
+          { /* cs_azon.csapat_bemutat_magyar */} 
           </p>
         </div>
         <h3 style={{ textAlign: "justify" }}>Képek a Csapatmunkájáról: </h3>

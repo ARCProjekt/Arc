@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 //import { alkotok } from "../Alkotok";
 import React from "react";
-import "../css/Kozos.css";
+import "../css/Kozos2.css";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
