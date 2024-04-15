@@ -27,18 +27,28 @@ const OsszCsapat = ({ onCsapatSelect }) => {
 
   return (
     <div className="summary-section">
-      <div className="cont">
+      <div className="cont" style={{display:"grid",gridTemplateColumns:"1fr 1fr"}}>
         {csapatok.map((item) => (
-          <div key={item.cs_azon} className="half-circle-card">
+          <div key={item.cs_azon} className="half-circle-card" style={{margin:"15px"}}>
             <img
-              src={
-                "http://localhost:8000" + "/storage/alkotokepek/kave.jpg"
-              }
+              src={"http://localhost:8000" + "/storage/alkotokepek/csapat.jpg"}
             />
             <div className="content">
               <h3>{item.csapat_nev_magyar}</h3>
               <p>{item.csapat_bemutat_magyar}</p>
-              <button onClick={() => handleClick(item.cs_azon)}>
+              <button
+                onClick={() => handleClick(item.cs_azon)}
+                style={{
+                  fontSize: "1.2em",
+                  marginBottom: "10px",
+                  textAlign: "justify",
+                  padding:"10px",
+                  border:"1px solid #ccc",
+                  borderRadius:"5px",
+                  background:"none"
+                }}
+              
+              >
                 A csapathoz
               </button>
             </div>

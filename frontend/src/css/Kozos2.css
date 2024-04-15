@@ -29,13 +29,14 @@
     margin-right: 10px; 
 }
   .half-circle-card img {
-    width: 100%;
+    width: 115%;
     height: auto;
   }
   
   .half-circle-card .content {
     position: absolute;
-    background-color: #ecead1;
+    height: 190px;
+    background-color: #8d8c86;
     border-radius: 50% 50% 0 0;
     bottom: 0;
     left: 0;
