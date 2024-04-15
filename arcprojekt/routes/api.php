@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlkotoController;
 use App\Http\Controllers\CsapatController;
+use App\Http\Controllers\Galeria_kepController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\KepekController;
@@ -49,6 +50,7 @@ Route::middleware('auth.basic')->group(function () {
 Route::get('/users', [UserController::class, 'users']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);
+Route::get('/galeriakepek/{cs_azon}', [Galeria_kepController::class, 'galeriakepek']);
 Route::get('/kepek', [KepekController::class, 'kepek']);
 Route::get('/alkotok/create', [AlkotoController::class, 'create']);
 Route::post('/alkotok', [AlkotoController::class, 'store']);

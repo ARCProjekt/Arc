@@ -52,7 +52,7 @@ class CsapatController extends Controller
             ->where('cs_azon', '=', $cs_azon)
             ->get();
 
-        return response()->json(['adott csapatok' => $csapat]);
+        return response()->json(['adottcsapatok' => $csapat]);
     }
     public function show($id)
     {

@@ -72,7 +72,6 @@ class AlkotoController extends Controller
         ->where('alkotos.cs_azon', '=', $cs_azon)
         ->orderBy('a_azon')
         ->get();
-    
         return response()->json(['alkotok' => $alkotok]);
     }
     public function buszkeseg($alkoto)

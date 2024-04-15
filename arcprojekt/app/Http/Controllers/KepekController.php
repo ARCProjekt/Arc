@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kepek;
 use App\Models\Nyelv;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Laravel\Prompts\Key;
 
@@ -14,6 +15,7 @@ class KepekController extends Controller
     {
         return Kepek::all();
     }
+     
     public function create()
     {
         return view('kepek.create');

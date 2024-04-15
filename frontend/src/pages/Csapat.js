@@ -2,14 +2,40 @@ import React from "react";
 import { Carousel, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { kepek } from "../KepLista";
+import { useParams } from "react-router-dom";
 import KepGaleria from "./Galeria";
-import { useState } from "react";
+import axios from "../api/axios";
+import { useState, useEffect } from "react";
 import "../css/Kozos2.css";
 import GaleriaKep from "./GaleriaKep";
 export default function Csapat() {
-//localhost:8000/api/csapathozalkoto/{cs_azon}
   const [nagyKepLathato, setNagyKepLathato] = useState(false);
+  const [csapat, setCsapat] = useState([]);
+  const [alkotok, setAlkotok] = useState([]);
   const [aktKep, setAktKep] = useState(0);
+  let { cs_azon } = useParams();
+  useEffect(() => {
+    const getCsapat = async () => {
+      const apiCsapat = await axios.get(
+        `http://localhost:8000/api/adott_csapat/${cs_azon}`
+      );
+      console.log(apiCsapat.data.adottcsapatok);
+      setCsapat(apiCsapat.data.adottcsapatok);
+    };
+    getCsapat();
+  }, [cs_azon]); // Figyeljünk a cs_azon változóra
+  
+  useEffect(() => {
+    const getAlkotok = async () => {
+      const apiAlkotok = await axios.get(
+        `http://localhost:8000/api/csapathozalkoto/${cs_azon}`
+      );
+      console.log(apiAlkotok.data.alkotok);
+      setAlkotok(apiAlkotok.data.alkotok);
+    };
+    getAlkotok();
+  }, [cs_azon]); // Figyeljünk a cs_azon változóra
+  
   function kattintas(index) {
     console.log(kepek.index);
     setAktKep(index);
@@ -26,62 +52,37 @@ export default function Csapat() {
           <h3 className="mb-4" style={{ textAlign: "justify" }}>
             Csapattagok
           </h3>
+          <p>A csapattag azonosítója: {cs_azon}</p>
           <ul className="list-unstyled">
-            
-            <li className="mb-2">
-              <Nav.Link
-              className="link"
-                as={Link}
-                to="/alkoto"
-                style={{
-                  fontSize: "1.2em",
-                  marginBottom: "10px",
-                  textAlign: "justify",
-                }}
-              >
-              
-              </Nav.Link>
-            </li>
-            <li className="mb-2">
-              <Nav.Link
-              className="link"
-                as={Link}
-                to="/alkoto"
-                style={{
-                  fontSize: "1.2em",
-                  marginBottom: "10px",
-                  textAlign: "justify",
-                }}
-              >
-               
-              </Nav.Link>
-            </li>
-            <li className="mb-2">
-              <Nav.Link
-              className="link"
-                as={Link}
-                to="/alkoto"
-                style={{
-                  fontSize: "1.2em",
-                  marginBottom: "10px",
-                  textAlign: "justify",
-                }}
-              >
-                
-              </Nav.Link>
-            </li>
+            {alkotok.map((item) => (
+              <li className="mb-2">
+                <Nav.Link
+                  className="link"
+                  as={Link}
+                  to="/alkoto"
+                  style={{
+                    fontSize: "1.2em",
+                    marginBottom: "10px",
+                    textAlign: "justify",
+                  }}
+                >
+                  {item.magyar_nev}
+                </Nav.Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="mt-4 ">
           <h3 style={{ textAlign: "justify" }}>Csapatmunka bemutatása</h3>
-          <p className="csapat_szov"
+          <p
+            className="csapat_szov"
             style={{
               fontSize: "1.2em",
               marginBottom: "10px",
               textAlign: "justify",
             }}
           >
-          { /* cs_azon.csapat_bemutat_magyar */} 
+            {/* cs_azon.csapat_bemutat_magyar */}
           </p>
         </div>
         <h3 style={{ textAlign: "justify" }}>Képek a Csapatmunkájáról: </h3>
@@ -89,7 +90,11 @@ export default function Csapat() {
           <Carousel style={{ width: "60%" }}>
             {kepek.map((kep) => (
               <Carousel.Item key={kep.id}>
-                <img className="d-block w-100" src={process.env.PUBLIC_URL+kep.src} alt={kep.cim} />
+                <img
+                  className="d-block w-100"
+                  src={process.env.PUBLIC_URL + kep.src}
+                  alt={kep.cim}
+                />
                 <Carousel.Caption>
                   <h5>{kep.leiras}</h5>
                 </Carousel.Caption>
@@ -126,7 +131,7 @@ export default function Csapat() {
               zIndex: 1,
               borderRadius: "10px",
               position: "absolute",
-              margin:"100px",
+              margin: "100px",
               top: "auto",
               backgroundColor: "rgb(248, 223, 188)",
               maxWidth: "800px",
@@ -143,7 +148,10 @@ export default function Csapat() {
             >
               ✖️
             </button>
-            <GaleriaKep obj={kepek[aktKep]} style={{ width: "40%", margin: "10px" }} />
+            <GaleriaKep
+              obj={kepek[aktKep]}
+              style={{ width: "40%", margin: "10px" }}
+            />
           </div>
         )}
 
