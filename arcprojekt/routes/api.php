@@ -25,8 +25,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/galeria/newId', [GaleriaController::class, 'getNewGalleryId']);
-Route::post('/galeria/store', [GaleriaController::class, 'store']);
 Route::middleware('auth.basic')->group(function () {
     Route::post('/alkotoletrehoz', [AlkotoController::class, 'store']);
     Route::patch('/buszkeseg/{alkoto_id}', [AlkotoController::class, 'buszkeseg']);
@@ -47,12 +45,11 @@ Route::middleware('auth.basic')->group(function () {
     });
 });
 
-Route::get('/users', [UserController::class, 'users']);
+Route::post('/galeria/store', [GaleriaController::class, 'store']);
 Route::get('/alkotokkiir', [AlkotoController::class, 'alkotokKiir']);
 Route::get('/buszkesegeink', [AlkotoController::class, 'buszkesegKiir']);
 Route::get('/galeriakepek/{cs_azon}', [Galeria_kepController::class, 'galeriakepek']);
 Route::get('/kepek', [KepekController::class, 'kepek']);
-Route::get('/alkotok/create', [AlkotoController::class, 'create']);
 Route::post('/alkotok', [AlkotoController::class, 'store']);
 Route::get('/alkotok', [AlkotoController::class, 'index']);
 Route::get('/kategoriaklista', [KategoriaController::class, 'kategoriakLista']);

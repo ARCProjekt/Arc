@@ -11,10 +11,6 @@ class UserController extends Controller
 {
     public function users()
     {
-       /*  $user = Auth::user();
-        if (!$user || $user->jog !== 1) {
-            abort(401, 'Nincs jogosultsága új felhasználókat lekérdezni.');
-        } */
 
         if (!Auth::check() || Auth::user()->jog !== 1) {
             abort(401, 'Nincs jogosultsága felhasználókat lekérni.');
@@ -26,14 +22,11 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-         //$user = Auth::user();
 
         if (!Auth::check() || Auth::user()->jog !== 1) {
             abort(401, 'Nincs jogosultsága új felhasználókat létrehozni.');
         }
- 
 
-        
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -41,10 +34,9 @@ class UserController extends Controller
             'jog' => 'required|in:tanar,admin',
         ]);
 
-           // Lekérjük a jogosultsági szerepköröket
         $jogTanar = 2;
-        $jogAdmin = 1; 
-        // Lekérjük mindkét jogosultsági szerepkört
+        $jogAdmin = 1;
+
         $jogosultsagok = Jogosultsag::whereIn('jog', ['T', 'A'])->get();
 
         $jogTanar = $jogosultsagok->where('jog', 'T')->first();
@@ -54,7 +46,6 @@ class UserController extends Controller
             abort(500, 'Nem találhatók megfelelő jogosultsági szerepkörök az adatbázisban.');
         }
 
-        // Új felhasználó létrehozása
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
@@ -65,7 +56,8 @@ class UserController extends Controller
         $user->save();
     }
 
-    public function userTorol($id){
+    public function userTorol($id)
+    {
         if (!Auth::check() || Auth::user()->jog !== 1) {
             abort(401, 'Nincs jogosultsága felhasználókat törölni.');
         }
@@ -73,7 +65,8 @@ class UserController extends Controller
         User::find($id)->delete();
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         if (!Auth::check() || Auth::user()->jog !== 1) {
             abort(401, 'Nincs jogosultsága felhasználókat módosítani.');
         }
@@ -84,57 +77,37 @@ class UserController extends Controller
             'password' => 'sometimes|required|string|min:8',
             'jog' => 'sometimes|required|integer'
         ];
-    
+
         $messages = [
             'email.email' => 'Hibás email formátum.',
             'email.unique' => 'Az email cím már használatban van.',
             'password.min' => 'A jelszónak legalább 8 karakter hosszúnak kell lennie.',
         ];
-    
+
         $validatedData = $request->validate($rules, $messages);
-    
-    
+
+
         $user = User::find($id);
         try {
-            // Csak a validált és a kérésben szereplő adatok frissítése
             foreach ($validatedData as $key => $value) {
                 if ($key == 'password') {
-                    // A jelszó esetében külön kezeljük a titkosítást
                     $user->password = bcrypt($value);
                 } else {
-                    // Egyéb adatok frissítése
                     $user->$key = $value;
                 }
             }
-    
+
             $user->save();
             return response()->json($user);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
         }
-    
-
-        // $user = User::find($id);
-
-       /*  try {
-            $user->fill($request->only(['name', 'email', 'password', 'jog']));
-            
-            // Itt a jelszót bcrypt-tel kell titkosítani, ha a jelszót is frissíteni szeretnéd
-            if ($request->has('password')) {
-                $user->password = bcrypt($request->password);
-            }
-            
-            $user->save();
-            return response()->json($user);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Adatbázis hiba: ' . $e->getMessage()], 500);
-        } */
     }
 
-    public function checkEmail(Request $request) {
+    public function checkEmail(Request $request)
+    {
         $email = $request->input('email');
         $egyedi = !User::where('email', $email)->exists();
         return response()->json(['egyedi' => $egyedi]);
-      }
-
+    }
 }
