@@ -1,52 +1,49 @@
-import { Carousel } from "react-bootstrap";
-import { kepek } from "../KepLista";
+
 import "../css/Kozos2.css";
 import { useLanguage } from "./NyelvSegedlet";
+
+
 export default function Projekt() {
   const { selectedLanguage } = useLanguage();
+  
   return (
-    <div className="summary-section" style={{ textAlign: "justify" }}>
+    <div className="summary-section">
       <div className="cont">
-        <h2 className="projekt_cim" style={{ textAlign: "center" }}>
+      <div className="projekt">
+      <div >
+        <img
+        className="pro_kep"
+        src={process.env.PUBLIC_URL + "/kepek/szamalk.png"}
+        alt="Számalk"
+      />
+        </div>
+      <div className="pro_szoveg">
+        <h2 className="projekt_cim">
           {selectedLanguage === "hu"
             ? "A projekt Lényege"
             : "The Essence of the Project"}
         </h2>
         <br />
-        <p
-          className="csapat_szov"
-          style={{ textAlign: "justify", width: "600px", margin: "auto" }}
-        >
-          {" "}
+        <p className="csapat_szov">
           {selectedLanguage === "hu"
             ? "Az évszázad fő kihívása az ember által előidézett éghajlatváltozáshoz való alkalmazkodás, annak pusztító hatásainak mérséklése a biológiai sokféleség helyreállításával és a szén-dioxid-semlegesség elérésével. A gondolkodási és életmódminták nem könnyen alakíthatók át. A kultúra és Európa kulturális fővárosa bőséges és sokrétű cselekvési lehetőséget kínál. A művészeteket az élet más területeivel összekapcsoló közös alkotás oktathatja, provokálhatja és inspirálhatja az embereket, hogy törődjenek és reagáljanak, és a városok értelmet adják tisztábban a bennük lévő és körülöttük lévő természettel."
             : "The main challenge of this century is adaptation to human-induced climate change, mitigation of its devastating impacts by restoring biodiversity and achieving carbon neutrality. Thought and lifestyle patterns are not easily transformed. Culture and a European Capital of Culture have ample and diverse space for action. Co-creation linking the arts to other fields of life can educate, provoke and inspire people to care and react, and make sense of cities in clearer unison with the nature in and around them."}
         </p>
-        <div className="mt-5 d-flex justify-content-center pr_galeria">
-          <Carousel style={{ width: "40%" }}>
-            {kepek.map((kep) => (
-              <Carousel.Item key={kep.id}>
-                <img
-                  className="d-block w-100"
-                  src={process.env.PUBLIC_URL + kep.src}
-                  alt={kep.cim}
-                />
-                <Carousel.Caption>
-                  <h5>{kep.leiras}</h5>
-                </Carousel.Caption>
-              </Carousel.Item>
-            ))}
-          </Carousel>
         </div>
-        <h2 className="projekt_cim" style={{ textAlign: "center" }}>
+        <div >
+        <img
+        
+        src={process.env.PUBLIC_URL + "/kepek/szamalk.png"}
+        alt="Számalk"
+      />
+        </div>
+        <div className="pro_szoveg">
+        <h2 className="projekt_cim">
           {selectedLanguage === "hu"
             ? "Iskolánk szerepe"
             : "The Role of our School"}
         </h2>
-        <p
-          className="csapat_szov"
-          style={{ textAlign: "justify", margin: "auto", width: "600px" }}
-        >
+        <p className="csapat_szov">
           {selectedLanguage === "hu" ? (
             <>
               <p>
@@ -64,12 +61,7 @@ export default function Projekt() {
                 tehát egy jól felépíthető folyamatot reprezentál. A projekt
                 elemei:
               </p>
-              <ul>
-                <li>divatperformance,</li>
-                <li>kiállítás,</li>
-                <li>weblap,</li>
-                <li>közösségimédiás megjelenés.</li>
-              </ul>
+             
               <p>
                 A divatperformance: <br />A koncepció egy
                 mozgásszínház-divatbemutató kombináció formájában megjelenített
@@ -105,12 +97,7 @@ export default function Projekt() {
                 the arc/face therefore represents a well-structured process.
                 Elements of the project:
               </p>
-              <ul>
-                <li>fashion performance,</li>
-                <li>exhibition,</li>
-                <li>website,</li>
-                <li>social media presence.</li>
-              </ul>
+              
               <br />
               <p>
                 The fashion performance: <br /> The concept is a story-telling
@@ -132,21 +119,8 @@ export default function Projekt() {
             </>
           )}
         </p>
-        <div className="mt-5 d-flex justify-content-center pr_galeria">
-          <Carousel style={{ width: "40%" }}>
-            {kepek.map((kep) => (
-              <Carousel.Item key={kep.id}>
-                <img
-                  className="d-block w-100"
-                  src={process.env.PUBLIC_URL + kep.src}
-                  alt={kep.cim}
-                />
-                <Carousel.Caption>
-                  <h5>{kep.leiras}</h5>
-                </Carousel.Caption>
-              </Carousel.Item>
-            ))}
-          </Carousel>
+        </div>
+       
         </div>
       </div>
     </div>

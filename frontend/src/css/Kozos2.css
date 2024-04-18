@@ -174,7 +174,22 @@
   .footer-content {
     padding-left: 20px !important;
   }
-  
+  .projekt {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 20px; 
+    background-color: rgba(0, 0, 0, 0.8);
+    color: aliceblue;
+  }
+ .projekt img{
+  max-width: 400px;
+  margin: 20px;
+ }
+  .katsec{
+    background-color: rgba(0, 0, 0, 0.8);
+    color: aliceblue !important;
+    width: 1000px;
+  }
   @media only screen and (max-width: 575px) {
     .summary-section {
       display: block;
@@ -186,6 +201,11 @@
     }
     .cont {
       min-width: 350px !important;
+    }
+    .katsec {
+      min-width: 350px !important;
+      max-width: 350px !important; 
+     
     }
     .szoveg p {
       font-size: 15px !important;
@@ -280,6 +300,19 @@
     .projekt_cim {
       padding-top: 10px;
     }
+    .projekt {
+      display: grid;
+      grid-template-columns: auto;
+    
+    
+    }
+   .projekt img{
+    max-width: 200px;
+   
+   }
+   .pro_szoveg{
+    text-align: center;
+   }
   }
   
   /* Táblagépek */
@@ -293,7 +326,12 @@
     .cont {
       min-width: fit-content !important;
     }
-  
+    .katsec {
+      width: 50%; 
+      min-width: fit-content !important;
+      max-width: none !important; 
+      margin: auto;
+    }
     .mask {
       height: 320px !important;
       display: block !important;
@@ -368,6 +406,16 @@
       margin: auto !important;
       padding: 0 !important;
     }
+    .projekt {
+      display: grid;
+      grid-template-columns: auto;
+    
+    
+    }
+   .projekt img{
+    max-width: 300px;
+   
+   }
   }
   
   /* Kisebb képernyőjű laptopok és nagyobb telefonok */
@@ -382,7 +430,11 @@
       max-width: 600px !important;
       margin: auto;
     }
-  
+    .katsec{
+      min-width: 600px !important;
+      max-width: 600px !important;
+      margin: auto;
+    }
     .mask {
       height: 400px !important;
     }
@@ -419,6 +471,16 @@
   
       height: 90% !important;
     }
+    .projekt {
+      display: grid;
+      grid-template-columns: auto;
+    
+    
+    }
+   .projekt img{
+    max-width: 300px;
+   
+   }
   }
   
   /* Kisebb asztali számítógépek és laptopok */
@@ -432,6 +494,10 @@
       min-width: 800px !important;
       max-width: 800px !important;
       margin: auto;
+    }
+    .katsec{
+      min-width: 800px !important;
+      max-width: 800px !important;
     }
   
     .mask {
