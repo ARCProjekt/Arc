@@ -65,13 +65,11 @@ const AdottCsapat = ({ cs_azon }) => {
   const [alkotok, setAlkotok] = useState([]);
   const [aktKep, setAktKep] = useState(0);
   const [kepek, setKepek] = useState([]);
+
   useEffect(() => {
     const getCsapat = async () => {
-      const apiCsapat = await axios.get(
-        `http://localhost:8000/api/adott_csapat/${cs_azon}`
-      );
+      const apiCsapat = await axios.get(`http://localhost:8000/api/adott_csapat/${cs_azon}`);
       setCsapat(apiCsapat.data.adottcsapatok);
-      console.log(apiCsapat.data.adottcsapatok);
     };
 
     getCsapat();
@@ -79,25 +77,20 @@ const AdottCsapat = ({ cs_azon }) => {
 
   useEffect(() => {
     const getAlkotok = async () => {
-      const apiAlkotok = await axios.get(
-        `http://localhost:8000/api/csapathozalkoto/${cs_azon}`
-      );
+      const apiAlkotok = await axios.get(`http://localhost:8000/api/csapathozalkoto/${cs_azon}`);
       setAlkotok(apiAlkotok.data.alkotok);
-      console.log(apiAlkotok.data.alkotok);
     };
     getAlkotok();
   }, [cs_azon]);
+
   useEffect(() => {
     const getKepek = async () => {
-      const apiKepek = await axios.get(
-        `http://localhost:8000/api/galeriakepek/${cs_azon}`
-      );
+      const apiKepek = await axios.get(`http://localhost:8000/api/galeriakepek/${cs_azon}`);
       setKepek(apiKepek.data.kepek);
-      console.log(apiKepek.data.kepek);
     };
-
     getKepek();
   }, []);
+
   function kattintas(index) {
     setAktKep(index);
     setNagyKepLathato(true);
@@ -106,49 +99,48 @@ const AdottCsapat = ({ cs_azon }) => {
   function bezarNagyKep() {
     setNagyKepLathato(false);
   }
-
+  function vissza(){
+    window.location.reload();
+  }
   return (
     <div className="summary-section">
       <div className="cont">
-        <div>
-          {csapat.map((item) => (
-            <div key={item.cs_azon}>
-              <h2>{item.csapat_nev_magyar}</h2>
-              <h3>Kategória: {item.magyar_kategoria}</h3>
-            </div>
+          <button onClick={vissza}>vissza</button>
+        {csapat.map((item) => (
+          <div key={item.cs_azon}>
+            <h2>{item.csapat_nev_magyar}</h2>
+            <h3>Kategória: {item.magyar_kategoria}</h3>
+          </div>
+        ))}
+        <h3 className="mb-4" style={{ textAlign: "justify" }}>
+          Csapattagok
+        </h3>
+        <ul className="list-unstyled">
+          {alkotok.map((item, index) => (
+            <li className="mb-2" key={index}>
+              <Nav.Link
+                className="link"
+                as={Link}
+                to="/alkoto"
+                style={{
+                  fontSize: "1.2em",
+                  marginBottom: "10px",
+                  textAlign: "justify",
+                }}
+              >
+                {item.magyar_nev}
+              </Nav.Link>
+            </li>
           ))}
-          <h3 className="mb-4" style={{ textAlign: "justify" }}>
-            Csapattagok
-          </h3>
-          <ul className="list-unstyled">
-            {alkotok.map((item, index) => (
-              <li className="mb-2" key={index}>
-                <Nav.Link
-                  className="link"
-                  as={Link}
-                  to="/alkoto"
-                  style={{
-                    fontSize: "1.2em",
-                    marginBottom: "10px",
-                    textAlign: "justify",
-                  }}
-                >
-                  {item.magyar_nev}
-                </Nav.Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          {csapat.map((item) => (
-            <div key={item.cs_azon}>
-              <div className="mt-4">
-                <h3 style={{ textAlign: "justify" }}>Csapatmunka bemutatása</h3>
-                <p className="csapat_szov">{item.csapat_bemutat_magyar}</p>
-              </div>
+        </ul>
+        {csapat.map((item) => (
+          <div key={item.cs_azon}>
+            <div className="mt-4">
+              <h3 style={{ textAlign: "justify" }}>Csapatmunka bemutatása</h3>
+              <p className="csapat_szov">{item.csapat_bemutat_magyar}</p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
         <div>
           <h3 style={{ textAlign: "justify" }}>Képek a Csapatmunkájáról: </h3>
           <div className="mt-5 d-flex justify-content-center">
