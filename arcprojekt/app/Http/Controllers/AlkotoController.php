@@ -86,13 +86,14 @@ class AlkotoController extends Controller
     public function adottAlkoto($alkoto_id)
     {
         $alkoto = DB::table('alkotos')
-            ->select('nev_nyelv.magyar as nevHU', 'nev_nyelv.angol as nevEN', 'bemutat_nyelv.magyar as bemutatHU', 'bemutat_nyelv.angol as bemutatEN', 'szak_nyelv.magyar as szakHU', 'szak_nyelv.angol as szakEN', 'kepeks.kep_azon as kep', 'kategoria_nyelv.magyar as kategoriaHU', 'kategoria_nyelv.angol as kategoriaEN', 'csapats.cs_azon as csapat_id')
+            ->select('nev_nyelv.magyar as nevHU', 'nev_nyelv.angol as nevEN', 'bemutat_nyelv.magyar as bemutatHU', 'bemutat_nyelv.angol as bemutatEN', 'szak_nyelv.magyar as szakHU', 'szak_nyelv.angol as szakEN', 'kepeks.kep as kep', 'kategoria_nyelv.magyar as kategoriaHU', 'kategoria_nyelv.angol as kategoriaEN', 'csapats.cs_azon as csapat_id','csapat_nev.magyar as csapat_nev')
             ->join('nyelvs as nev_nyelv', 'alkotos.nyelv_id_nev', '=', 'nev_nyelv.nyelv_id')
             ->join('nyelvs as bemutat_nyelv', 'alkotos.nyelv_id_bemutat', '=', 'bemutat_nyelv.nyelv_id')
             ->join('szaks', 'alkotos.szak_id', '=', 'szaks.szak_id')
             ->join('nyelvs as szak_nyelv', 'szaks.nyelv_id_elnevezes', '=', 'szak_nyelv.nyelv_id')
             ->join('kepeks', 'alkotos.kep_azon', '=', 'kepeks.kep_azon')
             ->join('csapats', 'alkotos.cs_azon', '=', 'csapats.cs_azon')
+            ->join('nyelvs as csapat_nev', 'csapats.nyelv_id_csapat_nev', '=', 'csapat_nev.nyelv_id')
             ->join('kategorias', 'csapats.k_id', '=', 'kategorias.k_id')
             ->join('nyelvs as kategoria_nyelv', 'kategorias.nyelv_id_elnevezes', '=', 'kategoria_nyelv.nyelv_id')
             ->where('a_azon', '=', $alkoto_id)
@@ -103,7 +104,7 @@ class AlkotoController extends Controller
     public function buszkesegKiir()
     {
         $buszkesegeink = DB::select('
-            SELECT nev_nyelv.magyar as alkoto_nevHU, nev_nyelv.angol as alkoto_nevEN, nyelvs_bemutat.magyar as bemutatoHU, nyelvs_bemutat.angol as bemutatoEN, kepeks.kep as kep, szak_elnev.magyar as szakHU, szak_elnev.angol as szakEN, a_azon as id
+            SELECT alkotos.a_azon,nev_nyelv.magyar as alkoto_nevHU, nev_nyelv.angol as alkoto_nevEN, nyelvs_bemutat.magyar as bemutatoHU, nyelvs_bemutat.angol as bemutatoEN, kepeks.kep as kep, szak_elnev.magyar as szakHU, szak_elnev.angol as szakEN, a_azon as id
             from alkotos
             inner join nyelvs as nev_nyelv
             on alkotos.nyelv_id_nev = nev_nyelv.nyelv_id
