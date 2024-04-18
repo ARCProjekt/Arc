@@ -37,7 +37,7 @@ const LayOut = () => {
                 {selectedLanguage === "hu" ? "Csapatok" : "Teams"}
               </Nav.Link>
               <Nav.Link as={Link} to="/alkoto">
-                {selectedLanguage === "hu" ? "Alkotó" : "Creator"}
+                {selectedLanguage === "hu" ? "Alkotók" : "Creators"}
               </Nav.Link>
               <Nav.Link as={Link} to="/buszkesegeink">
                 {selectedLanguage === "hu" ? "Büszkeségeink" : "Our Pride"}
