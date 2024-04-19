@@ -63,7 +63,7 @@ const Fooldal = () => {
                 </div>
                 <div className="summary-image alul">
                   <img
-                    src={process.env.PUBLIC_URL + "/kepek/bgk2.png"}
+                    src={process.env.PUBLIC_URL + "/kepek/bgk.png"}
                     alt="Kép leírása"
                   />
                 </div>
