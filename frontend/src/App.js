@@ -2,7 +2,6 @@ import "./App.css";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./LayOut";
 import Fooldal from "./pages/Fooldal";
-import Alkoto from "./pages/Alkotok";
 import Kategoria from "./pages/Kategoria";
 import Buszkesegeink from "./pages/Buszkesegeink";
 import Projekt from "./pages/Projekt";
