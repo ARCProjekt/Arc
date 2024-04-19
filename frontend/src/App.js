@@ -26,7 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Fooldal />} />
-              <Route path="alkoto" element={<Alkoto />} />
+
               <Route path="kategoria" element={<Kategoria />} />
               <Route path="buszkesegeink" element={<Buszkesegeink />} />
               <Route path="projekt" element={<Projekt />} />

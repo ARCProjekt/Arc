@@ -3,21 +3,23 @@ import { Carousel, Nav } from "react-bootstrap";
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import "../css/Kozos2.css";
+import AdottAlkoto from "./AdottAlkoto";
 
 const AdottCsapat = ({ cs_azon }) => {
   const [nagyKepLathato, setNagyKepLathato] = useState(false);
   const [csapat, setCsapat] = useState([]);
   const [alkotok, setAlkotok] = useState([]);
   const [aktKep, setAktKep] = useState(0);
+  const [selectedAlkoto, setSelectedAlkoto] = useState(null);
   const [kepek, setKepek] = useState([]);
-
+  const [showAlkoto, setShowAlkoto] = useState(true);
   useEffect(() => {
     const getCsapat = async () => {
       const apiCsapat = await axios.get(
         `http://localhost:8000/api/adott_csapat/${cs_azon}`
       );
-      console.log(apiCsapat.data.adottcsapatok);
-      setCsapat(apiCsapat.data.adottcsapatok);
+/*       console.log(apiCsapat.data.adottcsapatok);
+ */      setCsapat(apiCsapat.data.adottcsapatok);
     };
 
     getCsapat();
@@ -28,25 +30,36 @@ const AdottCsapat = ({ cs_azon }) => {
       const apiAlkotok = await axios.get(
         `http://localhost:8000/api/csapathozalkoto/${cs_azon}`
       );
-      console.log(apiAlkotok.data.alkotok);
-      setAlkotok(apiAlkotok.data.alkotok);
+/*       console.log(apiAlkotok.data.alkotok);
+ */      setAlkotok(apiAlkotok.data.alkotok);
     };
     getAlkotok();
   }, [cs_azon]); // cs_azon paraméter hozzáadása az useEffect függvény függőségi tömbjéhez
+
+  const handleAlkotoClick = (a_azon) => {
+    setSelectedAlkoto(a_azon);
+    console.log(a_azon)
+    setShowAlkoto(false);
+  };
+  const handleBackButtonClick = () => {
+    setSelectedAlkoto(null);
+    setShowAlkoto(true);
+  };
 
   useEffect(() => {
     const getKepek = async () => {
       const apiKepek = await axios.get(
         `http://localhost:8000/api/galeriakepek/${cs_azon}`
       );
-      console.log(apiKepek.data.kepek);
-      setKepek(apiKepek.data.kepek);
+/*       console.log(apiKepek.data.kepek);
+ */      setKepek(apiKepek.data.kepek);
     };
     getKepek();
   }, [cs_azon]); // cs_azon paraméter hozzáadása az useEffect függvény függőségi tömbjéhez
 
   return (
     <div className="summary-section">
+      {showAlkoto && (
       <div className="cont">
         {csapat.map((item,index) => (
           <div key={index}>
@@ -60,18 +73,20 @@ const AdottCsapat = ({ cs_azon }) => {
         <ul className="list-unstyled">
           {alkotok.map((item, index) => (
             <li className="mb-2" key={index}>
-              <Nav.Link
-                className="link"
-                as={Link}
-                to={`/alkoto`}
-                style={{
-                  fontSize: "1.2em",
-                  marginBottom: "10px",
-                  textAlign: "justify",
-                }}
-              >
-                {item.magyar_nev}
-              </Nav.Link>
+             <button
+                  onClick={() => handleAlkotoClick(item.a_azon)}
+                  style={{
+                    fontSize: "1.2em",
+                    marginBottom: "10px",
+                    textAlign: "justify",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    background: "none",
+                  }}
+                >
+                  {item.magyar_nev}
+                </button>
             </li>
           ))}
         </ul>
@@ -108,6 +123,13 @@ const AdottCsapat = ({ cs_azon }) => {
           </div>
         </div>
       </div>
+       )}
+       {selectedAlkoto && (
+        <div>
+{/*           <button onClick={handleBackButtonClick}>Back</button>
+ */}          <AdottAlkoto a_azon={selectedAlkoto} />
+        </div>
+      )}
     </div>
   );
 };
