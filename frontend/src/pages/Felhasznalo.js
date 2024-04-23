@@ -93,12 +93,12 @@ const Felhasznalo = () => {
   const handleInputChange = (e, id, key) => {
     const value = e.target.value;
     if (key === "email" && !validateEmail(value)) {
-    setEmailError("Hibás email formátum");
-    // Ha az email nem valid, itt megállítjuk a további logikát
-    return;
-  } else {
-    setEmailError("");
-  }
+      setEmailError("Hibás email formátum");
+      // Ha az email nem valid, itt megállítjuk a további logikát
+      return;
+    } else {
+      setEmailError("");
+    }
     const newData = felhasznalok.map((item) =>
       item.id === id ? { ...item, [key]: e.target.value } : item
     );
@@ -184,7 +184,7 @@ const Felhasznalo = () => {
 
   return (
     <div className="summary-section">
-      <div className="cont">
+      <div className="cont katsec">
         <div className="feltoltes">
           <h3>Új user</h3>
           <form onSubmit={handleSubmit}>
@@ -252,27 +252,25 @@ const Felhasznalo = () => {
             <br />
 
             <button
-              type="submit"
-              style={{
-                background: "none",
-                padding: "5px",
-                display: "grid",
-                gap: "10px",
-                maxWidth: "400px",
-                margin: "0 auto",
-                marginTop: "10px",
-              }}
-            >
-              Felhasználó létrehozása
-            </button>
+                        type="submit"
+                        style={{
+                            padding: "10px",
+                            backgroundColor: "#007bff",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Felhasználó létrehozása
+                    </button>
           </form>
         </div>
         <div>
           <br />
           <br />
         </div>
-        <div className="tablazat ">
-          <h3>Userek</h3>
+        <div className="tablazat" style={{ backgroundColor: "#edf9ff" }}>
           <div className="table-responsive">
             <table className="table table-striped">
               <thead>
@@ -306,17 +304,18 @@ const Felhasznalo = () => {
                     <td>
                       {editableRow === item.id ? (
                         <>
-                        <input
-                          type="email"
-                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                          value={item.email}
-                          onChange={(e) => handleEmailChange(e, item.id)}
-                          title="Invalid email address"
-                          
-                        />{emailError && <div style={{ color: 'red' }}>{emailError}</div>}
+                          <input
+                            type="email"
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                            value={item.email}
+                            onChange={(e) => handleEmailChange(e, item.id)}
+                            title="Invalid email address"
+                          />
+                          {emailError && (
+                            <div style={{ color: "red" }}>{emailError}</div>
+                          )}
                         </>
                       ) : (
-                        
                         item.email
                       )}
                     </td>

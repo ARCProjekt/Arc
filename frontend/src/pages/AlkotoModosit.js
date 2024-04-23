@@ -741,7 +741,7 @@ const AlkotoLetrehoz = () => {
 export default function AlkotoModosit() {
   return (
     <div className="summary-section">
-      <div className="cont">
+      <div className="cont katsec">
         <Kepletrehoz />
         <AlkotoLetrehoz />
       </div>

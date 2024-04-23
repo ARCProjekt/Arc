@@ -32,7 +32,7 @@ const AdottAlkoto = ({ a_azon }) => {
   return (
     <div className="summary-section">
       {showCsapat && (
-        <div className="cont">
+        <div className="cont katsec">
           {alkoto.map((item, index) => (
             <div key={index} className="alkoto">
               <div

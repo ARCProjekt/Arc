@@ -30,7 +30,7 @@ export default function Csapatok() {
   return (
     <div className="summary-section">
       <div
-        className="cont"
+        className="cont katsec"
         style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
       >
         {showCsapat &&

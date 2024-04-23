@@ -6,9 +6,9 @@ import { useLanguage } from "./NyelvSegedlet";
 
 export default function Projekt() {
   const { selectedLanguage } = useLanguage();
-  const [style, setStyle] = useState("Kozos2.css");
+ 
   return (
-    <div className={style}>
+    <div >
     <div className="summary-section">
       <div className="cont">
       <div className="projekt">

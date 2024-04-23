@@ -38,7 +38,7 @@ export default function Buszkesegeink() {
 
   return (
     <div className="summary-section">
-      <div className="cont">
+      <div className="cont katsec">
         <div className="cim">
           <h1>
             {selectedLanguage === "hu"

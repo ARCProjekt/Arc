@@ -41,12 +41,7 @@ const Layout = () => {
               <Nav.Link as={Link} to="/csapatok">
                 {selectedLanguage === 'hu' ? 'Csapatok' : 'Teams'}
               </Nav.Link>
-              <Nav.Link as={Link} to="/alkoto">
-                {selectedLanguage === 'hu' ? 'Alkotók' : 'Creators'}
-              </Nav.Link>
-              {/* <Nav.Link as={Link} to="/alkoto">
-                {selectedLanguage === "hu" ? "Alkotók" : "Creators"}
-              </Nav.Link> */}
+              
               <Nav.Link as={Link} to="/buszkesegeink">
                 {selectedLanguage === 'hu' ? 'Büszkeségeink' : 'Our Pride'}
               </Nav.Link>

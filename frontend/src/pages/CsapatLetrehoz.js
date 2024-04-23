@@ -87,7 +87,7 @@ const GaleriaService = ({ onGaleriaCreated }) => {
               margin: "0 auto",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div className="input-container" style={{ display: "flex", flexDirection: "column" }}>
               <label htmlFor="galeria_leiras_magyar">
                 Galéria leírása (Magyar):
               </label>
@@ -105,8 +105,8 @@ const GaleriaService = ({ onGaleriaCreated }) => {
               />
             </div>
             <br />
-
-            <div style={{ display: "flex", alignItems: "center" }}>
+  
+            <div className="input-container" style={{ display: "flex", flexDirection: "column" }}>
               <label htmlFor="galeria_leiras_angol">
                 Galéria leírása (Angol):
               </label>
@@ -124,8 +124,8 @@ const GaleriaService = ({ onGaleriaCreated }) => {
               />
             </div>
             <br />
-
-            <div style={{ display: "flex", alignItems: "center" }}>
+  
+            <div className="input-container" style={{ display: "flex", flexDirection: "column" }}>
               <label htmlFor="kep_leiras_magyar">Kép leírása (Magyar):</label>
               <input
                 type="text"
@@ -141,8 +141,8 @@ const GaleriaService = ({ onGaleriaCreated }) => {
               />
             </div>
             <br />
-
-            <div style={{ display: "flex", alignItems: "center" }}>
+  
+            <div className="input-container" style={{ display: "flex", flexDirection: "column" }}>
               <label htmlFor="kep_leiras_angol">Kép leírása (Angol):</label>
               <input
                 type="text"
@@ -158,8 +158,8 @@ const GaleriaService = ({ onGaleriaCreated }) => {
               />
             </div>
             <br />
-
-            <div style={{ display: "flex", alignItems: "center" }}>
+  
+            <div className="input-container" style={{ display: "flex", flexDirection: "column" }}>
               <label htmlFor="kepek">Képek:</label>
               <input
                 type="file"
@@ -188,8 +188,8 @@ const GaleriaService = ({ onGaleriaCreated }) => {
               </button>
             </div>
             <br />
-
-            <div style={{ display: "flex", alignItems: "center" }}>
+  
+            <div className="input-container" style={{ display: "flex", flexDirection: "column" }}>
               <label htmlFor="fotos_neve">Fotós neve:</label>
               <input
                 type="text"
@@ -205,7 +205,7 @@ const GaleriaService = ({ onGaleriaCreated }) => {
               />
             </div>
             <br />
-
+  
             <button
               type="submit"
               style={{
@@ -224,6 +224,8 @@ const GaleriaService = ({ onGaleriaCreated }) => {
       </div>
     </div>
   );
+  
+  
 };
 
 
@@ -427,8 +429,8 @@ const CsapatLetrehoz = ({ galeriaId }) => {
                         />
                     </td>
                     <td>
-                        <button onClick={() => updateCsapat(csapat.cs_azon)}>Mentés</button>
-                        <button onClick={handleCancelEdit}>Mégse</button>
+                        <button onClick={() => updateCsapat(csapat.cs_azon)}>✔️</button>
+                        <button onClick={handleCancelEdit}>✘</button>
                     </td>
                 </tr>
             );
@@ -443,8 +445,8 @@ const CsapatLetrehoz = ({ galeriaId }) => {
                     <td>{csapat.csapat_bemutat_magyar}</td>
                     <td>{csapat.csapat_bemutat_angol}</td>
                     <td>
-                        <button onClick={() => handleEditClick(csapat.cs_azon)}>Szerkesztés</button>
-                        <button onClick={() => handleDelete(csapat.cs_azon)}>Törlés</button>
+                        <button onClick={() => handleEditClick(csapat.cs_azon)}>🖌</button>
+                        <button onClick={() => handleDelete(csapat.cs_azon)}> 🗑</button>
                     </td>
                 </tr>
             );
@@ -571,10 +573,10 @@ const CsapatLetrehoz = ({ galeriaId }) => {
                     </button>
                 </form>
             </div>
-            <div className="tablazat" style={{ width: "100%", overflowX: "auto" }}>
-                <div>
-                    <h3>Csapatok</h3>
-                    <table className="table" style={{ width: "100%" }}>
+            <div className="tablazat" style={{ backgroundColor: "#edf9ff" }}>
+            
+            <div className="table-responsive">
+              <table className="table table-striped">
                         <thead>
                             <tr>
                                 <th>Azonosító</th>
@@ -613,7 +615,7 @@ const GaleriaEsCsapatLetrehoz = () => {
 
   return (
     <div className="summary-section">
-      <div className="cont">
+      <div className="cont katsec">
         <button onClick={handleButtonClick}>Hozzon létre új Galériát!</button>
         {showGaleriaService && (
           <GaleriaService onGaleriaCreated={handleGaleriaCreated} />

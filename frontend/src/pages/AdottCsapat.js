@@ -55,7 +55,7 @@ const AdottCsapat = ({ cs_azon }) => {
   return (
     <div className="summary-section">
       {showAlkoto && (
-        <div className="cont">
+        <div className="cont katsec">
           {csapat.map((item, index) => (
             <div key={index}>
               <h2>{item.csapat_nev_magyar}</h2>
