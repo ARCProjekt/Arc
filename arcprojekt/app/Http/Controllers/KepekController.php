@@ -33,9 +33,7 @@ class KepekController extends Controller
                 'fotos_neve' => 'required',
             ]);
 
-            // Elérési útvonal mentése
             $eleresi_utvonal = $request->file('kep')->storeAs('/storage/alkotokepek', $request->file('kep')->getClientOriginalName());
-            // Nyelv létrehozása mindkét leírással
             $nyelvMagyarLeiras = Nyelv::create([
                 'magyar' => $request->nyelv_id_leiras_magyar,
                 'angol' => $request->nyelv_id_leiras_angol,
@@ -43,7 +41,6 @@ class KepekController extends Controller
             ]);
 
 
-            // Adatbázisba mentés
             $kepAdatok = [
                 'kep' => $eleresi_utvonal,
                 'nyelv_id_leiras' => $nyelvMagyarLeiras->nyelv_id,

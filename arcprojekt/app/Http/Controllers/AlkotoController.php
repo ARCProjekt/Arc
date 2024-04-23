@@ -136,21 +136,18 @@ class AlkotoController extends Controller
             'buszkesegeink' => 'required|boolean',
         ]);
 
-        // Nyelv létrehozása magyar névvel
         $nyelvMagyarNev = Nyelv::create([
             'magyar' => $request->magyar_nev,
             'angol' => $request->angol_nev,
             'hol' => 'alkoto nev',
         ]);
 
-        // Nyelv létrehozása magyar leírással
         $nyelvMagyarBemutat = Nyelv::create([
             'magyar' => $request->magyar_bemutat,
             'angol' => $request->angol_bemutat,
             'hol' => 'alkoto bemutat',
         ]);
 
-        // Alkoto létrehozása képpel együtt
         $alkoto = Alkoto::create([
             'szak_id' => $request->szak_id,
             'nyelv_id_nev' => $nyelvMagyarNev->nyelv_id,
@@ -168,7 +165,6 @@ class AlkotoController extends Controller
         $alkoto = Alkoto::find($id);
 
         try {
-            // Alkotó nevének nyelvi objektumának frissítése
             if (!empty($request->magyar_nev)) {
                 $nyelvMagyarNev = Nyelv::updateOrCreate(
                     ['nyelv_id' => $alkoto->nyelv_id_nev],
@@ -177,7 +173,6 @@ class AlkotoController extends Controller
                 $alkoto->nyelv_id_nev = $nyelvMagyarNev->nyelv_id;
             }
 
-            // Alkotó bemutatkozásának nyelvi objektumának frissítése
             if (!empty($request->magyar_bemutat)) {
                 $nyelvMagyarBemutat = Nyelv::updateOrCreate(
                     ['nyelv_id' => $alkoto->nyelv_id_bemutat],
@@ -186,14 +181,12 @@ class AlkotoController extends Controller
                 $alkoto->nyelv_id_bemutat = $nyelvMagyarBemutat->nyelv_id;
             }
 
-            // Alkotó adatainak frissítése
             $alkoto->fill($request->only([
                 'szak_id',
                 'kep_azon',
                 'cs_azon',
                 'buszkesegeink'
             ]));
-            // Alkotó frissítése
             $alkoto->save();
 
             return response()->json(['message' => 'Az alkotó sikeresen frissítve lett!'], 200);

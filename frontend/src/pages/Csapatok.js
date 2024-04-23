@@ -29,12 +29,21 @@ export default function Csapatok() {
 
   return (
     <div className="summary-section">
-      <div className="cont" style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+      <div
+        className="cont"
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
+      >
         {showCsapat &&
-          csapatok.map((item,index) => (
-            <div key={index} className="half-circle-card" style={{ margin: "15px" }}>
+          csapatok.map((item, index) => (
+            <div
+              key={index}
+              className="half-circle-card"
+              style={{ margin: "15px" }}
+            >
               <img
-                src={"http://localhost:8000" + "/storage/alkotokepek/csapat.jpg"}
+                src={
+                  "http://localhost:8000" + "/storage/alkotokepek/csapat.jpg"
+                }
                 alt="Csapatok"
               />
               <div className="content">
@@ -60,7 +69,20 @@ export default function Csapatok() {
       </div>
       {selectedCsapat && (
         <div>
-          <button onClick={handleBackButtonClick}>Back</button>
+          <button
+            onClick={handleBackButtonClick}
+            style={{
+              fontSize: "1.2em",
+              marginBottom: "10px",
+              textAlign: "justify",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              background: "none",
+            }}
+          >
+            Vissza a csapatokhoz
+          </button>
           <AdottCsapat cs_azon={selectedCsapat} />
         </div>
       )}
