@@ -42,7 +42,7 @@ export default function Csapatok() {
               style={{ margin: "15px" }}
             >
                <img
-            src={"http://localhost:8000" + csapat.galeria_kepek}
+            src={"http://localhost:8000/" + csapat.galeria_kepek}
             alt={`Csapat kép ${index}`}
         />
 
