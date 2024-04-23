@@ -7,6 +7,7 @@ export default function Csapatok() {
   const [selectedCsapat, setSelectedCsapat] = useState(null);
   const [csapatok, setCsapatok] = useState([]);
   const [showCsapat, setShowCsapat] = useState(true);
+  const [kepek, setKepek] = useState([]);
 
   useEffect(() => {
     const getCsapatok = async () => {
@@ -34,23 +35,22 @@ export default function Csapatok() {
         style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
       >
         {showCsapat &&
-          csapatok.map((item, index) => (
+          csapatok.map((csapat, index) => (
             <div
               key={index}
               className="half-circle-card"
               style={{ margin: "15px" }}
             >
-              <img
-                src={
-                  "http://localhost:8000" + "/storage/alkotokepek/csapat.jpg"
-                }
-                alt="Csapatok"
-              />
+               <img
+            src={"http://localhost:8000" + csapat.galeria_kepek}
+            alt={`Csapat kép ${index}`}
+        />
+
               <div className="content">
-                <h3>{item.csapat_nev_magyar}</h3>
-                <p>{item.csapat_bemutat_magyar}</p>
+                <h3>{csapat.csapat_nev_magyar}</h3>
+                <p>{csapat.csapat_bemutat_magyar}</p>
                 <button
-                  onClick={() => handleCsapatClick(item.cs_azon)}
+                  onClick={() => handleCsapatClick(csapat.cs_azon)}
                   style={{
                     fontSize: "1.2em",
                     marginBottom: "10px",

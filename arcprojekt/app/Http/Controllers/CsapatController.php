@@ -7,6 +7,7 @@ use App\Models\Nyelv;
 use App\Models\Csapat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CsapatController extends Controller
 {
@@ -23,15 +24,25 @@ class CsapatController extends Controller
             csapat_nev.magyar as csapat_nev_magyar,
             csapat_nev.angol as csapat_nev_angol,
             csapat_bemutat.magyar as csapat_bemutat_magyar,
-            csapat_bemutat.angol as csapat_bemutat_angol
+            csapat_bemutat.angol as csapat_bemutat_angol,
+                GROUP_CONCAT(kepeks.kep) as galeria_kepek
+
         FROM csapats
         INNER JOIN nyelvs as csapat_nev ON csapats.nyelv_id_csapat_nev = csapat_nev.nyelv_id
         INNER JOIN nyelvs as csapat_bemutat ON csapats.nyelv_id_leiras = csapat_bemutat.nyelv_id
         INNER JOIN kategorias ON csapats.k_id = kategorias.k_id
         INNER JOIN nyelvs ON kategorias.nyelv_id_elnevezes = nyelvs.nyelv_id
-
-
+        INNER JOIN galeria_keps ON csapats.galeria_id = galeria_keps.galeria_id
+        INNER JOIN kepeks ON galeria_keps.kep_azon = kepeks.kep_azon
+        GROUP BY csapats.cs_azon,csapats.galeria_id,csapats.k_id,csapats.nyelv_id_csapat_nev,
+        csapats.nyelv_id_leiras,csapats.created_at,csapats.updated_at,nyelvs.magyar,nyelvs.angol,
+        csapat_nev.magyar,csapat_nev.angol,csapat_bemutat.magyar,csapat_bemutat.angol;
         ');
+        $csapatok = array_map(function($csapat) {
+            $csapat->galeria_kepek = explode(',', $csapat->galeria_kepek)[0];
+            return $csapat;
+        }, $csapatok);
+    
         return response()->json(['csapatok' => $csapatok]);
     }
     public function adottcsapatKiir($cs_azon)
