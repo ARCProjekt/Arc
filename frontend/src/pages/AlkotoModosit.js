@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import "../css/Kozos2.css";
 import axios from "../api/axios";
 const Kepletrehoz = () => {
-  // const [ujToken2, setUjToken] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
     kep: "",
-    kep_leiras_magyar: "", // Módosítás: 'kep_leiras_magyar' hozzáadása
-    kep_leiras_angol: "", // Módosítás: 'kep_leiras_angol' hozzáadása
+    kep_leiras_magyar: "",
+    kep_leiras_angol: "",
     fotos_neve: "",
   });
 
@@ -31,23 +30,21 @@ const Kepletrehoz = () => {
     e.preventDefault();
 
     try {
-      // Először CSRF token lekérése
       const ujToken = await axios.get("token");
       const ujToken2 = ujToken.data;
 
-      // Képfeltöltés kódja
       const formDataWithImage = new FormData();
       formDataWithImage.append("kep", formData.kep);
       formDataWithImage.append(
         "nyelv_id_leiras_magyar",
         formData.kep_leiras_magyar
-      ); // Módosítás: Hozzáadva
+      );
       formDataWithImage.append(
         "nyelv_id_leiras_angol",
         formData.kep_leiras_angol
-      ); // Módosítás: Hozzáadva
+      );
       formDataWithImage.append("fotos_neve", formData.fotos_neve);
-      formDataWithImage.append("kep_azon", formData.kep_azon); // Ez az új sor
+      formDataWithImage.append("kep_azon", formData.kep_azon);
 
       const response = await axios.post(
         "api/kepek/alkotoKepek",
@@ -91,7 +88,7 @@ const Kepletrehoz = () => {
             type="file"
             id="kep"
             required
-            accept="image/*" // Csak képfájlok elfogadása
+            accept="image/*"
             onChange={handleFileChange}
           />
 
@@ -194,7 +191,6 @@ const AlkotoLetrehoz = () => {
     cs_azon: "",
     buszkesegeink: "",
   });
-  //const imagePath = "alkotokepek/" + kep;
 
   //alkotok
   useEffect(() => {
@@ -210,7 +206,7 @@ const AlkotoLetrehoz = () => {
     try {
       const response = await axios.get("token");
       console.log("ujtoken2 csrf ", ujToken2);
-      setUjToken(response.data); //itt frissul majd a token
+      setUjToken(response.data);
     } catch (error) {
       console.error("Error fetching CSRF token:", error);
     }
@@ -223,7 +219,6 @@ const AlkotoLetrehoz = () => {
     const getCsapatok = async () => {
       const apiCsapatok = await axios.get("api/csapatok");
       setCsapatok(apiCsapatok.data.csapatok);
-      //console.log("Csapatok:", apiCsapatok.data.csapatok);
     };
     getCsapatok();
   }, []);
@@ -232,7 +227,6 @@ const AlkotoLetrehoz = () => {
     const getSzakok = async () => {
       const apiSzakok = await axios.get("api/szakok");
       setSzakok(apiSzakok.data.szakok);
-      //console.log("Szakok:", apiSzakok.data.szakok);
     };
     getSzakok();
   }, []);
@@ -241,7 +235,6 @@ const AlkotoLetrehoz = () => {
     const getKepek = async () => {
       const apiKepek = await axios.get("api/kepek");
       setKepek(apiKepek.data);
-      //console.log("Kepek:", apiKepek.data);
     };
     getKepek();
   }, []);
@@ -256,10 +249,8 @@ const AlkotoLetrehoz = () => {
   const handleInputChange = (e, a_azon, key) => {
     const value = e.target.value;
 
-    // Megkeressük az alkotót a_azon alapján
     const index = alkotok.findIndex((item) => item.a_azon === a_azon);
     if (index !== -1) {
-      // Ha találtunk egyezést, akkor csak az adott elemet módosítjuk
       const updatedAlkoto = { ...alkotok[index], [key]: value };
       const newData = [...alkotok];
       newData[index] = updatedAlkoto;
@@ -267,7 +258,6 @@ const AlkotoLetrehoz = () => {
       setAlkotok(newData);
 
       if (a_azon === editableRow) {
-        // Frissítsük az állapotot egy funkció segítségével az aktuális érték alapján
         setszerkesztAlkoto((prevState) => ({
           ...prevState,
           [key]: value,
@@ -303,11 +293,9 @@ const AlkotoLetrehoz = () => {
     e.preventDefault();
 
     try {
-      // Először CSRF token lekérése
       const ujToken = await axios.get("token");
       const ujToken2 = ujToken.data;
 
-      // Kérés elküldése a frissített fejléccel és az opciókkal
       const response = await axios.post(
         "api/alkotoletrehoz",
         { ...formData, buszkesegeink: isChecked ? "1" : "0" },
@@ -357,7 +345,6 @@ const AlkotoLetrehoz = () => {
       console.log("Alkoto frissítve: ", response.data);
       window.location.reload();
       setEditableRow(null);
-      //setszerkesztAlkoto(null);
       setIsChecked(szerkesztAlkoto.isChecked);
     } catch (error) {
       console.error("Hiba történt a alkotó frissítésekor: ", error);
@@ -367,7 +354,10 @@ const AlkotoLetrehoz = () => {
 
   return (
     <div>
-      <div className="feltoltes" style={{ textAlign: "center" ,alignItems:"center"}}>
+      <div
+        className="feltoltes"
+        style={{ textAlign: "center", alignItems: "center" }}
+      >
         <h3 style={{ marginBottom: "20px" }}>Új Alkotó:</h3>
         <form
           onSubmit={handleSubmit}
@@ -692,7 +682,6 @@ const AlkotoLetrehoz = () => {
                           id={`buszkesegeink-nem-${item.a_azon}`}
                           name={`buszkesegeink_${item.a_azon}`}
                           value="0"
-                          //checked={item.isChecked === "0"} // Ellenőrizzük, hogy a rádiógomb 0 értékű-e
                           onChange={(e) =>
                             handleInputChange(e, item.a_azon, "buszkesegeink")
                           }
@@ -706,7 +695,6 @@ const AlkotoLetrehoz = () => {
                           id={`buszkesegeink-igen-${item.a_azon}`}
                           name={`buszkesegeink_${item.a_azon}`}
                           value="1"
-                          //checked={item.isChecked === "1"} // Ellenőrizzük, hogy a rádiógomb 1 értékű-e
                           onChange={(e) =>
                             handleInputChange(e, item.a_azon, "buszkesegeink")
                           }

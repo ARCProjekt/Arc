@@ -183,6 +183,7 @@ return new class extends Migration
             'hol' => 'Alkotó bemutat',
         ]);
 
+       
 
         //kepek
         Nyelv::create([
@@ -249,23 +250,11 @@ return new class extends Migration
             'hol' => 'csapat leiras',
         ]);
 
-       /*  Nyelv::create([
-            'angol' => "engliiiiiiiiish bemutat",
-            'magyar' => "bemutatkozás",
-            'hol' => 'alkotó bemutat',
-        ]);
-
         Nyelv::create([
-            'angol' => "engliiiiiiiiish bemutat",
-            'magyar' => "bemutatkozás",
-            'hol' => 'alkotó bemutat',
+            'angol' => "angol ",
+            'magyar' => "magyar ",
+            'hol' => 'Alkotó bemutat',
         ]);
-
-        Nyelv::create([
-            'angol' => "engliiiiiiiiish bemutat",
-            'magyar' => "bemutatkozás",
-            'hol' => 'alkotó bemutat',
-        ]); */
     }
 
     /**

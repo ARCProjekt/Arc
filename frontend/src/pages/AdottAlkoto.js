@@ -196,8 +196,21 @@ const AdottAlkoto = ({ a_azon }) => {
       )}
       {selectedCsapat && (
         <div>
-          {/*           <button onClick={handleBackButtonClick}>Back</button>
-           */}{" "}
+          <button
+            onClick={handleBackButtonClick}
+            style={{
+              fontSize: "1.2em",
+              marginBottom: "10px",
+              textAlign: "justify",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              background: "none",
+            }}
+          >
+            Vissza az alkotóhoz
+          </button>
+
           <AdottCsapat cs_azon={selectedCsapat} />
         </div>
       )}

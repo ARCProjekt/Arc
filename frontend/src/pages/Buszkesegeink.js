@@ -2,7 +2,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "./NyelvSegedlet";
 import { Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import AdottAlkoto from "./AdottAlkoto";
 
@@ -10,7 +9,7 @@ export default function Buszkesegeink() {
   const { selectedLanguage } = useLanguage();
   const [buszkeseg, setBuszkeseg] = useState([]);
   const [selectedAlkoto, setSelectedAlkoto] = useState(null);
-  const [showBuszkesegek, setShowBuszkesegek] = useState(true); // State to manage whether to show Buszkesegeink
+  const [showBuszkesegek, setShowBuszkesegek] = useState(true);
 
   useEffect(() => {
     const getBuszkeseg = async () => {
@@ -29,12 +28,12 @@ export default function Buszkesegeink() {
 
   const handleAlkotoClick = (a_azon) => {
     setSelectedAlkoto(a_azon);
-    setShowBuszkesegek(false); // Hide Buszkesegeink when an alkoto is selected
+    setShowBuszkesegek(false);
   };
 
   const handleBackButtonClick = () => {
     setSelectedAlkoto(null);
-    setShowBuszkesegek(true); // Show Buszkesegeink when back button is clicked
+    setShowBuszkesegek(true);
   };
 
   return (
@@ -47,7 +46,7 @@ export default function Buszkesegeink() {
               : "The Pride of our School"}
           </h1>
         </div>
-        {showBuszkesegek && ( // Conditionally render Buszkesegeink
+        {showBuszkesegek && (
           <div className="row row-cols-1 row-cols-md-2 g-3 kartya">
             {buszkeseg.map((elem, index) => (
               <div key={index} className="col ">
@@ -92,9 +91,22 @@ export default function Buszkesegeink() {
           </div>
         )}
       </div>
-      {selectedAlkoto && ( // Conditionally render Adottalkoto
+      {selectedAlkoto && (
         <div>
-          <button onClick={handleBackButtonClick}>Back</button>
+          <button
+            onClick={handleBackButtonClick}
+            style={{
+              fontSize: "1.2em",
+              marginBottom: "10px",
+              textAlign: "justify",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              background: "none",
+            }}
+          >
+            Vissza a büszkeségekhez
+          </button>
           <AdottAlkoto a_azon={selectedAlkoto} />
         </div>
       )}
