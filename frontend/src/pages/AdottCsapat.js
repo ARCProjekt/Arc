@@ -48,6 +48,7 @@ const AdottCsapat = ({ cs_azon }) => {
       const apiKepek = await axios.get(
         `http://localhost:8000/api/galeriakepek/${cs_azon}`
       );
+      console.log(apiKepek.data.kepek)
       setKepek(apiKepek.data.kepek);
     };
     getKepek();
