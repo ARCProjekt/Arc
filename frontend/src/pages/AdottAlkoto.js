@@ -62,7 +62,7 @@ const AdottAlkoto = ({ a_azon }) => {
                       style={{ marginRight: "20px", flex: "0 0 auto" }}
                     >
                       <img
-                        src={process.env.PUBLIC_URL + "/kepek/legolas.jpg"}
+                        src={"http://localhost:8000/" + item.kep}
                         alt="a kep alt-ja ha nem tolt be"
                         style={{
                           maxWidth: "200px",
