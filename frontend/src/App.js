@@ -17,53 +17,51 @@ import { LanguageProvider } from "./pages/NyelvSegedlet";
 import RequireAuth from "./RequireAuth";
 import NoPage from "./pages/NoPage";
 import Csapatok from "./pages/Csapatok";
+import { StyleProvider } from "./contexts/StyleContext";
 
 function App() {
   return (
     <HashRouter>
       <AuthProvider>
         <LanguageProvider>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Fooldal />} />
-              <Route path="alkoto" element={<Alkoto />} />
-              <Route path="kategoria" element={<Kategoria />} />
-              <Route path="buszkesegeink" element={<Buszkesegeink />} />
-              <Route path="projekt" element={<Projekt />} />
-              <Route path="bejelentkezes" element={<Bejelentkezes />} />
-              <Route path="csapatok" element={<Csapatok />} />
-              <Route
-                path="alkotomodosit"
-                element={
-                  <RequireAuth requiredRoles={[2, 1]}>
-                    <AlkotoModosit />
-                  </RequireAuth>
-                }
-              />
-
-              <Route
-                path="csapatletrehoz"
-                element={
-                  <RequireAuth requiredRoles={[2, 1]}>
-                    <GaleriaEsCsapatLetrehoz />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="felhasznalo"
-                element={
-                  <RequireAuth requiredRoles={[1]}>
-                    <Felhasznalo />
-                  </RequireAuth>
-                }
-              />
-              {/* <Route
-                path="csapatletrehoz"
-                element={<GaleriaEsCsapatLetrehoz />}
-              /> */}
-            </Route>
-            <Route path="*" element={<NoPage />} />
-          </Routes>
+       
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Fooldal />} />
+                <Route path="alkoto" element={<Alkoto />} />
+                <Route path="kategoria" element={<Kategoria />} />
+                <Route path="buszkesegeink" element={<Buszkesegeink />} />
+                <Route path="projekt" element={<Projekt />} />
+                <Route path="bejelentkezes" element={<Bejelentkezes />} />
+                <Route path="csapatok" element={<Csapatok />} />
+                <Route
+                  path="alkotomodosit"
+                  element={
+                    <RequireAuth requiredRoles={[2, 1]}>
+                      <AlkotoModosit />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="csapatletrehoz"
+                  element={
+                    <RequireAuth requiredRoles={[2, 1]}>
+                      <GaleriaEsCsapatLetrehoz />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="felhasznalo"
+                  element={
+                    <RequireAuth requiredRoles={[1]}>
+                      <Felhasznalo />
+                    </RequireAuth>
+                  }
+                />
+              </Route>
+              <Route path="*" element={<NoPage />} />
+            </Routes>
+          
         </LanguageProvider>
       </AuthProvider>
     </HashRouter>

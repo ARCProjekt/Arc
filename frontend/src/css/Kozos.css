@@ -1,4 +1,4 @@
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -20,14 +20,14 @@ h1 {
 .szin img {
   margin-right: 10px; 
 }
-/*.half-circle-card {
+.half-circle-card {
   width: 300px;
-  height: 300px; /* Módosítottuk a magasságot a képhez 
+  height: 300px; 
   
   border-radius: 50% 50% 0 0;
   border: 1px solid #ccc;
-  overflow: hidden; /* Hozzáadtuk az overflow-t, hogy a kép ne lógjon ki a kártya alakjából 
-  position: relative; /* Hozzáadtuk a relatív pozíciót az abszolút pozíciózáshoz 
+  overflow: hidden; 
+  position: relative; 
 }
 
 .half-circle-card img {
@@ -183,7 +183,7 @@ thead,td{
 .footer-content {
   padding-left: 20px !important;
 }
-
+ */
 @media only screen and (max-width: 575px) {
   .summary-section {
     display: block;
@@ -290,7 +290,7 @@ thead,td{
     padding-top: 10px;
   }
 }
- Táblagépek 
+ 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .summary-section {
     display: block;
@@ -377,7 +377,7 @@ thead,td{
     padding: 0 !important;
   }
 }
- Kisebb képernyőjű laptopok és nagyobb telefonok 
+ 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .summary-section {
     width: 80%;
@@ -427,7 +427,7 @@ thead,td{
     height: 90% !important;
   }
 }
- Kisebb asztali számítógépek és laptopok 
+ 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .summary-section {
     width: 80%;
@@ -448,7 +448,7 @@ thead,td{
     height: auto !important;
     margin-bottom: 10px !important;
   }
-} Nagyobb asztali számítógépek 
+} 
 @media only screen and (min-width: 1200px) {
   .summary-section {
     width: 80%;
@@ -458,4 +458,4 @@ thead,td{
   .cont {
     margin: 20px;
   }
-}*/
+}

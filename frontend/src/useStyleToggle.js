@@ -1,15 +1,14 @@
-import { useState } from 'react';
+/* import { useState } from 'react';
 
 const useStyleToggle = () => {
-  const [style, setStyle] = useState('Kozos.css');
+  const [style, setStyle] = useState('Kozos2.css');
 
   const handleStyleToggle = () => {
-    setStyle((prevStyle) => (prevStyle === 'Kozos.css' ? 'Kozos2.css' : 'Kozos.css'));
+    setStyle((prevStyle) => (prevStyle === 'Kozos2.css' ? 'Kozos.css' : 'Kozos2.css'));
   };
 
-  const selectedLanguage = 'hu'; 
-
-  return { handleStyleToggle, selectedLanguage };
+  return { style, handleStyleToggle };
 };
 
 export default useStyleToggle;
+ */

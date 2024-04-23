@@ -1,76 +1,80 @@
-import React from "react";
-import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
-import NyelvValtas from "./pages/NyelvValtas";
-import { LanguageProvider, useLanguage } from "./pages/NyelvSegedlet";
-import "./css/Kozos2.css";
-import useAuthContext from "./contexts/AuthContext";
+// Layout.js
 
-const LayOut = () => {
+import React from 'react';
+import { Navbar, Container, Nav, Dropdown } from 'react-bootstrap';
+import { Link, Outlet } from 'react-router-dom';
+import NyelvValtas from './pages/NyelvValtas';
+import { useLanguage } from './pages/NyelvSegedlet';
+import useAuthContext from './contexts/AuthContext';
+/* import StyleToggleButton from './StyleToggleButton';
+import { useStyleContext } from './contexts/StyleContext'; */
+
+const Layout = () => {
   const { user } = useAuthContext();
   const { selectedLanguage } = useLanguage();
-
+ /*  const { currentStyle } = useStyleContext(); */
+/* ---EZ A NAVBARBA KELL--- <Nav style={{ marginLeft: 'auto' }}>
+              <StyleToggleButton />
+            </Nav>  */
   return (
     <div>
       <header className="szin p-3">
         <div>
-          <img src={process.env.PUBLIC_URL + "/kepek/logo.png"} alt="" />
+          <img src={process.env.PUBLIC_URL + '/kepek/logo.png'} alt="" />
           <h1>Arts Of Survival</h1>
         </div>
       </header>
       <Navbar bg="dark" variant="dark" expand="sm" className="p-2 navvv">
-        <Container fluid>
+      <Container fluid /* style={{ backgroundImage: `url(/${currentStyle})` }} */>
           <Navbar.Brand as={Link} to="/">
-            {selectedLanguage === "hu" ? "Főoldal" : "Main page"}
+            {selectedLanguage === 'hu' ? 'Főoldal' : 'Main page'}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              
               <Nav.Link as={Link} to="/projekt">
-                {selectedLanguage === "hu" ? "A projekt" : "The Project"}
+                {selectedLanguage === 'hu' ? 'A projekt' : 'The Project'}
               </Nav.Link>
               <Nav.Link as={Link} to="/kategoria">
-                {selectedLanguage === "hu" ? "Kategóriák" : "Categories"}
+                {selectedLanguage === 'hu' ? 'Kategóriák' : 'Categories'}
               </Nav.Link>
               <Nav.Link as={Link} to="/csapatok">
-                {selectedLanguage === "hu" ? "Csapatok" : "Teams"}
+                {selectedLanguage === 'hu' ? 'Csapatok' : 'Teams'}
               </Nav.Link>
               <Nav.Link as={Link} to="/alkoto">
-                {selectedLanguage === "hu" ? "Alkotók" : "Creators"}
+                {selectedLanguage === 'hu' ? 'Alkotók' : 'Creators'}
               </Nav.Link>
               <Nav.Link as={Link} to="/buszkesegeink">
-                {selectedLanguage === "hu" ? "Büszkeségeink" : "Our Pride"}
+                {selectedLanguage === 'hu' ? 'Büszkeségeink' : 'Our Pride'}
               </Nav.Link>
-
               <Dropdown className="legMenu">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  {user ? user.name : "Bejelentkezés"}
+                  {user ? user.name : 'Bejelentkezés'}
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to="/AlkotoModosit">
-                    {user && user.jog < 3 && "Alkotó Módosítása"}
+                    {user && user.jog < 3 && 'Alkotó Módosítása'}
                   </Dropdown.Item>
                   <Dropdown.Item as={Link} to="/Felhasznalo">
-                    {user && user.jog === 1 && "Felhasználó Módosítása"}
+                    {user && user.jog === 1 && 'Felhasználó Módosítása'}
                   </Dropdown.Item>
                   <Dropdown.Item as={Link} to="/csapatletrehoz">
-                    {user && user.jog < 3 && "Csapat Módosítása"}
+                    {user && user.jog < 3 && 'Csapat Módosítása'}
                   </Dropdown.Item>
                   <Dropdown.Item as={Link} to="/bejelentkezes">
-                    {user ? "Kijelentkezés" : "Bejelentkezés"}
+                    {user ? 'Kijelentkezés' : 'Bejelentkezés'}
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>
-            <Nav style={{ marginLeft: "auto" }}>
+            <Nav style={{ marginLeft: 'auto' }}>
               <NyelvValtas />
             </Nav>
+            
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Container fluid>
+      <Container fluid /* style={{ backgroundImage: `url(/${currentStyle})` }} */>
         <Outlet />
       </Container>
       <footer>
@@ -84,4 +88,4 @@ const LayOut = () => {
   );
 };
 
-export default LayOut;
+export default Layout;

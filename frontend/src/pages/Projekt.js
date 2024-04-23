@@ -1,12 +1,14 @@
 
+import { useState } from "react";
 import "../css/Kozos2.css";
 import { useLanguage } from "./NyelvSegedlet";
 
 
 export default function Projekt() {
   const { selectedLanguage } = useLanguage();
-  
+  const [style, setStyle] = useState("Kozos2.css");
   return (
+    <div className={style}>
     <div className="summary-section">
       <div className="cont">
       <div className="projekt">
@@ -123,6 +125,7 @@ export default function Projekt() {
        
         </div>
       </div>
+    </div>
     </div>
   );
 }

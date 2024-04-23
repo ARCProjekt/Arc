@@ -1,5 +1,5 @@
 import "../css/Fooldal2.css";
-import "../css/Kozos2.css";
+
 import React from "react";
 import BgImageWithNavbar from "../BgImageWithNavbar";
 import Bg2 from "../Bg2";
