@@ -5,14 +5,11 @@ import useAuthContext from "../contexts/AuthContext";
 export default function Bejelentkezes() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, logout } = useAuthContext();
-  const { loginReg, errors } = useAuthContext();
+  const { user, logout, loginReg, errors } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //bejelentkezés
-    //Összegyűjtjük egyetlen objektumban az űrlap adatokat
     const adat = {
       email: email,
       password: password,
@@ -21,7 +18,27 @@ export default function Bejelentkezes() {
     loginReg(adat, "/login");
   };
 
+  // Ha a felhasználó be van jelentkezve, ne jelenítsük meg a bejelentkezés űrlapot
+  if (user) {
+    return (
+      <div className="summary-section ">
+    <div className="cont katsec">
+      <div className="m-auto" style={{ maxWidth: "400px" }}>
+        <h1 className="text-center">Bejelentkezve</h1>
+        <div className=" text-center mt-3 log">
+          <button onClick={logout} className="btn btn-danger">
+            Kijelentkezés
+          </button>
+        </div>
+      </div>
+      </div>
+      </div>
+    );
+  }
+
   return (
+    <div className="summary-section ">
+    <div className="cont katsec">
     <div className="m-auto" style={{ maxWidth: "400px" }}>
       <h1 className="text-center">Bejelentkezés</h1>
       <form onSubmit={handleSubmit}>
@@ -31,9 +48,7 @@ export default function Bejelentkezes() {
           </label>
           <input
             type="email"
-            // value beállítása a state értékére
             value={email}
-            // state értékének módosítása ha változik a beviteli mező tartalma
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -72,18 +87,14 @@ export default function Bejelentkezes() {
           </div>
         </div>
 
-        <div className=" text-center">
+        <div className=" text-center log">
           <button type="submit" className="btn btn-primary w-100">
-            Login
+            Bejelentkezés
           </button>
-
-          <div className=" text-center mt-3">
-            <button onClick={logout} className="btn btn-danger">
-              Kijelentkezés
-            </button>
-          </div>
         </div>
       </form>
+    </div>
+    </div>
     </div>
   );
 }

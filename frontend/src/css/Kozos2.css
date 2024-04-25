@@ -3,6 +3,9 @@
     margin: 0;
     padding: 0;
   }
+  .log{
+    padding: 10px;
+  }
   h1 {
     text-align: center;
   }

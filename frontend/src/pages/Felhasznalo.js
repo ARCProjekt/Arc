@@ -20,6 +20,7 @@ const Felhasznalo = () => {
     const fetchData = async () => {
       try {
         await getUser();
+        
         const response = await axios.get("http://localhost:8000/api/users", {
           withCredentials: true,
           headers: { "X-CSRF-TOKEN": ujToken2 },
