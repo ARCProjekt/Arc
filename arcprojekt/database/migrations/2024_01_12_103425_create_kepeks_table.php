@@ -21,12 +21,12 @@ return new class extends Migration
         });
 
         Kepek::create([
-            'kep' => '/kepek/legolas.jpg',
+            'kep' => 'storage/csapatkepek/csapat.jpg',
             'nyelv_id_leiras' => 30,
             'fotos_neve' => 'R. Máté'
         ]); 
         Kepek::create([
-            'kep' => '/kepek/legolas.jpg',
+            'kep' => 'storage/csapatkepek/csapat.jpg',
             'nyelv_id_leiras' => 31,
             'fotos_neve' => 'Balázs'
         ]);

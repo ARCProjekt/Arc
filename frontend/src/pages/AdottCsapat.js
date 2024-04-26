@@ -56,7 +56,7 @@ const AdottCsapat = ({ cs_azon }) => {
   return (
     <div className="summary-section">
       {showAlkoto && (
-        <div className="cont katsec">
+        <div className="cont katsec"  style={{ padding: "10px", border: "10px" }}>
           {csapat.map((item, index) => (
             <div key={index}>
               <h2>{item.csapat_nev_magyar}</h2>
@@ -102,7 +102,7 @@ const AdottCsapat = ({ cs_azon }) => {
                   <Carousel.Item key={kep.kep_azon}>
                     <img
                       className="d-block w-100"
-                      src={"http://localhost:8000" + kep.kep}
+                      src={"http://localhost:8000/" + kep.kep}
                       alt={kep.leiras}
                     />
                   </Carousel.Item>
@@ -134,6 +134,7 @@ const AdottCsapat = ({ cs_azon }) => {
               border: "1px solid #ccc",
               borderRadius: "5px",
               background: "none",
+              color:"aliceblue"
             }}
           >
             Vissza a csapathoz

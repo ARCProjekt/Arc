@@ -33,7 +33,6 @@ class GaleriaController extends Controller
                 'fotos_neve' => 'required',
             ]);
     
-            // Nyelv létrehozása mindkét leírással
             $nyelvGaleriaLeiras = Nyelv::create([
                 'magyar' => $request->galeria_leiras['magyar'],
                 'angol' => $request->galeria_leiras['angol'],
@@ -46,29 +45,29 @@ class GaleriaController extends Controller
                 'hol' => 'kep leiras',
             ]);
     
-            // Galéria létrehozása
             $galeria = Galeria::create([
-                'fogaleria' => null, // vagy amit beállítottál, hogy alapból legyen
+                'fogaleria' => null, 
                 'nyelv_id_leiras' => $nyelvGaleriaLeiras->nyelv_id,
             ]);
     
-            // Elérési útvonalak mentése és képek feltöltése
             $eleresi_utvonalak = [];
             foreach ($request->file('kepek') as $kep) {
-                $eleresi_utvonal = $kep->store('csapatkepek');
-                $eleresi_utvonalak[] = $eleresi_utvonal;
-    
-                // Adatbázisba mentés
+                $eleresi_utvonal = $kep->storeAs('public/csapatkepek', $kep->getClientOriginalName());
+
+                // Módosítjuk az elérési utat a storage mappára
+                $eleresi_utvonal = str_replace('public/', 'storage/', $eleresi_utvonal);
+                
+                $eleresi_utvonalak[] = 'public/csapatkepek/' . $kep->getClientOriginalName();
+                
+                
                 $kepAdatok = [
                     'kep' => $eleresi_utvonal,
                     'nyelv_id_leiras' => $nyelvKepLeiras->nyelv_id,
                     'fotos_neve' => $request->fotos_neve,
                 ];
     
-                // Kép létrehozása
                 $kepObj = Kepek::create($kepAdatok);
     
-                // Galéria képek létrehozása a kapott id-kkel
                 $galeriaKep = Galeria_kep::create([
                     'kep_azon' => $kepObj->kep_azon,
                     'galeria_id' => $galeria->galeria_id,
@@ -86,7 +85,6 @@ class GaleriaController extends Controller
     public function getNewGalleryId()
     {
         try {
-            // Új galéria ID létrehozása
             $galeria = Galeria::latest()->first();
 
             return response()->json(['galeria_id' => $galeria->galeria_id]);

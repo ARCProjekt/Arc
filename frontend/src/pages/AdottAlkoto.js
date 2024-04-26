@@ -112,6 +112,7 @@ const AdottAlkoto = ({ a_azon }) => {
                             border: "1px solid #ccc",
                             borderRadius: "5px",
                             background: "none",
+                            color:"aliceblue"
                           }}
                         >
                           Csapathoz
@@ -146,10 +147,10 @@ const AdottAlkoto = ({ a_azon }) => {
                       borderRadius: "10px",
                     }}
                   >
-                    <h2 style={{ fontSize: "1.5em", marginBottom: "10px" }}>
+                    <h2 style={{ fontSize: "1.5em", marginBottom: "10px",color:"black" }}>
                       Szak:
                     </h2>
-                    <p style={{ fontSize: "1.2em", marginBottom: "10px" }}>
+                    <p style={{ fontSize: "1.2em", marginBottom: "10px",color:"black" }}>
                       {item.szakHU}
                     </p>
                   </div>
@@ -161,10 +162,10 @@ const AdottAlkoto = ({ a_azon }) => {
                       borderRadius: "10px",
                     }}
                   >
-                    <h2 style={{ fontSize: "1.5em", marginBottom: "10px" }}>
+                    <h2 style={{ fontSize: "1.5em", marginBottom: "10px",color:"black" }}>
                       Kategória:
                     </h2>
-                    <p style={{ fontSize: "1.2em", marginBottom: "10px" }}>
+                    <p style={{ fontSize: "1.2em", marginBottom: "10px" ,color:"black"}}>
                       {item.kategoriaHU}
                     </p>
                   </div>
@@ -205,7 +206,7 @@ const AdottAlkoto = ({ a_azon }) => {
               padding: "10px",
               border: "1px solid #ccc",
               borderRadius: "5px",
-              background: "none",
+              background: "#dee2e6",
             }}
           >
             Vissza az alkotóhoz

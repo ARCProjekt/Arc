@@ -15,13 +15,13 @@ class KepekController extends Controller
     {
         return Kepek::all();
     }
-     
+
     public function create()
     {
         return view('kepek.create');
     }
 
-   
+
 
     public function alkotoKepek(Request $request)
     {
@@ -33,7 +33,10 @@ class KepekController extends Controller
                 'fotos_neve' => 'required',
             ]);
 
-            $eleresi_utvonal = $request->file('kep')->storeAs('/storage/alkotokepek', $request->file('kep')->getClientOriginalName());
+            $eleresi_utvonal = $request->file('kep')->storeAs('public/alkotokepek', $request->file('kep')->getClientOriginalName());
+
+            // Vágd le a "public/" részt az elérési útvonalból
+            $eleresi_utvonal = str_replace('public/', 'storage/', $eleresi_utvonal);
             $nyelvMagyarLeiras = Nyelv::create([
                 'magyar' => $request->nyelv_id_leiras_magyar,
                 'angol' => $request->nyelv_id_leiras_angol,
