@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "../api/axios";
 import "../css/Kozos2.css";
 import AdottCsapat from "./AdottCsapat";
+import { useLanguage } from "./NyelvSegedlet";
 
-const AdottAlkoto = ({ a_azon }) => {
+const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
+  const { selectedLanguage } = useLanguage();
   const [alkoto, setAlkoto] = useState([]);
   const [selectedCsapat, setSelectedCsapat] = useState(null);
   const [showCsapat, setShowCsapat] = useState(true);
@@ -33,6 +35,8 @@ const AdottAlkoto = ({ a_azon }) => {
     <div className="summary-section">
       {showCsapat && (
         <div className="cont katsec">
+          <button onClick={Vissza}>{szoveg}</button>
+
           {alkoto.map((item, index) => (
             <div key={index} className="alkoto">
               <div
@@ -85,19 +89,28 @@ const AdottAlkoto = ({ a_azon }) => {
                           className="alkoto_nev"
                           style={{ fontSize: "2em", marginBottom: "10px" }}
                         >
-                          {item.nevHU}
+                          {selectedLanguage === "hu" ? item.nevHU : item.nevEN}
                         </h1>
                         <p
                           style={{ fontSize: "1.5em", marginBottom: "10px" }}
                           className="projekt_nev"
                         >
-                          Projekt neve: {item.kategoriaHU}
+                          {selectedLanguage === "hu"
+                            ? "Projekt neve: "
+                            : "Name of the project: "}
+                          {selectedLanguage === "hu"
+                            ? item.kategoriaHU
+                            : item.kategoriaEN}
                         </p>
                         <p
                           style={{ fontSize: "1.5em", marginBottom: "10px" }}
                           className="csapat_n"
-                        >
-                          Csapat neve: {item.csapat_nev}
+                        > {selectedLanguage === "hu"
+                        ? "Csapat neve:"
+                        : "Name of the team: "}
+                           {selectedLanguage === "hu"
+                            ? item.csapatHU
+                            : item.csapatEN}
                         </p>
                       </div>
 
@@ -112,10 +125,12 @@ const AdottAlkoto = ({ a_azon }) => {
                             border: "1px solid #ccc",
                             borderRadius: "5px",
                             background: "none",
-                            color:"aliceblue"
+                            color: "aliceblue",
                           }}
                         >
-                          Csapathoz
+                         {selectedLanguage === "hu"
+                            ? "Csapathoz"
+                            :"To the team"}
                         </button>
                       </Link>
                     </div>
@@ -147,11 +162,27 @@ const AdottAlkoto = ({ a_azon }) => {
                       borderRadius: "10px",
                     }}
                   >
-                    <h2 style={{ fontSize: "1.5em", marginBottom: "10px",color:"black" }}>
-                      Szak:
+                    <h2
+                      style={{
+                        fontSize: "1.5em",
+                        marginBottom: "10px",
+                        color: "black",
+                      }}
+                    >
+                      {selectedLanguage === "hu"
+                            ? "Szak"
+                            : "Profession: "}
                     </h2>
-                    <p style={{ fontSize: "1.2em", marginBottom: "10px",color:"black" }}>
-                      {item.szakHU}
+                    <p
+                      style={{
+                        fontSize: "1.2em",
+                        marginBottom: "10px",
+                        color: "black",
+                      }}
+                    >
+                      {selectedLanguage === "hu"
+                            ? item.szakHU
+                            : item.szakEN}
                     </p>
                   </div>
                   <div
@@ -162,11 +193,27 @@ const AdottAlkoto = ({ a_azon }) => {
                       borderRadius: "10px",
                     }}
                   >
-                    <h2 style={{ fontSize: "1.5em", marginBottom: "10px",color:"black" }}>
-                      Kategória:
+                    <h2
+                      style={{
+                        fontSize: "1.5em",
+                        marginBottom: "10px",
+                        color: "black",
+                      }}
+                    >
+                      {selectedLanguage === "hu"
+                            ? "Kategória:"
+                            : "Category: "}
                     </h2>
-                    <p style={{ fontSize: "1.2em", marginBottom: "10px" ,color:"black"}}>
-                      {item.kategoriaHU}
+                    <p
+                      style={{
+                        fontSize: "1.2em",
+                        marginBottom: "10px",
+                        color: "black",
+                      }}
+                    >
+                       {selectedLanguage === "hu"
+                            ? item.kategoriaHU
+                            : item.kategoriaEN}
                     </p>
                   </div>
                 </div>
@@ -178,7 +225,9 @@ const AdottAlkoto = ({ a_azon }) => {
                   }}
                 >
                   <h3 style={{ fontSize: "2em", marginBottom: "10px" }}>
-                    Bemutatkozás
+                  {selectedLanguage === "hu"
+                            ? "Bemutatkozás"
+                            :"Introduction"}
                   </h3>
                   <p
                     style={{
@@ -187,7 +236,9 @@ const AdottAlkoto = ({ a_azon }) => {
                       lineHeight: "1.5",
                     }}
                   >
-                    {item.bemutatHU}
+                     {selectedLanguage === "hu"
+                            ? item.bemutatHU
+                            : item.bemutatEN}
                   </p>
                 </div>
               </div>
@@ -197,22 +248,10 @@ const AdottAlkoto = ({ a_azon }) => {
       )}
       {selectedCsapat && (
         <div>
-          <button
-            onClick={handleBackButtonClick}
-            style={{
-              fontSize: "1.2em",
-              marginBottom: "10px",
-              textAlign: "justify",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              background: "#dee2e6",
-            }}
-          >
-            Vissza az alkotóhoz
-          </button>
-
-          <AdottCsapat cs_azon={selectedCsapat} />
+          <AdottCsapat
+            cs_azon={selectedCsapat}
+            Vissza={handleBackButtonClick}
+          />
         </div>
       )}
     </div>

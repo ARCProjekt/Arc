@@ -86,7 +86,7 @@ class AlkotoController extends Controller
     public function adottAlkoto($alkoto_id)
     {
         $alkoto = DB::table('alkotos')
-            ->select('nev_nyelv.magyar as nevHU', 'nev_nyelv.angol as nevEN', 'bemutat_nyelv.magyar as bemutatHU', 'bemutat_nyelv.angol as bemutatEN', 'szak_nyelv.magyar as szakHU', 'szak_nyelv.angol as szakEN', 'kepeks.kep as kep', 'kategoria_nyelv.magyar as kategoriaHU', 'kategoria_nyelv.angol as kategoriaEN', 'csapats.cs_azon as csapat_id','csapat_nev.magyar as csapat_nev')
+            ->select('nev_nyelv.magyar as nevHU', 'nev_nyelv.angol as nevEN', 'bemutat_nyelv.magyar as bemutatHU', 'bemutat_nyelv.angol as bemutatEN', 'szak_nyelv.magyar as szakHU', 'szak_nyelv.angol as szakEN', 'kepeks.kep as kep', 'kategoria_nyelv.magyar as kategoriaHU', 'kategoria_nyelv.angol as kategoriaEN', 'csapats.cs_azon as csapat_id','csapat_nev.magyar as csapatHU','csapat_nev.angol as csapatEN')
             ->join('nyelvs as nev_nyelv', 'alkotos.nyelv_id_nev', '=', 'nev_nyelv.nyelv_id')
             ->join('nyelvs as bemutat_nyelv', 'alkotos.nyelv_id_bemutat', '=', 'bemutat_nyelv.nyelv_id')
             ->join('szaks', 'alkotos.szak_id', '=', 'szaks.szak_id')

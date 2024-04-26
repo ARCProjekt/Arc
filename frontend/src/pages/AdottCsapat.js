@@ -4,8 +4,10 @@ import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import "../css/Kozos2.css";
 import AdottAlkoto from "./AdottAlkoto";
+import { useLanguage } from "./NyelvSegedlet";
 
-const AdottCsapat = ({ cs_azon }) => {
+const AdottCsapat = ({ cs_azon, Vissza }) => {
+  const { selectedLanguage } = useLanguage();
   const [nagyKepLathato, setNagyKepLathato] = useState(false);
   const [csapat, setCsapat] = useState([]);
   const [alkotok, setAlkotok] = useState([]);
@@ -48,7 +50,6 @@ const AdottCsapat = ({ cs_azon }) => {
       const apiKepek = await axios.get(
         `http://localhost:8000/api/galeriakepek/${cs_azon}`
       );
-      console.log(apiKepek.data.kepek)
       setKepek(apiKepek.data.kepek);
     };
     getKepek();
@@ -56,15 +57,36 @@ const AdottCsapat = ({ cs_azon }) => {
   return (
     <div className="summary-section">
       {showAlkoto && (
-        <div className="cont katsec"  style={{ padding: "10px", border: "10px" }}>
+        <div
+          className="cont katsec"
+          style={{ padding: "10px", border: "10px" }}
+        >
+          <button onClick={Vissza}>
+            {" "}
+            {selectedLanguage === "hu"
+              ? "Vissza a csapatokhoz"
+              : "Back to the teams"}
+          </button>
+
           {csapat.map((item, index) => (
             <div key={index}>
-              <h2>{item.csapat_nev_magyar}</h2>
-              <h3>Kategória: {item.magyar_kategoria}</h3>
+              <h2>
+                {" "}
+                {selectedLanguage === "hu"
+                  ? item.csapat_nev_magyar
+                  : item.csapat_nev_angol}
+              </h2>
+              <h3>
+                {" "}
+                {selectedLanguage === "hu" ? "Kategória: " : "Category: "}{" "}
+                {selectedLanguage === "hu"
+                  ? item.magyar_kategoria
+                  : item.angol_kategoria}
+              </h3>
             </div>
           ))}
           <h3 className="mb-4" style={{ textAlign: "justify" }}>
-            Csapattagok
+            {selectedLanguage === "hu" ? "Csapattagok" : "Team mates"}
           </h3>
           <ul className="list-unstyled">
             {alkotok.map((item, index) => (
@@ -79,9 +101,10 @@ const AdottCsapat = ({ cs_azon }) => {
                     border: "1px solid #ccc",
                     borderRadius: "5px",
                     background: "none",
+                    color: "aliceblue",
                   }}
                 >
-                  {item.magyar_nev}
+                  {selectedLanguage === "hu" ? item.magyar_nev : item.angol_nev}
                 </button>
               </li>
             ))}
@@ -89,13 +112,25 @@ const AdottCsapat = ({ cs_azon }) => {
           {csapat.map((item) => (
             <div key={item.cs_azon}>
               <div className="mt-4">
-                <h3 style={{ textAlign: "justify" }}>Csapatmunka bemutatása</h3>
-                <p className="csapat_szov">{item.csapat_bemutat_magyar}</p>
+                <h3 style={{ textAlign: "justify" }}>
+                  {selectedLanguage === "hu"
+                    ? "Csapatmunka bemutatása"
+                    : "The teamwork"}
+                </h3>
+                <p className="csapat_szov">
+                  {selectedLanguage === "hu"
+                    ? item.csapat_bemutat_magyar
+                    : item.csapat_bemutat_angol}
+                </p>
               </div>
             </div>
           ))}
           <div>
-            <h3 style={{ textAlign: "justify" }}>Képek a Csapatmunkájáról: </h3>
+            <h3 style={{ textAlign: "justify" }}>
+              {selectedLanguage === "hu"
+                ? "Képek a csapat munkájáról"
+                : "Pictures of the teamwork"}{" "}
+            </h3>
             <div className="mt-5 d-flex justify-content-center">
               <Carousel style={{ width: "60%" }}>
                 {kepek.map((kep) => (
@@ -113,9 +148,15 @@ const AdottCsapat = ({ cs_azon }) => {
               {csapat.map((item) => (
                 <div key={item.cs_azon}>
                   <h3 style={{ textAlign: "justify" }}>
-                    Csapatmunka bemutatása
+                    {selectedLanguage === "hu"
+                      ? "Csapatmunka bemutatása"
+                      : "Presentation of Teamwork"}
                   </h3>
-                  <p className="csapat_szov">{item.csapat_bemutat_magyar}</p>
+                  <p className="csapat_szov">
+                    {selectedLanguage === "hu"
+                      ? item.csapat_bemutat_magyar
+                      : item.csapat_bemutat_angol}
+                  </p>
                 </div>
               ))}
             </div>
@@ -124,22 +165,14 @@ const AdottCsapat = ({ cs_azon }) => {
       )}
       {selectedAlkoto && (
         <div>
-          <button
-            onClick={handleBackButtonClick}
-            style={{
-              fontSize: "1.2em",
-              marginBottom: "10px",
-              textAlign: "justify",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              background: "none",
-              color:"aliceblue"
-            }}
-          >
-            Vissza a csapathoz
-          </button>
-          <AdottAlkoto a_azon={selectedAlkoto} />
+         { selectedLanguage === "hu"
+         ? <AdottAlkoto
+            a_azon={selectedAlkoto}
+            Vissza={handleBackButtonClick}
+            szoveg={"Vissza a csapathoz"}
+          />                            : <AdottAlkoto a_azon={selectedAlkoto} Vissza={handleBackButtonClick} szoveg={"Back to the team"}/>}
+          
+          
         </div>
       )}
     </div>

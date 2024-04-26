@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "../api/axios";
 import "../css/Kozos2.css";
 import AdottCsapat from "./AdottCsapat";
+import { useLanguage } from "./NyelvSegedlet";
 
 export default function Csapatok() {
+  const { selectedLanguage } = useLanguage();
   const [selectedCsapat, setSelectedCsapat] = useState(null);
   const [csapatok, setCsapatok] = useState([]);
   const [showCsapat, setShowCsapat] = useState(true);
@@ -29,12 +31,21 @@ export default function Csapatok() {
   };
 
   return (
-    <div className="summary-section">
+    <div className="summary-section"> 
+    <div className="cim">
+            <h1>
+              {selectedLanguage === "hu"
+                ? "Csapatok"
+                : "Teams"}
+            </h1>
+            </div>
       <div
         className="cont katsec"
         style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
       >
+       
         {showCsapat &&
+        
           csapatok.map((csapat, index) => (
             <div
               key={index}
@@ -47,8 +58,12 @@ export default function Csapatok() {
         />
 
               <div className="content">
-                <h3>{csapat.csapat_nev_magyar}</h3>
-                <p>{csapat.csapat_bemutat_magyar}</p>
+                <h3>{selectedLanguage === "hu"
+                            ? csapat.csapat_nev_magyar
+                            : csapat.csapat_nev_angol}</h3>
+                <p>{selectedLanguage === "hu"
+                            ? csapat.csapat_bemutat_magyar
+                            : csapat.csapat_bemutat_angol}</p>
                 <button
                   onClick={() => handleCsapatClick(csapat.cs_azon)}
                   style={{
@@ -61,7 +76,9 @@ export default function Csapatok() {
                     background: "none",
                   }}
                 >
-                  A csapathoz
+                 {selectedLanguage === "hu"
+                            ? "Csapathoz"
+                            : "To the team"}
                 </button>
               </div>
             </div>
@@ -69,8 +86,7 @@ export default function Csapatok() {
       </div>
       {selectedCsapat && (
         <div>
-  
-          <AdottCsapat cs_azon={selectedCsapat} />
+          <AdottCsapat cs_azon={selectedCsapat} Vissza={handleBackButtonClick} />
         </div>
       )}
     </div>

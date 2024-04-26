@@ -50,6 +50,7 @@ class CsapatController extends Controller
         $csapat = DB::table('csapats')
             ->select(
                 'nyelvs.magyar as magyar_kategoria',
+                'nyelvs.angol as angol_kategoria',
                 'csapats.*',
                 'csapat_nev.magyar as csapat_nev_magyar',
                 'csapat_nev.angol as csapat_nev_angol',

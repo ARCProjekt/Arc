@@ -38,15 +38,15 @@ export default function Buszkesegeink() {
 
   return (
     <div className="summary-section">
-      <div className="cont katsec">
-        <div className="cim">
-          <h1>
-            {selectedLanguage === "hu"
-              ? "Iskolánk büszkeségei"
-              : "The Pride of our School"}
-          </h1>
-        </div>
-        {showBuszkesegek && (
+      {showBuszkesegek && (
+        <div className="cont katsec">
+          <div className="cim">
+            <h1>
+              {selectedLanguage === "hu"
+                ? "Iskolánk büszkeségei"
+                : "The Pride of our School"}
+            </h1>
+          </div>
           <div className="row row-cols-1 row-cols-md-2 g-3 kartya">
             {buszkeseg.map((elem, index) => (
               <div key={index} className="col ">
@@ -89,25 +89,14 @@ export default function Buszkesegeink() {
               </div>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
       {selectedAlkoto && (
         <div>
-          <button
-            onClick={handleBackButtonClick}
-            style={{
-              fontSize: "1.2em",
-              marginBottom: "10px",
-              textAlign: "justify",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              background: "none",
-            }}
-          >
-            Vissza a büszkeségekhez
-          </button>
-          <AdottAlkoto a_azon={selectedAlkoto} />
+          {selectedLanguage === "hu"
+                            ?<AdottAlkoto a_azon={selectedAlkoto} Vissza={handleBackButtonClick} szoveg={"Vissza a büszkeségekhez"}/>
+                            : <AdottAlkoto a_azon={selectedAlkoto} Vissza={handleBackButtonClick} szoveg={"Back to our pride"}/>}
+          
         </div>
       )}
     </div>
