@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "../api/axios";
 import "../css/Kozos2.css";
 import AdottCsapat from "./AdottCsapat";
-import CentralSelect from "./CentralSelect";
 
 export default function Csapatok() {
   const [selectedCsapat, setSelectedCsapat] = useState(null);
