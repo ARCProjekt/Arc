@@ -1,0 +1,405 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "arc",
+    "collectionId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+    "dateExported": "2024-04-27T12:03:01.541Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "841e7a69-10d5-45cd-ba12-d18cc667296d",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "ujalkoto",
+            "url": "http://localhost:8000/api/alkotoletrehoz",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-06T14:45:42.741Z",
+            "modified": "2024-04-09T08:03:32.224Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "magyar_nev",
+                        "value": "grege"
+                    },
+                    {
+                        "name": "angol_nev",
+                        "value": "grtgrt"
+                    },
+                    {
+                        "name": "szak_id",
+                        "value": "1"
+                    },
+                    {
+                        "name": "magyar_bemutat",
+                        "value": "gerrge"
+                    },
+                    {
+                        "name": "angol_bemutat",
+                        "value": "gregegergre"
+                    },
+                    {
+                        "name": "cs_azon",
+                        "value": "2"
+                    },
+                    {
+                        "name": "kep_azon",
+                        "value": "3"
+                    },
+                    {
+                        "name": "buszkesegeink",
+                        "value": "1"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "a3f67831-fc25-47fc-8124-ffe05de18048",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "szerkesztalkoto",
+            "url": "http://localhost:8000/api/alkotoszerkeszt/{alkoto_id}?kep_azon=3",
+            "method": "PATCH",
+            "sortNum": 12500,
+            "created": "2024-03-19T15:21:35.814Z",
+            "modified": "2024-04-23T09:45:40.578Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "alkoto_id",
+                    "value": "3",
+                    "isPath": true
+                },
+                {
+                    "name": "kep_azon",
+                    "value": "3",
+                    "isPath": false
+                },
+                {
+                    "name": "cs_azon",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "buszkesegeink",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "angol_bemutat",
+                    "value": "grg",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "angol_nev",
+                    "value": "ee",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            }
+        },
+        {
+            "_id": "15f10555-d751-49cd-825e-90cf6f504208",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "ujfelhasznalo",
+            "url": "http://localhost:8000/api/userletrehoz?name=zoe&email=zoe@zoe.com&password=zoe&jog=2",
+            "method": "POST",
+            "sortNum": 15000,
+            "created": "2024-02-29T12:02:48.924Z",
+            "modified": "2024-02-29T12:03:21.568Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "name",
+                    "value": "zoe",
+                    "isPath": false
+                },
+                {
+                    "name": "email",
+                    "value": "zoe@zoe.com",
+                    "isPath": false
+                },
+                {
+                    "name": "password",
+                    "value": "zoe",
+                    "isPath": false
+                },
+                {
+                    "name": "jog",
+                    "value": "2",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "51bb3db9-d362-4951-89e6-1277ddf17ea9",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "felhasznalok",
+            "url": "http://localhost:8000/api/users",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-02-08T12:11:47.755Z",
+            "modified": "2024-02-29T11:53:40.399Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "bdbe45b8-e70f-477b-adb6-9c5b0a8f29b9",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "alkotok",
+            "url": "http://localhost:8000/api/adottalkoto/{alkotoid}",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-02-24T21:11:16.450Z",
+            "modified": "2024-04-18T11:00:23.582Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "alkotoid",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "17b50c11-3f11-4260-92c0-9443667c62b6",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "csapatok",
+            "url": "http://localhost:8000/api/csapatok",
+            "method": "GET",
+            "sortNum": 35000,
+            "created": "2024-02-27T12:25:50.063Z",
+            "modified": "2024-03-19T16:50:03.360Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "tests": []
+        },
+        {
+            "_id": "d4f7e9e0-5682-4b1b-86c6-feed28fe180b",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "kepek",
+            "url": "http://localhost:8000/api/galeriakepek/{cs_azon}",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-02-27T07:54:30.381Z",
+            "modified": "2024-04-15T13:27:20.401Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "cs_azon",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "7d5ccf5a-4cec-4130-8a0c-fe2cd3abf8f2",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "kepek Copy",
+            "url": "http://localhost:8000/api/kepek",
+            "method": "GET",
+            "sortNum": 45000,
+            "created": "2024-04-15T13:09:43.965Z",
+            "modified": "2024-04-15T13:09:55.368Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e89986ac-b40b-45dd-b2ee-9a8ce69888ff",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "szakok",
+            "url": "http://localhost:8000/api/szakok",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-02-27T12:32:09.620Z",
+            "modified": "2024-02-27T12:32:28.070Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "08888f89-a774-4565-9a09-d263d8ac12f7",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "ujkep-alkoto",
+            "url": "http://localhost:8000/api/kepek/alkotoKepek",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-03-07T11:24:44.910Z",
+            "modified": "2024-04-23T09:35:15.981Z",
+            "headers": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "nyelv_id_leiras_magyar",
+                        "value": "valki"
+                    },
+                    {
+                        "name": "nyelv_id_leiras_angol",
+                        "value": "hdhd"
+                    },
+                    {
+                        "name": "fotos_neve",
+                        "value": "valaki"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "kep",
+                        "value": "c:\\Users\\berta\\Downloads\\kep.jpg"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            }
+        },
+        {
+            "_id": "4e2fdbdf-8c45-48e4-99fb-b6cc38bcdcf8",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "buskesegeink",
+            "url": "http://localhost:8000/api/buszkesegeink",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-04-02T09:43:40.856Z",
+            "modified": "2024-04-02T09:43:47.087Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "9c5d2e61-b5a2-4d91-9dfc-b8e5d70dfeef",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "adottCsapat",
+            "url": "http://localhost:8000/api/galeriakepek/${adottCsapatAzon}",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-04-15T11:05:37.065Z",
+            "modified": "2024-04-18T11:54:46.545Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "adottCsapatAzon",
+                    "value": "2",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "8ef8e1c7-e2c1-4b2b-a78a-aa56b3cc95e9",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "adottCsapat Copy",
+            "url": "http://localhost:8000/api/adott_csapat/${adottCsapatAzon}",
+            "method": "GET",
+            "sortNum": 95000,
+            "created": "2024-04-18T11:51:48.500Z",
+            "modified": "2024-04-26T20:54:17.672Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "adottCsapatAzon",
+                    "value": "2",
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "9c9a3554-b68c-4f07-bece-c2e5d9a9c802",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "csapathozAlkoto",
+            "url": "http://localhost:8000/api/csapathozalkoto/${adottCsapatAzon}",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2024-04-18T11:51:19.288Z",
+            "modified": "2024-04-23T11:56:25.759Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "adottCsapatAzon",
+                    "value": "2",
+                    "isPath": true
+                }
+            ]
+        },
+        {
+            "_id": "48de7072-ba84-40fe-9d83-c779ae6b49d7",
+            "colId": "8c6461f7-7e75-4f4c-b6db-691aef7c8bfb",
+            "containerId": "",
+            "name": "adottalkoto",
+            "url": "http://localhost:8000/api/adottalkoto/{a_azon}",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-04-19T16:35:41.186Z",
+            "modified": "2024-04-19T16:36:05.888Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "a_azon",
+                    "value": "1",
+                    "isPath": true
+                }
+            ]
+        }
+    ],
+    "ref": "y3OH-6rXd6HO4c-GLGricFnGOXD1JbhmctSHpNLwISVEy7RxGMATezrX5Rrt3ycfovU-SPsD-LLTBbWuRic2KA"
+}
