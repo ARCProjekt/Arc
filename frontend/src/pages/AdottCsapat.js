@@ -188,16 +188,18 @@ const AdottCsapat = ({
                       ? "Csapatmunka bemutatása"
                       : "Presentation of Teamwork"}
                   </h3>
-                  <p className="csapat_szov">
-                    {selectedLanguage === "hu"
+                  <h4 className="csapat_szov">
+                  {selectedLanguage === "hu"
                       ? item.csapat_bemutat_magyar
                       : item.csapat_bemutat_angol}
-                  </p>
+                  </h4>
                 </div>
               ))}
             </div>
           </div>
-          <h3 style={{ textAlign: "justify" }}>Teljes képgaléria: </h3>
+          <h3 style={{ textAlign: "justify" }}>{selectedLanguage === "hu"
+                      ? "Képgaléria"
+                      : "Gallery"} </h3>
           {nagyKepLathato && (
             <div
               className="nagyKep"
