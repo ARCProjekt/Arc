@@ -5,7 +5,7 @@ import "../css/Kozos2.css";
 import AdottCsapat from "./AdottCsapat";
 import { useLanguage } from "./NyelvSegedlet";
 
-const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
+const AdottAlkoto = ({ a_azon, Vissza, szoveg ,showGomb}) => {
   const { selectedLanguage } = useLanguage();
   const [alkoto, setAlkoto] = useState([]);
   const [selectedCsapat, setSelectedCsapat] = useState(null);
@@ -35,7 +35,7 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
     <div className="summary-section">
       {showCsapat && (
         <div className="cont katsec">
-          <button onClick={Vissza}>{szoveg}</button>
+          <button onClick={Vissza} style={{margin:"10px",background:"none",borderRadius:"5px ",border:"1px solid grey",color:"aliceblue",fontSize:"25px"}}>{szoveg}</button>
 
           {alkoto.map((item, index) => (
             <div key={index} className="alkoto">
@@ -92,7 +92,10 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                           {selectedLanguage === "hu" ? item.nevHU : item.nevEN}
                         </h1>
                         <p
-                          style={{ fontSize: "1.5em", marginBottom: "10px" }}
+                          style={{
+                            fontSize: "1.5em",
+                            marginBottom: "10px",
+                          }}
                           className="projekt_nev"
                         >
                           {selectedLanguage === "hu"
@@ -105,34 +108,38 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                         <p
                           style={{ fontSize: "1.5em", marginBottom: "10px" }}
                           className="csapat_n"
-                        > {selectedLanguage === "hu"
-                        ? "Csapat neve:"
-                        : "Name of the team: "}
-                           {selectedLanguage === "hu"
+                        >
+                          {" "}
+                          {selectedLanguage === "hu"
+                            ? "Csapat neve:"
+                            : "Name of the team: "}
+                          {selectedLanguage === "hu"
                             ? item.csapatHU
                             : item.csapatEN}
                         </p>
                       </div>
 
-                      <Link>
-                        <button
-                          onClick={() => handleCsapatClick(item.csapat_id)}
-                          style={{
-                            fontSize: "1.2em",
-                            marginBottom: "10px",
-                            textAlign: "justify",
-                            padding: "10px",
-                            border: "1px solid #ccc",
-                            borderRadius: "5px",
-                            background: "none",
-                            color: "aliceblue",
-                          }}
-                        >
-                         {selectedLanguage === "hu"
-                            ? "Csapathoz"
-                            :"To the team"}
-                        </button>
-                      </Link>
+                      {showGomb && (
+                        <Link>
+                          <button
+                            onClick={() => handleCsapatClick(item.csapat_id)}
+                            style={{
+                              fontSize: "1.2em",
+                              marginBottom: "10px",
+                              textAlign: "justify",
+                              padding: "10px",
+                              border: "1px solid #ccc",
+                              borderRadius: "5px",
+                              background: "none",
+                              color: "aliceblue",
+                            }}
+                          >
+                            {selectedLanguage === "hu"
+                              ? "Csapathoz"
+                              : "To the team"}
+                          </button>
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -160,6 +167,8 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                       background: " rgb(208, 245, 254)",
                       padding: "20px",
                       borderRadius: "10px",
+                      background:
+                        "linear-gradient(0deg, rgba(246, 231, 196, 0.38) 0%, rgba(240, 167, 174, 1) 100%)",
                     }}
                   >
                     <h2
@@ -169,9 +178,7 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                         color: "black",
                       }}
                     >
-                      {selectedLanguage === "hu"
-                            ? "Szak"
-                            : "Profession: "}
+                      {selectedLanguage === "hu" ? "Szak" : "Profession: "}
                     </h2>
                     <p
                       style={{
@@ -180,9 +187,7 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                         color: "black",
                       }}
                     >
-                      {selectedLanguage === "hu"
-                            ? item.szakHU
-                            : item.szakEN}
+                      {selectedLanguage === "hu" ? item.szakHU : item.szakEN}
                     </p>
                   </div>
                   <div
@@ -191,6 +196,8 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                       background: " rgb(208, 245, 254)",
                       padding: "20px",
                       borderRadius: "10px",
+                      background:
+                        "linear-gradient(0deg, rgba(246, 231, 196, 0.38) 0%, rgba(240, 167, 174, 1) 100%)",
                     }}
                   >
                     <h2
@@ -200,9 +207,7 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                         color: "black",
                       }}
                     >
-                      {selectedLanguage === "hu"
-                            ? "Kategória:"
-                            : "Category: "}
+                      {selectedLanguage === "hu" ? "Kategória:" : "Category: "}
                     </h2>
                     <p
                       style={{
@@ -211,9 +216,9 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                         color: "black",
                       }}
                     >
-                       {selectedLanguage === "hu"
-                            ? item.kategoriaHU
-                            : item.kategoriaEN}
+                      {selectedLanguage === "hu"
+                        ? item.kategoriaHU
+                        : item.kategoriaEN}
                     </p>
                   </div>
                 </div>
@@ -225,9 +230,9 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                   }}
                 >
                   <h3 style={{ fontSize: "2em", marginBottom: "10px" }}>
-                  {selectedLanguage === "hu"
-                            ? "Bemutatkozás"
-                            :"Introduction"}
+                    {selectedLanguage === "hu"
+                      ? "Bemutatkozás"
+                      : "Introduction"}
                   </h3>
                   <p
                     style={{
@@ -236,9 +241,9 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
                       lineHeight: "1.5",
                     }}
                   >
-                     {selectedLanguage === "hu"
-                            ? item.bemutatHU
-                            : item.bemutatEN}
+                    {selectedLanguage === "hu"
+                      ? item.bemutatHU
+                      : item.bemutatEN}
                   </p>
                 </div>
               </div>
@@ -251,6 +256,10 @@ const AdottAlkoto = ({ a_azon, Vissza, szoveg }) => {
           <AdottCsapat
             cs_azon={selectedCsapat}
             Vissza={handleBackButtonClick}
+            szoveg={"Vissza az alkotóhoz"}
+            angolSzoveg={"Back to the artist"}
+            showGomb={false}
+            showNevek={true}
           />
         </div>
       )}

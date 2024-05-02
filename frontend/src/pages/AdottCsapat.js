@@ -6,7 +6,14 @@ import AdottAlkoto from "./AdottAlkoto";
 import { useLanguage } from "./NyelvSegedlet";
 import GaleriaKep from "./GaleriaKep";
 import Kep from "./Kep";
-const AdottCsapat = ({ cs_azon, Vissza }) => {
+const AdottCsapat = ({
+  cs_azon,
+  Vissza,
+  szoveg,
+  angolSzoveg,
+  showGomb,
+  showNevek,
+}) => {
   const { selectedLanguage } = useLanguage();
   const [nagyKepLathato, setNagyKepLathato] = useState(false);
   const [csapat, setCsapat] = useState([]);
@@ -66,11 +73,18 @@ const AdottCsapat = ({ cs_azon, Vissza }) => {
           className="cont katsec"
           style={{ padding: "10px", border: "10px" }}
         >
-          <button onClick={Vissza}>
-            {" "}
-            {selectedLanguage === "hu"
-              ? "Vissza a csapatokhoz"
-              : "Back to the teams"}
+          <button
+            onClick={Vissza}
+            style={{
+              margin: "10px",
+              background: "none",
+              borderRadius: "5px ",
+              border: "1px solid grey",
+              color: "aliceblue",
+              fontSize: "25px",
+            }}
+          >
+            {selectedLanguage === "hu" ? szoveg : angolSzoveg}
           </button>
 
           {csapat.map((item, index) => (
@@ -96,21 +110,38 @@ const AdottCsapat = ({ cs_azon, Vissza }) => {
           <ul className="list-unstyled">
             {alkotok.map((item, index) => (
               <li className="mb-2" key={index}>
-                <button
-                  onClick={() => handleAlkotoClick(item.a_azon)}
-                  style={{
-                    fontSize: "1.2em",
-                    marginBottom: "10px",
-                    textAlign: "justify",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    background: "none",
-                    color: "aliceblue",
-                  }}
-                >
-                  {selectedLanguage === "hu" ? item.magyar_nev : item.angol_nev}
-                </button>
+                {showGomb && (
+                  <button
+                    onClick={() => handleAlkotoClick(item.a_azon)}
+                    style={{
+                      fontSize: "1.2em",
+                      marginBottom: "10px",
+                      textAlign: "justify",
+                      padding: "10px",
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                      background: "none",
+                      color: "aliceblue",
+                    }}
+                  >
+                    {selectedLanguage === "hu"
+                      ? item.magyar_nev
+                      : item.angol_nev}
+                  </button>
+                )}
+                {showNevek && (
+                  <h2
+                    style={{
+                      fontSize: "1.5em",
+                      marginBottom: "10px",
+                      color: "black",
+                    }}
+                  >
+                    {selectedLanguage === "hu"
+                      ? item.magyar_nev
+                      : item.angol_nev}
+                  </h2>
+                )}
               </li>
             ))}
           </ul>
@@ -194,7 +225,6 @@ const AdottCsapat = ({ cs_azon, Vissza }) => {
                 obj={aktKep}
                 style={{ width: "40%", margin: "10px" }}
               />
-              
             </div>
           )}
           <div
@@ -224,12 +254,14 @@ const AdottCsapat = ({ cs_azon, Vissza }) => {
               a_azon={selectedAlkoto}
               Vissza={handleBackButtonClick}
               szoveg={"Vissza a csapathoz"}
+              showGomb={false}
             />
           ) : (
             <AdottAlkoto
               a_azon={selectedAlkoto}
               Vissza={handleBackButtonClick}
               szoveg={"Back to the team"}
+              showGomb={false}
             />
           )}
         </div>
