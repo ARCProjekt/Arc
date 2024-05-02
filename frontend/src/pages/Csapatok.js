@@ -9,7 +9,6 @@ export default function Csapatok() {
   const [selectedCsapat, setSelectedCsapat] = useState(null);
   const [csapatok, setCsapatok] = useState([]);
   const [showCsapat, setShowCsapat] = useState(true);
-  const [kepek, setKepek] = useState([]);
 
   useEffect(() => {
     const getCsapatok = async () => {
@@ -31,39 +30,37 @@ export default function Csapatok() {
   };
 
   return (
-    <div className="summary-section"> 
-    <div className="cim">
-            <h1>
-              {selectedLanguage === "hu"
-                ? "Csapatok"
-                : "Teams"}
-            </h1>
-            </div>
+    <div className="summary-section">
+      <div className="cim">
+        <h1>{selectedLanguage === "hu" ? "Csapatok" : "Teams"}</h1>
+      </div>
       <div
-        className="cont katsec"
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
-      >
-       
-        {showCsapat &&
+        className="cont katsec row  justify-content-center"
         
+      >
+        {showCsapat &&
           csapatok.map((csapat, index) => (
             <div
               key={index}
-              className="half-circle-card"
-              style={{ margin: "15px" }}
+              className="half-circle-card col-md-6 offset-md-3"
+              style={{padding:"auto", margin: "15px" ,maxWidth:"400px"}}
             >
-               <img
-            src={"http://localhost:8000/" + csapat.galeria_kepek}
-            alt={`Csapat kép ${index}`}
-        />
+              <img
+                src={"http://localhost:8000/" + csapat.galeria_kepek}
+                alt={`Csapat kép ${index}`}
+              />
 
               <div className="content">
-                <h3>{selectedLanguage === "hu"
-                            ? csapat.csapat_nev_magyar
-                            : csapat.csapat_nev_angol}</h3>
-                <p>{selectedLanguage === "hu"
-                            ? csapat.csapat_bemutat_magyar
-                            : csapat.csapat_bemutat_angol}</p>
+                <h3>
+                  {selectedLanguage === "hu"
+                    ? csapat.csapat_nev_magyar
+                    : csapat.csapat_nev_angol}
+                </h3>
+                <p>
+                  {selectedLanguage === "hu"
+                    ? csapat.csapat_bemutat_magyar
+                    : csapat.csapat_bemutat_angol}
+                </p>
                 <button
                   onClick={() => handleCsapatClick(csapat.cs_azon)}
                   style={{
@@ -76,9 +73,7 @@ export default function Csapatok() {
                     background: "none",
                   }}
                 >
-                 {selectedLanguage === "hu"
-                            ? "Csapathoz"
-                            : "To the team"}
+                  {selectedLanguage === "hu" ? "Csapathoz" : "To the team"}
                 </button>
               </div>
             </div>
@@ -86,7 +81,10 @@ export default function Csapatok() {
       </div>
       {selectedCsapat && (
         <div>
-          <AdottCsapat cs_azon={selectedCsapat} Vissza={handleBackButtonClick} />
+          <AdottCsapat
+            cs_azon={selectedCsapat}
+            Vissza={handleBackButtonClick}
+          />
         </div>
       )}
     </div>

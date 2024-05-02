@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Carousel, Nav } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import axios from "../api/axios";
-import { Link } from "react-router-dom";
 import "../css/Kozos2.css";
 import AdottAlkoto from "./AdottAlkoto";
 import { useLanguage } from "./NyelvSegedlet";
-
+import GaleriaKep from "./GaleriaKep";
+import Kep from "./Kep";
 const AdottCsapat = ({ cs_azon, Vissza }) => {
   const { selectedLanguage } = useLanguage();
   const [nagyKepLathato, setNagyKepLathato] = useState(false);
@@ -25,7 +25,9 @@ const AdottCsapat = ({ cs_azon, Vissza }) => {
 
     getCsapat();
   }, [cs_azon]);
-
+  function bezarNagyKep() {
+    setNagyKepLathato(false);
+  }
   useEffect(() => {
     const getAlkotok = async () => {
       const apiAlkotok = await axios.get(
@@ -44,7 +46,10 @@ const AdottCsapat = ({ cs_azon, Vissza }) => {
     setSelectedAlkoto(null);
     setShowAlkoto(true);
   };
-
+  function kattintas(kep) {
+    setAktKep(kep);
+    setNagyKepLathato(true);
+  }
   useEffect(() => {
     const getKepek = async () => {
       const apiKepek = await axios.get(
@@ -161,18 +166,72 @@ const AdottCsapat = ({ cs_azon, Vissza }) => {
               ))}
             </div>
           </div>
+          <h3 style={{ textAlign: "justify" }}>Teljes képgaléria: </h3>
+          {nagyKepLathato && (
+            <div
+              className="nagyKep"
+              style={{
+                zIndex: 1,
+                borderRadius: "10px",
+                margin: "100px",
+                top: "auto",
+                maxWidth: "800px",
+              }}
+            >
+              <button
+                onClick={bezarNagyKep}
+                style={{
+                  border: "0",
+                  float: "left",
+                  margin: "10px",
+                  background: "none",
+                }}
+              >
+                ✖️
+              </button>
+
+              <GaleriaKep
+                obj={aktKep}
+                style={{ width: "40%", margin: "10px" }}
+              />
+              
+            </div>
+          )}
+          <div
+            className="mt-4"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            {kepek.map((item) => (
+              <div className="col-4 col-md-4 col-lg-4 mb-3" key={item.kep_azon}>
+                <Kep
+                  obj={item.kep}
+                  index={item.kep}
+                  kattintas={() => kattintas(item.kep)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {selectedAlkoto && (
         <div>
-         { selectedLanguage === "hu"
-         ? <AdottAlkoto
-            a_azon={selectedAlkoto}
-            Vissza={handleBackButtonClick}
-            szoveg={"Vissza a csapathoz"}
-          />                            : <AdottAlkoto a_azon={selectedAlkoto} Vissza={handleBackButtonClick} szoveg={"Back to the team"}/>}
-          
-          
+          {selectedLanguage === "hu" ? (
+            <AdottAlkoto
+              a_azon={selectedAlkoto}
+              Vissza={handleBackButtonClick}
+              szoveg={"Vissza a csapathoz"}
+            />
+          ) : (
+            <AdottAlkoto
+              a_azon={selectedAlkoto}
+              Vissza={handleBackButtonClick}
+              szoveg={"Back to the team"}
+            />
+          )}
         </div>
       )}
     </div>

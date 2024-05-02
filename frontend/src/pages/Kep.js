@@ -1,12 +1,12 @@
 export default function Kep(props) {
     function kattintas() {
-      console.log("katt", props.index);
+      console.log( props.index);
       props.kattintas(props.index);
     }
   
     return (
       <div className="kep">
-        <img src={process.env.PUBLIC_URL+props.obj.src} alt="" className="img-fluid galeria-kep" onClick={kattintas} style={{
+        <img src={"http://localhost:8000/"+props.obj} alt="" className="img-fluid galeria-kep" onClick={kattintas} style={{
           width: '70%',
           height: '100%',
           objectFit: 'cover',
