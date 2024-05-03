@@ -1,0 +1,279 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "arc",
+    "collectionId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+    "dateExported": "2024-05-03T14:11:13.309Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "cf2267fb-9bb8-4481-8352-946a0e6ae66d",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "kategoriak",
+            "url": "http://localhost:8000/api/kategoriaklista",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-02-01T13:58:23.449Z",
+            "modified": "2024-02-20T09:01:17.380Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5b96dd12-92f2-47aa-8cd8-508e71adce5d",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "kategoriak Copy",
+            "url": "http://localhost:8000/api/kategoriaklista",
+            "method": "GET",
+            "sortNum": 12500,
+            "created": "2024-02-23T10:54:00.627Z",
+            "modified": "2024-02-23T10:54:00.627Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "4d2961c7-a8f0-4b8b-98ce-163fe2c29619",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "getUsers",
+            "url": "http://localhost:8000/api/users",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2024-02-20T10:34:32.167Z",
+            "modified": "2024-02-29T09:40:19.146Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "18b9b52e-35c8-4afd-97c5-b94b6107cb8d",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "adottalkoto",
+            "url": "http://localhost:8000/api/adottalkoto/1",
+            "method": "GET",
+            "sortNum": 17500,
+            "created": "2024-03-25T13:33:51.740Z",
+            "modified": "2024-03-25T13:34:36.478Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "70db2100-6ef1-4968-a4b5-3c863c7f6f18",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "buszkesegeink",
+            "url": "http://localhost:8000/api/buszkesegeink",
+            "method": "GET",
+            "sortNum": 18750,
+            "created": "2024-03-25T13:55:31.291Z",
+            "modified": "2024-03-25T13:55:46.719Z",
+            "headers": [],
+            "params": [],
+            "reqType": "get",
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "852c4fdf-d87f-47d9-838a-b7629f784fa0",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "adott_csapat",
+            "url": "http://localhost:8000/api/adott_csapat/1",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-02-01T14:03:02.520Z",
+            "modified": "2024-02-02T12:23:13.465Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b4a5ba21-d7ef-4d6b-a4ac-3bcb3042739d",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "buszkesegPatch",
+            "url": "http://localhost:8000/api/buszkeseg/1",
+            "method": "PATCH",
+            "sortNum": 30000,
+            "created": "2024-02-02T12:22:48.287Z",
+            "modified": "2024-02-06T13:41:27.418Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "8630d19b-2834-4f5c-b951-1af75f4165a9",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "updateUser",
+            "url": "http://localhost:8000/api/updateuser/1?name=Cséfi Tanárnő&jog=1&email=tanarno@szerkesztve.com",
+            "method": "PATCH",
+            "sortNum": 35000,
+            "created": "2024-03-19T10:31:36.637Z",
+            "modified": "2024-04-09T09:37:22.406Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "name",
+                    "value": "Cséfi Tanárnő",
+                    "isPath": false
+                },
+                {
+                    "name": "jog",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "email",
+                    "value": "tanarno@szerkesztve.com",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "c545e986-83bc-4cf0-82fd-3804208b4c37",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "userLetrehoz",
+            "url": "http://localhost:8000/api/userletrehoz",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-02-08T12:40:12.400Z",
+            "modified": "2024-03-05T08:26:06.384Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "name",
+                    "value": "Csányi",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "email",
+                    "value": "kopasz",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "password",
+                    "value": "tesi",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "jog",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"name\": \"csányi\",\r\n    \"email\": \"kopasz@tesitanar.com\",\r\n    \"password\": \"tesi\",\r\n    \"jog\": \"tanar\"\r\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "b1b69dda-d3d2-45ca-b9b2-3088a4138812",
+            "colId": "e58fa07c-8b1d-442f-9190-b6615b9415eb",
+            "containerId": "",
+            "name": "userTorol",
+            "url": "http://localhost:8000/api/usertorol/14",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-03-19T09:38:24.889Z",
+            "modified": "2024-03-19T10:32:57.952Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "name",
+                    "value": "Csányi",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "email",
+                    "value": "kopasz",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "password",
+                    "value": "tesi",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "jog",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"csányi\",\n    \"email\": \"kopasz@tesitanar.com\",\n    \"password\": \"tesi\",\n    \"jog\": \"tanar\"\n}",
+                "form": []
+            },
+            "reqType": "post",
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        }
+    ],
+    "ref": "vgmG8Jytv-v9NPbc7YsBbW_5e7lLFkunRmbStWNmgyv6nqE-sNrNbErzgTWKx5cXYfSYLu1HhTq4zwLrMH_taQ"
+}
