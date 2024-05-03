@@ -9,6 +9,9 @@
   h1 {
     text-align: center;
   }
+  .csapat_szov {
+    margin: 15px;
+  }
   .half-circle-card {
     width: 400px;
     height: 400px;
@@ -271,6 +274,7 @@
     }
     .csapat_szov {
       text-align: left !important;
+    
     }
     .galeria {
       display: grid !important;

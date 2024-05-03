@@ -45,7 +45,7 @@ export default function Projekt() {
             ? "Iskolánk szerepe"
             : "The Role of our School"}
         </h2>
-        <p className="csapat_szov">
+        <p className="csapat_szov" >
           {selectedLanguage === "hu" ? (
             <>
               <p>
