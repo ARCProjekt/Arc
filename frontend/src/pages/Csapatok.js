@@ -46,7 +46,7 @@ export default function Csapatok() {
               <div
                 key={index}
                 className="half-circle-card col-md-6 offset-md-3"
-                style={{ padding: "auto", margin: "15px", maxWidth: "400px" }}
+                style={{padding:"0",  margin: "15px", maxWidth: "400px" }}
               >
                 <img
                   src={csapat.galeria_kepek ? `http://localhost:8000/${csapat.galeria_kepek}` : ""}
