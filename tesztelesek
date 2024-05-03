@@ -667,6 +667,159 @@
                 }
             },
             "tests": []
+        },
+        {
+            "_id": "6cb45fc6-5630-4c0d-8281-5fa76e442232",
+            "colId": "bd0b6716-ec59-4124-85e3-e58105f9b8f0",
+            "containerId": "",
+            "name": "Ujalkoto",
+            "url": "http://localhost:8000/api/alkotoletrehoz",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-15T16:19:16.998Z",
+            "modified": "2024-02-29T10:59:01.011Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "15acb10b-258d-49af-a676-c89cd4396699",
+            "colId": "bd0b6716-ec59-4124-85e3-e58105f9b8f0",
+            "containerId": "",
+            "name": "Userletrehoz",
+            "url": "http://localhost:8000/api/csapatok",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-02-27T07:45:35.581Z",
+            "modified": "2024-04-09T20:37:24.233Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Büfés Marika"
+                    },
+                    {
+                        "name": "jog",
+                        "value": "2"
+                    },
+                    {
+                        "name": "email",
+                        "value": "mari@mari.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "mari"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "10e43159-910b-436d-a945-66441e231b09",
+            "colId": "bd0b6716-ec59-4124-85e3-e58105f9b8f0",
+            "containerId": "",
+            "name": "Ujcsapat",
+            "url": "http://localhost:8000/api/csapat/store",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-02-29T11:49:34.902Z",
+            "modified": "2024-04-09T08:04:08.724Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"galeria_id\": 1,\n  \"k_id\": 2,\n  \"magyar_nev\": \"Példa magyar név\",\n  \"angol_nev\": \"Example English name\",\n  \"magyar_leiras\": \"Példa magyar leírás\",\n  \"angol_leiras\": \"Example English description\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "822f2381-ce25-47cd-8089-c61d5ad9c659",
+            "colId": "bd0b6716-ec59-4124-85e3-e58105f9b8f0",
+            "containerId": "",
+            "name": "CsapatTorol",
+            "url": "http://localhost:8000/api/csapatTorol/4",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-04-01T10:03:11.818Z",
+            "modified": "2024-04-09T09:30:59.208Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "b39be6a1-f5be-4d80-8fb6-7c8da6f203bd",
+            "colId": "bd0b6716-ec59-4124-85e3-e58105f9b8f0",
+            "containerId": "",
+            "name": "Update",
+            "url": "http://localhost:8000/api/csapatmodosit/5?magyar_nev=Töröld&angol_nev=delete&magyar_leiras=ezt kell  törölni&angol_leiras=need to delete this",
+            "method": "PATCH",
+            "sortNum": 60000,
+            "created": "2024-04-04T19:46:32.679Z",
+            "modified": "2024-04-09T15:47:52.462Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "magyar_nev",
+                    "value": "Töröld",
+                    "isPath": false
+                },
+                {
+                    "name": "angol_nev",
+                    "value": "delete",
+                    "isPath": false
+                },
+                {
+                    "name": "magyar_leiras",
+                    "value": "ezt kell  törölni",
+                    "isPath": false
+                },
+                {
+                    "name": "angol_leiras",
+                    "value": "need to delete this",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "admin@admin.com",
+                    "password": "admin"
+                }
+            },
+            "tests": []
         }
     ],
     "ref": "y3OH-6rXd6HO4c-GLGricFnGOXD1JbhmctSHpNLwISVEy7RxGMATezrX5Rrt3ycfovU-SPsD-LLTBbWuRic2KA"
