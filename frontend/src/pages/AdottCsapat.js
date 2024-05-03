@@ -134,7 +134,7 @@ const AdottCsapat = ({
                     style={{
                       fontSize: "1.5em",
                       marginBottom: "10px",
-                      color: "black",
+                      color: "aliceblue",
                     }}
                   >
                     {selectedLanguage === "hu"
