@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/Arc/static/css/main.31999641.css",
-    "main.js": "/Arc/static/js/main.cc117d1e.js",
-    "static/js/592.bf6ca574.chunk.js": "/Arc/static/js/592.bf6ca574.chunk.js",
-    "index.html": "/Arc/index.html",
-    "main.31999641.css.map": "/Arc/static/css/main.31999641.css.map",
-    "main.cc117d1e.js.map": "/Arc/static/js/main.cc117d1e.js.map",
-    "592.bf6ca574.chunk.js.map": "/Arc/static/js/592.bf6ca574.chunk.js.map"
+    "main.css": "/arcproject2024.szamalk-szalezi.hu/static/css/main.abe69822.css",
+    "main.js": "/arcproject2024.szamalk-szalezi.hu/static/js/main.eeba17d8.js",
+    "static/js/592.bf6ca574.chunk.js": "/arcproject2024.szamalk-szalezi.hu/static/js/592.bf6ca574.chunk.js",
+    "static/media/hatter.png": "/arcproject2024.szamalk-szalezi.hu/static/media/hatter.5a7a3323c5e3aa455b06.png",
+    "index.html": "/arcproject2024.szamalk-szalezi.hu/index.html",
+    "main.abe69822.css.map": "/arcproject2024.szamalk-szalezi.hu/static/css/main.abe69822.css.map",
+    "main.eeba17d8.js.map": "/arcproject2024.szamalk-szalezi.hu/static/js/main.eeba17d8.js.map",
+    "592.bf6ca574.chunk.js.map": "/arcproject2024.szamalk-szalezi.hu/static/js/592.bf6ca574.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.31999641.css",
-    "static/js/main.cc117d1e.js"
+    "static/css/main.abe69822.css",
+    "static/js/main.eeba17d8.js"
   ]
 }
